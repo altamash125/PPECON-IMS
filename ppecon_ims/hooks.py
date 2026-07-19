@@ -23,7 +23,9 @@ app_license = "mit"
 
 # Includes in <head>
 # ------------------
-
+# CSS/JS assets — loaded on all portal (web) pages
+web_include_css = "/assets/ppecon_ims/css/ims_portal.css"
+web_include_js = "/assets/ppecon_ims/js/ims_portal.js"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/ppecon_ims/css/ppecon_ims.css"
 # app_include_js = "/assets/ppecon_ims/js/ppecon_ims.js"
