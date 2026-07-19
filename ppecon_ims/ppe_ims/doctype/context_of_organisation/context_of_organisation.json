@@ -1,0 +1,224 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-06 10:35:04.399121",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "document_title",
+  "department",
+  "column_break_hpve",
+  "effective_date",
+  "next_review_date",
+  "site",
+  "amended_from",
+  "sb_vision",
+  "what_do_we_do_and_what_makes_us_different",
+  "column_break_ksck",
+  "where_do_we_aim_to_be",
+  "column_break_aecf",
+  "why_this_business_is_good_business_to_be_in",
+  "tab_break_qhbp",
+  "section_break_fpel",
+  "strength",
+  "opportunity",
+  "column_break_olyd",
+  "weakness",
+  "threat",
+  "pstel_anlaysis_tab",
+  "section_break_quvh",
+  "political",
+  "legal",
+  "social",
+  "column_break_ovfc",
+  "economic",
+  "technological",
+  "environmental"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "COO-.YYYY.-.####"
+  },
+  {
+   "fieldname": "document_title",
+   "fieldtype": "Data",
+   "label": "Document Title"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "column_break_hpve",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "effective_date",
+   "fieldtype": "Date",
+   "label": "Effective Date"
+  },
+  {
+   "fieldname": "next_review_date",
+   "fieldtype": "Date",
+   "label": "Next Review Date"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Link",
+   "label": "Site",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Context of Organisation",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "what_do_we_do_and_what_makes_us_different",
+   "fieldtype": "Small Text",
+   "label": "What Do We Do ? What Makes Us Different ?"
+  },
+  {
+   "fieldname": "column_break_ksck",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "where_do_we_aim_to_be",
+   "fieldtype": "Small Text",
+   "label": "Where Do We Aim To Be ?"
+  },
+  {
+   "fieldname": "why_this_business_is_good_business_to_be_in",
+   "fieldtype": "Small Text",
+   "label": "Why This Business Is Good Business To Be In ?"
+  },
+  {
+   "fieldname": "sb_vision",
+   "fieldtype": "Section Break",
+   "label": "Vision & Purpose section",
+   "options": "Vision & Purpose"
+  },
+  {
+   "fieldname": "strength",
+   "fieldtype": "Text Editor",
+   "label": "Strength"
+  },
+  {
+   "fieldname": "column_break_olyd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "weakness",
+   "fieldtype": "Text Editor",
+   "label": "Weakness"
+  },
+  {
+   "fieldname": "opportunity",
+   "fieldtype": "Text Editor",
+   "label": "Opportunity"
+  },
+  {
+   "fieldname": "threat",
+   "fieldtype": "Text Editor",
+   "label": "Threat"
+  },
+  {
+   "fieldname": "political",
+   "fieldtype": "Small Text",
+   "label": "Political"
+  },
+  {
+   "fieldname": "legal",
+   "fieldtype": "Small Text",
+   "label": "Legal"
+  },
+  {
+   "fieldname": "social",
+   "fieldtype": "Small Text",
+   "label": "Social"
+  },
+  {
+   "fieldname": "column_break_ovfc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "economic",
+   "fieldtype": "Small Text",
+   "label": "Economic"
+  },
+  {
+   "fieldname": "technological",
+   "fieldtype": "Small Text",
+   "label": "Technological"
+  },
+  {
+   "fieldname": "environmental",
+   "fieldtype": "Small Text",
+   "label": "Environmental"
+  },
+  {
+   "fieldname": "tab_break_qhbp",
+   "fieldtype": "Tab Break",
+   "label": "SWOT Analysis"
+  },
+  {
+   "fieldname": "column_break_aecf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pstel_anlaysis_tab",
+   "fieldtype": "Tab Break",
+   "label": "PSTEL Anlaysis"
+  },
+  {
+   "fieldname": "section_break_fpel",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_quvh",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-07-06 12:18:07.327748",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Context of Organisation",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

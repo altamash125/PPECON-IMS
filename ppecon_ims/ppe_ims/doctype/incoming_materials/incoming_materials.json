@@ -1,0 +1,120 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-07-15 12:10:01.070056",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_ufqb",
+  "amended_from",
+  "s_no",
+  "project_name",
+  "incoming_material_category",
+  "column_break_vnoa",
+  "incoming_material",
+  "management_system_type",
+  "delivery_note",
+  "technical_details",
+  "attach_documents_section",
+  "bulk_upload"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_ufqb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Incoming materials",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "s_no",
+   "fieldtype": "Data",
+   "label": "S No"
+  },
+  {
+   "fieldname": "project_name",
+   "fieldtype": "Link",
+   "label": "Project Name",
+   "options": "Project"
+  },
+  {
+   "fieldname": "incoming_material_category",
+   "fieldtype": "Select",
+   "label": "Incoming Material Category"
+  },
+  {
+   "fieldname": "column_break_vnoa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "incoming_material",
+   "fieldtype": "Data",
+   "label": "Incoming Material"
+  },
+  {
+   "fieldname": "management_system_type",
+   "fieldtype": "Link",
+   "label": "Management System Type",
+   "options": "Management System Type"
+  },
+  {
+   "fieldname": "delivery_note",
+   "fieldtype": "Link",
+   "label": "Delivery Note",
+   "options": "Delivery Note"
+  },
+  {
+   "fieldname": "technical_details",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Technical Details",
+   "reqd": 1
+  },
+  {
+   "fieldname": "attach_documents_section",
+   "fieldtype": "Section Break",
+   "label": "Attach Details"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Upload All"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-07-15 13:02:07.427693",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Incoming materials",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

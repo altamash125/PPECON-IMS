@@ -1,0 +1,186 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-06 14:02:51.546861",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_vqta",
+  "naming_series",
+  "site",
+  "how_it_affects_your_organisation",
+  "column_break_vlit",
+  "issue_type",
+  "management_system_type",
+  "department",
+  "risks_section",
+  "risk_category",
+  "risk_impact",
+  "treatment_type",
+  "risk_description",
+  "assigned_to",
+  "column_break_tvvg",
+  "amended_from",
+  "risk_and_opportunity_type",
+  "risk_probabily",
+  "action_processed",
+  "riskopportunity_source_or_activity"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_vqta",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "IMS External  Issue",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "EXT-ISS-.YYYY.-.####"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Link",
+   "label": "Site",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "how_it_affects_your_organisation",
+   "fieldtype": "Data",
+   "label": "How It Affects Your Organisation"
+  },
+  {
+   "fieldname": "column_break_vlit",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "issue_type",
+   "fieldtype": "Select",
+   "label": "Issue Type",
+   "options": "\nHealth & Safety\nGlobal Warming\nBiodiversity\nClimate"
+  },
+  {
+   "fieldname": "management_system_type",
+   "fieldtype": "Select",
+   "label": "Management System Type",
+   "options": "\nQMS (ISO 9001)\nEMS (ISO 14001)\nOHSMS (ISO 45001)\nIMS (All)"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "risks_section",
+   "fieldtype": "Section Break",
+   "label": "Risks"
+  },
+  {
+   "fieldname": "risk_category",
+   "fieldtype": "Select",
+   "label": "Risk Category",
+   "options": "\nFinance\nLanguage Barrier\nLegal\nNew Technology\nStrategic\nOperational\nReputation"
+  },
+  {
+   "fieldname": "risk_impact",
+   "fieldtype": "Select",
+   "label": "Risk Impact",
+   "options": "\nLow\nMedium\nHigh"
+  },
+  {
+   "fieldname": "treatment_type",
+   "fieldtype": "Select",
+   "label": "Treatment Type",
+   "options": "\nElimination\nRetention\nReduction\nTransfer"
+  },
+  {
+   "fieldname": "risk_description",
+   "fieldtype": "Small Text",
+   "label": "Risk Description"
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Link",
+   "label": "Assigned To",
+   "options": "User"
+  },
+  {
+   "fieldname": "column_break_tvvg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "risk_and_opportunity_type",
+   "fieldtype": "Select",
+   "label": "Risk and opportunity type",
+   "options": "External Issue\nPlanning Emergency\nProcess\nAspect\nContext\nHazard"
+  },
+  {
+   "fieldname": "risk_probabily",
+   "fieldtype": "Select",
+   "label": "Risk Probabily",
+   "options": "\nLow\nMedium\nHigh"
+  },
+  {
+   "fieldname": "riskopportunity_source_or_activity",
+   "fieldtype": "Small Text",
+   "label": "Risk/Opportunity source or activity"
+  },
+  {
+   "fieldname": "action_processed",
+   "fieldtype": "Data",
+   "label": "Action Processed "
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "IMS External  Issue",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-07-06 14:05:38.567504",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "IMS External  Issue",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

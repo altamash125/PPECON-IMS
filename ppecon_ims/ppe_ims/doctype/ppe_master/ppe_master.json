@@ -1,0 +1,124 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-07-14 13:36:07.661016",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1stu",
+  "amended_from",
+  "s_no",
+  "life_of_ppe",
+  "remarks",
+  "column_break_rlxk",
+  "ppe_name",
+  "inspection_frequency",
+  "responsible_person",
+  "section_break_yhck",
+  "inspection_plan",
+  "supported_documents_section",
+  "upload_all_file"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1stu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "PPE Master",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "s_no",
+   "fieldtype": "Data",
+   "label": "S No"
+  },
+  {
+   "fieldname": "life_of_ppe",
+   "fieldtype": "Data",
+   "label": "Life Of PPE"
+  },
+  {
+   "fieldname": "column_break_rlxk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ppe_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "PPE Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "inspection_plan",
+   "fieldtype": "Text Editor",
+   "label": "Inspection Plan"
+  },
+  {
+   "fieldname": "inspection_frequency",
+   "fieldtype": "Select",
+   "label": "Inspection Frequency",
+   "options": "\nHalf-Hourly\nHourly\nDaily\nWeekly\nQuarterly\nMonthly\nHalf-Yearly\nYearly"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "responsible_person",
+   "fieldtype": "Table MultiSelect",
+   "label": "Responsible Person",
+   "options": "Asignee"
+  },
+  {
+   "fieldname": "section_break_yhck",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "supported_documents_section",
+   "fieldtype": "Section Break",
+   "label": "Supported Documents"
+  },
+  {
+   "fieldname": "upload_all_file",
+   "fieldtype": "HTML",
+   "label": "Upload All File"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-07-14 13:40:43.645879",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "PPE Master",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

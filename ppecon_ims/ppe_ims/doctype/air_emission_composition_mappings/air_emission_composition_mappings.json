@@ -1,0 +1,48 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-07-19 10:45:40.878115",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "air_emission_composition",
+  "acceptable_limit",
+  "unit"
+ ],
+ "fields": [
+  {
+   "fieldname": "air_emission_composition",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Air Emission Composition",
+   "reqd": 1
+  },
+  {
+   "fieldname": "acceptable_limit",
+   "fieldtype": "Float",
+   "label": "Acceptable Limit"
+  },
+  {
+   "fieldname": "unit",
+   "fieldtype": "Link",
+   "label": "Unit",
+   "options": "UOM"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-07-19 10:46:48.384761",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Air Emission Composition Mappings",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

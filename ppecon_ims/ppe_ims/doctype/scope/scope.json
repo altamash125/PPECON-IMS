@@ -1,0 +1,100 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-06 14:10:09.062197",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_ym7g",
+  "amended_from",
+  "naming_series",
+  "scope",
+  "exclusion",
+  "column_break_wdsn",
+  "management_system_type",
+  "site",
+  "justification_for_exclusion"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_ym7g",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Scope",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "S No",
+   "options": "SCOPE-.YYYY.-.####"
+  },
+  {
+   "fieldname": "scope",
+   "fieldtype": "Data",
+   "label": "Scope"
+  },
+  {
+   "fieldname": "exclusion",
+   "fieldtype": "Small Text",
+   "label": "Exclusion"
+  },
+  {
+   "fieldname": "column_break_wdsn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "management_system_type",
+   "fieldtype": "Select",
+   "label": "Management System Type"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Link",
+   "label": "Site",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "justification_for_exclusion",
+   "fieldtype": "Small Text",
+   "label": "Justification For Exclusion"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-07-06 14:17:05.361721",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Scope",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

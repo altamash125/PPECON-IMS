@@ -1,0 +1,175 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-06 09:19:48.074231",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "department",
+  "resource_planning_for",
+  "column_break_mzgm",
+  "planning_date",
+  "required_date",
+  "planning_duration",
+  "resource_details_section",
+  "resource_type",
+  "quantity",
+  "column_break_gzjz",
+  "uom",
+  "approximate_cost_to_company",
+  "justification_section",
+  "benefits",
+  "remarks",
+  "column_break_dxba",
+  "description",
+  "approval_section",
+  "status",
+  "column_break_cmny",
+  "approved_by"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "S No",
+   "options": "RP-.YYYY.-.####"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "resource_planning_for",
+   "fieldtype": "Small Text",
+   "label": "Resource Planning For"
+  },
+  {
+   "fieldname": "column_break_mzgm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "planning_date",
+   "fieldtype": "Date",
+   "label": "Planning Date"
+  },
+  {
+   "fieldname": "required_date",
+   "fieldtype": "Date",
+   "label": "Required Date"
+  },
+  {
+   "fieldname": "planning_duration",
+   "fieldtype": "Select",
+   "label": "Planning Duration",
+   "options": "\nHalf-Hourly\nDaily\nWeekly\nFortnightly\nMonthly\nQuarterly\nHalf-Yearly\nYearly\nAs Needed"
+  },
+  {
+   "fieldname": "benefits",
+   "fieldtype": "Text Editor",
+   "label": "Benefits"
+  },
+  {
+   "fieldname": "resource_details_section",
+   "fieldtype": "Section Break",
+   "label": "Resource Details"
+  },
+  {
+   "fieldname": "resource_type",
+   "fieldtype": "Select",
+   "label": "Resource Type",
+   "options": "\nEquipment\nHuman Resource\nICT\nInfrastructure\nSupport Service\nTechnology"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "column_break_gzjz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "approximate_cost_to_company",
+   "fieldtype": "Currency",
+   "label": "Approximate Cost to Company"
+  },
+  {
+   "fieldname": "justification_section",
+   "fieldtype": "Section Break",
+   "label": "Justification"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "column_break_dxba",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User"
+  },
+  {
+   "fieldname": "approval_section",
+   "fieldtype": "Section Break",
+   "label": "Approval"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nDraft\nPending Approval\nApproved\nRejected\nCompleted"
+  },
+  {
+   "fieldname": "column_break_cmny",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-06 10:04:18.529095",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Resource Planning",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

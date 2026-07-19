@@ -1,0 +1,58 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-07-14 11:01:25.214736",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "what_to_inspect",
+  "how_to_inspect",
+  "responsibility",
+  "when_to_inspect"
+ ],
+ "fields": [
+  {
+   "fieldname": "what_to_inspect",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "What to Inspect",
+   "reqd": 1
+  },
+  {
+   "fieldname": "how_to_inspect",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "How To Inspect",
+   "reqd": 1
+  },
+  {
+   "fieldname": "responsibility",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Responsibility",
+   "reqd": 1
+  },
+  {
+   "fieldname": "when_to_inspect",
+   "fieldtype": "Select",
+   "label": "When To Inspect",
+   "options": "\nHourly\nDaily\nWeekly\nMonthly\nQuarterly\nHalf-Yearly\nYearly"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-07-14 11:04:03.400411",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "HSE Check List Items",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

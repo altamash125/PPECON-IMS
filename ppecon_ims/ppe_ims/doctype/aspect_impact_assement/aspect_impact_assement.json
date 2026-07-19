@@ -1,0 +1,190 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-14 09:24:02.100364",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "activity",
+  "situation",
+  "aspect_type",
+  "aspectimpact_description",
+  "column_break_gqur",
+  "processes",
+  "source",
+  "condition",
+  "impact_type",
+  "remarks",
+  "section_break_eeti",
+  "quantity",
+  "severity",
+  "controlled",
+  "rating",
+  "column_break_cbaz",
+  "occurence",
+  "legal_concern",
+  "likelihood_detection",
+  "custom_uppload"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Data",
+   "label": "S No"
+  },
+  {
+   "fieldname": "column_break_gqur",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "processes",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Process",
+   "options": "\nDescription for Control of Integrated Management System (IMS) Documents\nDescription for Incident Investigation & Reporting\nEmployee Welfare Guideline\nProcess Description for Project Planning and Execution\nProcess Description for Objectives and Planning\nProcess Description for Quality Assurance & Quality Control\nProcess Description for Environmental Aspects Impact Identification\nProcess Description for Internal & External Communication\nProcess Description for Administration & Human Resources\nProcess Description on Health & Safety Instructions\nProcess Description for Risks & Opportunities\nProcess Description for Statutory & Legislative Requirements\nProcess Description for Monitoring Measurement Analysis and Performance Evaluation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "activity",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Activity",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Select",
+   "label": "Source",
+   "options": "\nConstruction activities / Fit-out operations wastage\nDust\nElectrical\nHazardous Substances\nLife Cycle Perspective\nNoise\nPressure\nRadiation\nTemperature\nVibration",
+   "reqd": 1
+  },
+  {
+   "fieldname": "situation",
+   "fieldtype": "Select",
+   "label": "Situation",
+   "options": "\nAir Contamination\nChemical Handling\nDebris /Wastage\nEnergy Use\nExtreme Pressure\nExtreme Temperature\nRadiation Release"
+  },
+  {
+   "fieldname": "condition",
+   "fieldtype": "Select",
+   "label": "Condition",
+   "options": "\nAbnormal\nEmergency\nNormal",
+   "reqd": 1
+  },
+  {
+   "fieldname": "aspect_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Aspect Type",
+   "options": "\nAir Emissions\nAtmospheric Releases\nCirculation of vehicles coming in/out the site\nDisposal of Used Water\nEnergy Emitted(e.g. Heat, Radiation, Vibration, Noise, Light)\nEngine Running\nGas, Oil, Coal Consumption\nGeneration Of Waste/ByProducts\nUse Of Space\nWater Consumption(Human and Industrial purpose)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "impact_type",
+   "fieldtype": "Select",
+   "label": "Impact Type",
+   "options": "\nAir Pollution\nAtmosphere Pollution\nDepletion Of Natural Resources\nHazardous Energy Enimission",
+   "reqd": 1
+  },
+  {
+   "fieldname": "aspectimpact_description",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Aspect/Impact Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks",
+   "reqd": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_eeti",
+   "fieldtype": "Section Break",
+   "label": "Evaluation and Assessment of Aspect and Impact"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Select",
+   "label": "Quantity",
+   "options": "\n1\n2\n3\n4\n5"
+  },
+  {
+   "fieldname": "severity",
+   "fieldtype": "Int",
+   "label": "Severity",
+   "options": "\n1\n2\n3\n4\n5"
+  },
+  {
+   "fieldname": "controlled",
+   "fieldtype": "Select",
+   "label": "Controlled ",
+   "options": "\n1\n2\n3\n4\n5"
+  },
+  {
+   "fieldname": "column_break_cbaz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "occurence",
+   "fieldtype": "Select",
+   "label": "Occurence ",
+   "options": "\n1\n2\n3\n4\n5"
+  },
+  {
+   "fieldname": "legal_concern",
+   "fieldtype": "Select",
+   "label": "Legal Concern",
+   "options": "\n1\n5"
+  },
+  {
+   "fieldname": "likelihood_detection",
+   "fieldtype": "Select",
+   "label": "Likelihood Detection",
+   "options": "\n1\n2\n3\n4\n5"
+  },
+  {
+   "fieldname": "rating",
+   "fieldtype": "Rating",
+   "label": "Rating"
+  },
+  {
+   "fieldname": "custom_uppload",
+   "fieldtype": "HTML",
+   "label": "Uppload All"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-14 10:23:34.054499",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Aspect-Impact Assement",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

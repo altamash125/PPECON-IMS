@@ -1,0 +1,85 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-14 10:56:22.305338",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "check_list_for",
+  "remarks",
+  "hse_check_list_items_section",
+  "check_list_item",
+  "upload_all_documents_section",
+  "bulk_upload"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Data",
+   "label": "S No"
+  },
+  {
+   "fieldname": "check_list_for",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Check List For",
+   "reqd": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "hse_check_list_items_section",
+   "fieldtype": "Section Break",
+   "label": "HSE Check List Items"
+  },
+  {
+   "fieldname": "check_list_item",
+   "fieldtype": "Table",
+   "label": "Check list item",
+   "options": "HSE Check List Items"
+  },
+  {
+   "fieldname": "upload_all_documents_section",
+   "fieldtype": "Section Break",
+   "label": "Support Files"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Upload All"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-14 11:10:42.116647",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "HSE Checklist",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

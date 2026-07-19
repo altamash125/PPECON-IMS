@@ -1,0 +1,10 @@
+<header class="ims-topbar">
+	<div class="breadcrumb">
+		<a href="/ims">🏠 IMS</a>
+		{% if breadcrumb %} / {{ breadcrumb | safe }}{% endif %}
+	</div>
+	<div class="topbar-actions">
+		<a href="/app" class="btn-desk">Switch to Desk</a>
+		<a href="/api/method/logout" class="btn-logout">Logout</a>
+	</div>
+</header>

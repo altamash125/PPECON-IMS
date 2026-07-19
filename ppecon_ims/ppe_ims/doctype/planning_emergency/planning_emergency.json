@@ -1,0 +1,117 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-19 10:59:48.368997",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "emergency_type",
+  "probable_consequences",
+  "magnitude_of_impact",
+  "prevention_instructions",
+  "history_of_past_occurrence",
+  "column_break_kqbs",
+  "emergency_control_type",
+  "frequency_of_drill",
+  "expected_participants_for_drill",
+  "remarks",
+  "emergency_instructions"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "S No"
+  },
+  {
+   "fieldname": "emergency_type",
+   "fieldtype": "Select",
+   "label": "Emergency Type",
+   "options": "\nAccident\nBomb Threat\nEarthquake\nElectric Power Failure\nElectric Shock\nFall Prevention\nFire Fighting Plan\nFoods\nHead Injury\nHeart Attach\nHeart Stroke\nWorking at Height"
+  },
+  {
+   "fieldname": "probable_consequences",
+   "fieldtype": "Select",
+   "label": "Probable Consequences",
+   "options": "\nConsiderable Environmental Impact/ Severe Injury\nExtremely High Environmental Impact/ Loss Of Life\nMinimal or No Environmental Impact /No Injury\nMinor Environmental Impact/ Minor Injury\nNo Environmental Impact/Near miss"
+  },
+  {
+   "fieldname": "magnitude_of_impact",
+   "fieldtype": "Data",
+   "label": "Magnitude Of Impact ",
+   "options": "\nAll Employees\nContractor/ Sub Contractor\nIndividual\nLocal People / Surronding\n\n"
+  },
+  {
+   "fieldname": "column_break_kqbs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "emergency_control_type",
+   "fieldtype": "Select",
+   "label": "Emergency Control Type",
+   "options": "\nAwareness\nDisplay Of Sign Boards\nTraining"
+  },
+  {
+   "fieldname": "emergency_instructions",
+   "fieldtype": "Small Text",
+   "label": "Emergency Instructions"
+  },
+  {
+   "fieldname": "frequency_of_drill",
+   "fieldtype": "Select",
+   "label": "Frequency Of Drill",
+   "options": "\nHalf -hourly\nHourly\nDaily\nWeekly\nFortnightly\nMonthly\nQuarterly\nHalf-Yearly\nYearly"
+  },
+  {
+   "fieldname": "prevention_instructions",
+   "fieldtype": "Small Text",
+   "label": "Prevention Instructions"
+  },
+  {
+   "fieldname": "expected_participants_for_drill",
+   "fieldtype": "Link",
+   "label": "Expected Participants For Drill",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "history_of_past_occurrence",
+   "fieldtype": "Small Text",
+   "label": "History Of Past Occurrence"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-19 11:13:28.281899",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Planning Emergency",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

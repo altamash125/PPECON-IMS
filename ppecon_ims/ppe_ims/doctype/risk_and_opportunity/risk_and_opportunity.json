@@ -1,0 +1,169 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-06 13:35:17.311255",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "risk_category",
+  "risk_impact",
+  "department",
+  "treatement_type",
+  "assigned_to",
+  "is_it_an_opportunity",
+  "opportunity_details",
+  "opportunity_actions_proposed",
+  "opportunity_proposed_completion_date",
+  "column_break_qgfk",
+  "risk_opportunity_type",
+  "riskopportunity_source_or_activity",
+  "risk_probability",
+  "risk_description",
+  "proposed_review_date",
+  "proposed_completion_date",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "column_break_qgfk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "risk_opportunity_type",
+   "fieldtype": "Link",
+   "label": "Risk & Opportunity Type",
+   "options": "Risk and opportunity type"
+  },
+  {
+   "fieldname": "risk_category",
+   "fieldtype": "Link",
+   "label": "Risk Category",
+   "options": "Risk Category"
+  },
+  {
+   "fieldname": "risk_impact",
+   "fieldtype": "Select",
+   "label": "Risk Impact",
+   "options": "\nHigh\nLow\nMedium"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "treatement_type",
+   "fieldtype": "Select",
+   "label": "Treatement Type",
+   "options": "\nElimination\nReduction\nTransfer\nRetention"
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Table MultiSelect",
+   "label": "Assigned To",
+   "options": "Asignee"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_it_an_opportunity",
+   "fieldtype": "Check",
+   "label": "Is it an Opportunity?"
+  },
+  {
+   "fieldname": "riskopportunity_source_or_activity",
+   "fieldtype": "Data",
+   "label": "Risk/Opportunity source or activity"
+  },
+  {
+   "fieldname": "risk_probability",
+   "fieldtype": "Select",
+   "label": "Risk Probability",
+   "options": "\nHigh\nLow\nMedium"
+  },
+  {
+   "fieldname": "risk_description",
+   "fieldtype": "Small Text",
+   "label": "Risk Description"
+  },
+  {
+   "fieldname": "proposed_review_date",
+   "fieldtype": "Date",
+   "label": "Proposed Review Date"
+  },
+  {
+   "fieldname": "proposed_completion_date",
+   "fieldtype": "Date",
+   "label": "Proposed Completion Date"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "S NO",
+   "options": "PPE-RO-.YYYY.-"
+  },
+  {
+   "depends_on": "eval:doc.is_it_an_opportunity",
+   "fieldname": "opportunity_details",
+   "fieldtype": "Data",
+   "label": "Opportunity Details",
+   "mandatory_depends_on": "eval:doc.is_it_an_opportunity"
+  },
+  {
+   "depends_on": "eval:doc.is_it_an_opportunity",
+   "fieldname": "opportunity_actions_proposed",
+   "fieldtype": "Data",
+   "label": "Opportunity Actions Proposed",
+   "mandatory_depends_on": "eval:doc.is_it_an_opportunity"
+  },
+  {
+   "depends_on": "eval:doc.is_it_an_opportunity",
+   "fieldname": "opportunity_proposed_completion_date",
+   "fieldtype": "Date",
+   "label": "Opportunity Proposed Completion Date",
+   "mandatory_depends_on": "eval:doc.is_it_an_opportunity"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Risk and Opportunity",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-07-15 09:22:13.112089",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Risk and Opportunity",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

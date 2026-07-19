@@ -1,0 +1,136 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-19 10:16:44.849676",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "operation_planning_process",
+  "human_resource",
+  "expectations",
+  "knowledge_made_available",
+  "brief_description",
+  "column_break_zhkz",
+  "product_service_proejct",
+  "acceptance_criteria",
+  "nterested_parties",
+  "knowledge_required",
+  "infrastructure_resource",
+  "requirement_analysis",
+  "supported_documents_section",
+  "bulk_upload"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "S No"
+  },
+  {
+   "fieldname": "brief_description",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Brief Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "operation_planning_process",
+   "fieldtype": "Select",
+   "label": "Operation Planning Process",
+   "options": "\nDescription for Control of Integrated Management System (IMS) Documents\nDescription for Incident Investigation & Reporting\nEmployee Welfare Guideline\nProcess Description for Project Planning and Execution\nProcess Description for Quality Assurance & Quality Control\nProcess Description for Environmental Aspects Impact Identification\nProcess Description for Internal & External Communication\nProcess Description for Procurement\nProcess Description for Statutory & Legislative Requirements\nProcess Description on Health & Safety Instructions"
+  },
+  {
+   "fieldname": "column_break_zhkz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "product_service_proejct",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Product Service Proejct",
+   "reqd": 1
+  },
+  {
+   "fieldname": "requirement_analysis",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Requirement Analysis",
+   "reqd": 1
+  },
+  {
+   "fieldname": "human_resource",
+   "fieldtype": "Data",
+   "label": "Human Resource"
+  },
+  {
+   "fieldname": "expectations",
+   "fieldtype": "Data",
+   "label": "Expectations"
+  },
+  {
+   "fieldname": "knowledge_made_available",
+   "fieldtype": "Data",
+   "label": "Knowledge Made Available"
+  },
+  {
+   "fieldname": "acceptance_criteria",
+   "fieldtype": "Data",
+   "label": "Acceptance Criteria"
+  },
+  {
+   "fieldname": "nterested_parties",
+   "fieldtype": "Data",
+   "label": "nterested Parties"
+  },
+  {
+   "fieldname": "knowledge_required",
+   "fieldtype": "Data",
+   "label": "Knowledge Required"
+  },
+  {
+   "fieldname": "infrastructure_resource",
+   "fieldtype": "Data",
+   "label": "Infrastructure Resource"
+  },
+  {
+   "fieldname": "supported_documents_section",
+   "fieldtype": "Section Break",
+   "label": "Supported Documents"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Upload All"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-19 10:24:05.281200",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Operation Planning",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

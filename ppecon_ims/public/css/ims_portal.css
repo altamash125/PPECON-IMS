@@ -1,0 +1,494 @@
+/* ===========================================================================
+   PPECON IMS Portal — Stylesheet
+   Location : ppecon_ims/public/css/ims_portal.css
+   Served at: /assets/ppecon_ims/css/ims_portal.css  (run `bench build` once)
+   =========================================================================== */
+
+:root {
+  --sb-width: 270px;
+  --sb-bg-1: #14315c;
+  --sb-bg-2: #0d2240;
+  --sb-text: #d7e3f4;
+  --sb-hover: rgba(255, 255, 255, .08);
+  --sb-active: rgba(77, 163, 255, .18);
+  --accent: #2196f3;
+  --accent-dark: #1f4e79;
+  --bg-page: #f0f4f8;
+  --card-shadow: 0 1px 3px rgba(16, 42, 77, .12);
+  --radius: 8px;
+}
+
+/* ---- hide default Frappe website chrome (navbar / footer) ---- */
+header.navbar,
+nav.navbar,
+.web-footer,
+footer.web-footer,
+.page-breadcrumbs {
+  display: none !important;
+}
+.page_content,
+.page-content-wrapper,
+.main-column {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+}
+
+/* ---- base ---- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', -apple-system, Roboto, Arial, sans-serif;
+  background: var(--bg-page);
+  color: #22314a;
+}
+
+a { text-decoration: none; }
+
+.ims-app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ===========================================================================
+   SIDEBAR
+   =========================================================================== */
+.ims-sidebar {
+  width: var(--sb-width);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  background: linear-gradient(180deg, var(--sb-bg-1), var(--sb-bg-2));
+  color: var(--sb-text);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: transform .25s ease;
+}
+
+.ims-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+.logo-icon {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  background: #fff;
+  color: var(--accent-dark);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.logo-text .brand {
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.logo-text .sub {
+  font-size: 11px;
+  opacity: .7;
+}
+
+/* ---- search ---- */
+.ims-search { padding: 12px 14px; }
+
+.ims-search input {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, .1);
+  color: #fff;
+  font-size: 12.5px;
+  outline: none;
+}
+
+.ims-search input::placeholder { color: rgba(255, 255, 255, .5); }
+.ims-search input:focus { background: rgba(255, 255, 255, .16); }
+
+/* ---- menu ---- */
+.ims-menu {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 8px 16px;
+}
+
+.ims-menu::-webkit-scrollbar { width: 5px; }
+.ims-menu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, .18);
+  border-radius: 3px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  color: var(--sb-text);
+  font-size: 13px;
+  border-radius: 6px;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-item:hover {
+  background: var(--sb-hover);
+  color: #fff;
+}
+
+.menu-item.active {
+  background: var(--sb-active);
+  border-left-color: #4da3ff;
+  color: #fff;
+  font-weight: 600;
+}
+
+.menu-icon {
+  width: 18px;
+  text-align: center;
+  font-style: normal;
+  flex: 0 0 18px;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.group-header:hover {
+  background: var(--sb-hover);
+  color: #fff;
+}
+
+.chevron {
+  margin-left: auto;
+  font-size: 10px;
+  font-style: normal;
+  transition: transform .15s ease;
+  opacity: .7;
+}
+
+.menu-group > .group-items { display: none; }
+.menu-group.open > .group-items { display: block; }
+.menu-group.open > .group-header > .chevron { transform: rotate(90deg); }
+
+.group-items .menu-item {
+  padding-left: 40px;
+  font-size: 12.5px;
+}
+
+/* ---- nested sub-groups (HSE) ---- */
+.menu-group.sub > .group-header {
+  padding-left: 34px;
+  font-size: 12.5px;
+  font-weight: 500;
+  opacity: .95;
+}
+
+.menu-group.sub .menu-item {
+  padding-left: 52px;
+  font-size: 12px;
+}
+
+.hidden-by-search { display: none !important; }
+
+/* ---- sidebar footer ---- */
+.ims-footer {
+  padding: 12px 18px;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  font-size: 11px;
+  opacity: .75;
+}
+
+.ims-footer .user {
+  margin-top: 2px;
+  color: #9dc1ee;
+}
+
+/* ===========================================================================
+   MAIN AREA / TOPBAR
+   =========================================================================== */
+.ims-main {
+  margin-left: var(--sb-width);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.ims-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 10px 24px;
+  box-shadow: 0 1px 4px rgba(16, 42, 77, .1);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--accent-dark);
+  margin-right: 12px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.breadcrumb a {
+  color: var(--accent-dark);
+  font-weight: 600;
+}
+
+.breadcrumb a:hover { color: var(--accent); }
+
+.topbar-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-desk,
+.btn-logout {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.btn-desk {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-desk:hover { background: #1976d2; }
+
+.btn-logout {
+  background: #fdecea;
+  color: #c62828;
+}
+.btn-logout:hover { background: #f9d3cf; }
+
+/* ===========================================================================
+   CONTENT
+   =========================================================================== */
+.ims-content { padding: 26px 28px; }
+
+.ims-content h1 {
+  margin: 0 0 4px;
+  font-size: 24px;
+  color: var(--accent-dark);
+}
+
+.subtitle {
+  margin: 0 0 24px;
+  font-size: 13px;
+  color: #6b7a90;
+}
+
+/* ---- dashboard cards ---- */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  padding: 18px 20px;
+  border-top: 4px solid #ccc;
+}
+
+.card-blue   { border-top-color: #2196f3; }
+.card-green  { border-top-color: #2e9e5b; }
+.card-orange { border-top-color: #f5a623; }
+.card-red    { border-top-color: #e04f4f; }
+
+.card-label {
+  font-size: 12.5px;
+  color: #6b7a90;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+
+.card-value {
+  font-size: 34px;
+  font-weight: 700;
+  color: #1c2c44;
+  margin: 6px 0 4px;
+}
+
+/* ---- status-wise breakdown (Draft / Submitted) shown under card value ---- */
+.card-breakdown {
+  display: flex;
+  gap: 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.card-breakdown .bd-draft {
+  color: #b8860b;
+}
+
+.card-breakdown .bd-submit {
+  color: #2e9e5b;
+}
+
+.card a {
+  font-size: 12.5px;
+  color: var(--accent);
+  font-weight: 600;
+}
+.card a:hover { text-decoration: underline; }
+
+/* ---- quick actions ---- */
+.quick-actions h3 {
+  font-size: 15px;
+  color: var(--accent-dark);
+  margin: 0 0 12px;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.action-btn {
+  background: #fff;
+  border: 1px solid #dde6f0;
+  border-radius: var(--radius);
+  padding: 13px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-dark);
+  text-align: center;
+  box-shadow: var(--card-shadow);
+  transition: all .15s ease;
+}
+
+.action-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* ===========================================================================
+   RESPONSIVE
+   =========================================================================== */
+@media (max-width: 992px) {
+  .ims-sidebar { transform: translateX(-100%); }
+
+  .ims-app.sidebar-open .ims-sidebar {
+    transform: translateX(0);
+    box-shadow: 4px 0 18px rgba(0, 0, 0, .3);
+  }
+
+  .ims-main { margin-left: 0; }
+
+  .hamburger { display: inline-block; }
+}
+
+/* ===========================================================================
+   VISUAL SETTINGS — THEMES
+   Theme apply hota hai: <html data-ims-theme="green"> — JS localStorage se
+   set karta hai, isliye selection har page pe persist karti hai.
+   =========================================================================== */
+
+html[data-ims-theme="blue"] {
+  --sb-bg-1: #1565c0; --sb-bg-2: #0b3d91;
+  --accent: #1e88e5;  --accent-dark: #0d47a1;
+}
+
+html[data-ims-theme="green"] {
+  --sb-bg-1: #00796b; --sb-bg-2: #00463e;
+  --accent: #00a389;  --accent-dark: #00695c;
+}
+
+html[data-ims-theme="pink"] {
+  --sb-bg-1: #ad1457; --sb-bg-2: #6e0b38;
+  --accent: #e91e63;  --accent-dark: #880e4f;
+}
+
+html[data-ims-theme="yellow"] {
+  --sb-bg-1: #8d6e00; --sb-bg-2: #5c4700;
+  --accent: #f5a623;  --accent-dark: #8d6e00;
+}
+
+html[data-ims-theme="classic"] {
+  --sb-bg-1: #455a64; --sb-bg-2: #263238;
+  --accent: #607d8b;  --accent-dark: #37474f;
+}
+
+html[data-ims-theme="dark"] {
+  --sb-bg-1: #1f2226; --sb-bg-2: #0f1113;
+  --accent: #4da3ff;  --accent-dark: #2b6cb0;
+}
+
+/* ---- topbar welcome name ---- */
+.welcome-user {
+  margin-left: 14px;
+  padding-left: 14px;
+  border-left: 1px solid #dde6f0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--accent-dark);
+}
+
+/* ---- sidebar logo image ---- */
+.logo-wrap {
+  background: #fff;               /* dark sidebar pe logo visible rahe */
+  border-radius: 8px;
+  padding: 4px 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-img {
+  max-height: 45px;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}

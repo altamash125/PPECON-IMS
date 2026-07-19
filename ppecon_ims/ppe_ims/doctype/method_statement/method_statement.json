@@ -1,0 +1,234 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-07-15 10:10:21.799107",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_cgig",
+  "amended_from",
+  "s_no",
+  "version",
+  "execution_by",
+  "name_of_supervisor",
+  "column_break_ybbu",
+  "method_statement_name",
+  "productserviceproject_name",
+  "site",
+  "name_of_contractor__service_provider",
+  "name_of_employee_responsible_for_method_execution",
+  "health_and_saftety",
+  "trainings_required_before_start_up",
+  "please_give_details_of_your_first_aid_arrangements",
+  "location_of_the_first_aid_box",
+  "designated_emergency_evacuation_point",
+  "column_break_rohp",
+  "ongoing__regular_training_required",
+  "name_of_first_aider",
+  "address_of_nearest_hospitalmedical_facility",
+  "what_equipment_plant_and_materials_are_required_to_complete_it",
+  "work_permit_section",
+  "work_permit_requried",
+  "how_are_employees_going_to_enter_or_leave_the_working_area",
+  "describe_work_permit_re_question_and_approval_process",
+  "reason_why_work_permit_is_not_required",
+  "section_break_miow",
+  "review_frequeny"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_cgig",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Method Statement",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "s_no",
+   "fieldtype": "Data",
+   "label": "S No"
+  },
+  {
+   "fieldname": "column_break_ybbu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "method_statement_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Method Statement Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "version",
+   "fieldtype": "Data",
+   "label": "Version",
+   "reqd": 1
+  },
+  {
+   "fieldname": "productserviceproject_name",
+   "fieldtype": "Data",
+   "label": "Product/Service/Project Name"
+  },
+  {
+   "fieldname": "execution_by",
+   "fieldtype": "Select",
+   "label": "Execution By",
+   "options": "\nInternal Employee\nContractor\nService Provider"
+  },
+  {
+   "fieldname": "name_of_supervisor",
+   "fieldtype": "Data",
+   "label": "Name of Supervisor"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Link",
+   "label": "Site",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "name_of_contractor__service_provider",
+   "fieldtype": "Data",
+   "label": "Name of Contractor / Service Provider",
+   "reqd": 1
+  },
+  {
+   "fieldname": "name_of_employee_responsible_for_method_execution",
+   "fieldtype": "Data",
+   "label": "Name of Employee Responsible for Method Execution"
+  },
+  {
+   "fieldname": "health_and_saftety",
+   "fieldtype": "Section Break",
+   "label": "Health & Safety Information"
+  },
+  {
+   "fieldname": "trainings_required_before_start_up",
+   "fieldtype": "Data",
+   "label": "Trainings required before start up",
+   "reqd": 1
+  },
+  {
+   "fieldname": "please_give_details_of_your_first_aid_arrangements",
+   "fieldtype": "Data",
+   "label": "Please give details of your first aid arrangements",
+   "reqd": 1
+  },
+  {
+   "fieldname": "designated_emergency_evacuation_point",
+   "fieldtype": "Data",
+   "label": "Designated emergency evacuation point",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_rohp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ongoing__regular_training_required",
+   "fieldtype": "Data",
+   "label": "Ongoing / regular training required",
+   "reqd": 1
+  },
+  {
+   "fieldname": "name_of_first_aider",
+   "fieldtype": "Data",
+   "label": "Name of first aider",
+   "reqd": 1
+  },
+  {
+   "fieldname": "location_of_the_first_aid_box",
+   "fieldtype": "Data",
+   "label": "Location of the first aid box",
+   "reqd": 1
+  },
+  {
+   "fieldname": "address_of_nearest_hospitalmedical_facility",
+   "fieldtype": "Data",
+   "label": "Address of nearest hospital/medical facility"
+  },
+  {
+   "fieldname": "what_equipment_plant_and_materials_are_required_to_complete_it",
+   "fieldtype": "Data",
+   "label": "What equipment, plant and materials are required to complete it?"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "work_permit_section",
+   "fieldtype": "Section Break",
+   "label": "Work Permit"
+  },
+  {
+   "default": "0",
+   "fieldname": "work_permit_requried",
+   "fieldtype": "Check",
+   "label": "Work Permit Requried"
+  },
+  {
+   "fieldname": "how_are_employees_going_to_enter_or_leave_the_working_area",
+   "fieldtype": "Small Text",
+   "label": " How are employees going to enter or leave the working area?"
+  },
+  {
+   "depends_on": "eval:doc.work_permit_requried ==1",
+   "fieldname": "describe_work_permit_re_question_and_approval_process",
+   "fieldtype": "Small Text",
+   "label": "Describe Work Permit Re question and Approval Process",
+   "mandatory_depends_on": "eval:doc.work_permit_requried ==1"
+  },
+  {
+   "fieldname": "reason_why_work_permit_is_not_required",
+   "fieldtype": "Small Text",
+   "label": "Reason why work permit is not required",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_miow",
+   "fieldtype": "Section Break",
+   "label": "Review and Frequency"
+  },
+  {
+   "fieldname": "review_frequeny",
+   "fieldtype": "Select",
+   "label": "Review Frequeny",
+   "options": "\nQuarterly\nHalf Yearly\nYearly"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-07-15 10:49:39.488292",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Method Statement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

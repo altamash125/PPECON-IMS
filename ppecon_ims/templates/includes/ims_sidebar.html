@@ -1,0 +1,160 @@
+<aside class="ims-sidebar">
+	<div class="ims-logo">
+		<div class="logo-icon">P</div>
+		<div class="logo-text">
+			<div class="brand">PPECON</div>
+			<div class="sub">IMS</div>
+		</div>
+	</div>
+
+	<div class="ims-search">
+		<input type="text" placeholder="🔍 Search modules..." id="menuSearch" />
+	</div>
+
+	<nav class="ims-menu">
+		<a href="/ims" class="menu-item {% if active_page == 'dashboard' %}active{% endif %}">
+			<i class="menu-icon">⌂</i><span>Dashboard</span>
+		</a>
+
+		<div class="menu-group {% if active_group == 'admin' %}open{% endif %}">
+			<div class="group-header">
+				<i class="menu-icon">⚙</i><span>Administration</span>
+				<i class="chevron">▸</i>
+			</div>
+			<div class="group-items">
+				<a
+					href="/ims/resource-planning"
+					class="menu-item {% if active_page == 'resource-planning' %}active{% endif %}"
+					>Resource Planning</a
+				>
+				<a href="/app/asset" class="menu-item">Asset</a>
+			</div>
+		</div>
+
+		<div class="menu-group {% if active_group == 'context' %}open{% endif %}">
+			<div class="group-header">
+				<i class="menu-icon">📋</i><span>Context Of Organisation</span>
+				<i class="chevron">▸</i>
+			</div>
+			<div class="group-items">
+				<a
+					href="/ims/context"
+					class="menu-item {% if active_page == 'context' %}active{% endif %}"
+					>Context Of Organisation</a
+				>
+				<a
+					href="/ims/internal-issue"
+					class="menu-item {% if active_page == 'internal-issue' %}active{% endif %}"
+					>Internal Issues</a
+				>
+				<a
+					href="/ims/external-issue"
+					class="menu-item {% if active_page == 'external-issue' %}active{% endif %}"
+					>External Issues</a
+				>
+				<a
+					href="/ims/interested-party"
+					class="menu-item {% if active_page == 'interested-party' %}active{% endif %}"
+					>Interested Party</a
+				>
+				<a
+					href="/ims/scope"
+					class="menu-item {% if active_page == 'scope' %}active{% endif %}"
+					>Scope</a
+				>
+				<a
+					href="/ims/life-cycle"
+					class="menu-item {% if active_page == 'life-cycle' %}active{% endif %}"
+					>Life Cycle Management</a
+				>
+			</div>
+		</div>
+
+		<div class="menu-group {% if active_group == 'risk' %}open{% endif %}">
+			<div class="group-header">
+				<i class="menu-icon">🛡</i><span>Risk And Opportunity</span>
+				<i class="chevron">▸</i>
+			</div>
+			<div class="group-items">
+				<a
+					href="/ims/risk-opportunity"
+					class="menu-item {% if active_page == 'risk-opportunity' %}active{% endif %}"
+					>New Risk / Opportunity</a
+				>
+				<a
+					href="/ims/risk-opportunity/list"
+					class="menu-item {% if active_page == 'risk-list' %}active{% endif %}"
+					>Risk Register</a
+				>
+			</div>
+		</div>
+
+		<div class="menu-group {% if active_group == 'hr' %}open{% endif %}">
+			<div class="group-header">
+				<i class="menu-icon">👤</i><span>HR &amp; Admin</span>
+				<i class="chevron">▸</i>
+			</div>
+			<div class="group-items">
+				<a href="/app/department" class="menu-item">Department</a>
+				<a href="/app/employee" class="menu-item">Employee</a>
+				<a href="/app/training-program" class="menu-item">Training</a>
+			</div>
+		</div>
+
+		<div class="menu-group {% if active_group == 'sales' %}open{% endif %}">
+			<div class="group-header">
+				<i class="menu-icon">💼</i><span>Sales &amp; Marketing</span>
+				<i class="chevron">▸</i>
+			</div>
+			<div class="group-items">
+				<a href="/app/lead" class="menu-item">Enquiry (Lead)</a>
+				<a href="/app/opportunity" class="menu-item">Opportunity</a>
+				<a href="/app/quality-feedback" class="menu-item">Customer Feedback</a>
+			</div>
+		</div>
+
+		<div class="menu-group {% if active_group == 'purchase' %}open{% endif %}">
+			<div class="group-header">
+				<i class="menu-icon">🛒</i><span>Purchasing</span>
+				<i class="chevron">▸</i>
+			</div>
+			<div class="group-items">
+				<a href="/app/supplier" class="menu-item">Supplier</a>
+				<a href="/app/purchase-order" class="menu-item">Purchase Order</a>
+				<a href="/app/supplier-scorecard" class="menu-item">Supplier Reevaluation</a>
+			</div>
+		</div>
+
+		<div class="menu-group {% if active_group == 'ops' %}open{% endif %}">
+			<div class="group-header">
+				<i class="menu-icon">🏗</i><span>Operations</span>
+				<i class="chevron">▸</i>
+			</div>
+			<div class="group-items">
+				<a href="/app/project" class="menu-item">Projects</a>
+				<a href="/app/work-order" class="menu-item">Work Order</a>
+				<a href="/app/asset-maintenance" class="menu-item">Maintenance</a>
+			</div>
+		</div>
+
+		<div class="menu-group {% if active_group == 'quality' %}open{% endif %}">
+			<div class="group-header">
+				<i class="menu-icon">✓</i><span>Quality</span>
+				<i class="chevron">▸</i>
+			</div>
+			<div class="group-items">
+				<a href="/app/quality-inspection" class="menu-item">Quality Records</a>
+				<a href="/app/quality-action" class="menu-item">Improvement</a>
+			</div>
+		</div>
+
+		<a href="/app/non-conformance" class="menu-item">
+			<i class="menu-icon">⚠</i><span>Non Conformance</span>
+		</a>
+	</nav>
+
+	<div class="ims-footer">
+		<div class="version">PPECON IMS v1.0</div>
+		<div class="user">👤 {{ frappe.session.user }}</div>
+	</div>
+</aside>

@@ -1,0 +1,157 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-14 12:10:03.040422",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "processess",
+  "substance_chemical_of_concern",
+  "description_of_special_instructions",
+  "existing_controls",
+  "location_of_use",
+  "column_break_tpjm",
+  "hazardous_material_name",
+  "general_use",
+  "special_instructions",
+  "consequences_of_mishandling",
+  "storage_location",
+  "responsible_person",
+  "remarks",
+  "amended_from",
+  "supported_documents_section",
+  "bulk_upload"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Data",
+   "label": "S No"
+  },
+  {
+   "fieldname": "processess",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Process",
+   "options": "\nDescription for Control of Integrated Management System (IMS) Documents\nDescription for Incident Investigation & Reporting\nProcess Description for Project Planning and Execution\nProcess Description for Monitoring Measurement Analysis and Performance Evaluation\nProcess Description for Procurement\nProcess Description for Risks & Opportunities\nProcess Description for Statutory & Legislative Requirements\nProcess Description on Health & Safety Instructions",
+   "reqd": 1
+  },
+  {
+   "fieldname": "substance_chemical_of_concern",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Substance /Chemical of Concern",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description_of_special_instructions",
+   "fieldtype": "Small Text",
+   "label": "Description Of Special Instructions"
+  },
+  {
+   "fieldname": "existing_controls",
+   "fieldtype": "Data",
+   "label": "Existing Controls"
+  },
+  {
+   "fieldname": "location_of_use",
+   "fieldtype": "Data",
+   "label": "Location Of Use"
+  },
+  {
+   "fieldname": "column_break_tpjm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "hazardous_material_name",
+   "fieldtype": "Data",
+   "label": "Hazardous Material Name"
+  },
+  {
+   "fieldname": "general_use",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "General Use",
+   "reqd": 1
+  },
+  {
+   "fieldname": "special_instructions",
+   "fieldtype": "Select",
+   "label": "Special Instructions",
+   "options": "\nDisposal\nHeading\nStorage\nUsage"
+  },
+  {
+   "fieldname": "consequences_of_mishandling",
+   "fieldtype": "Data",
+   "label": "Consequences Of Mishandling"
+  },
+  {
+   "fieldname": "storage_location",
+   "fieldtype": "Data",
+   "label": "Storage Location"
+  },
+  {
+   "fieldname": "responsible_person",
+   "fieldtype": "Table MultiSelect",
+   "label": "Responsible Person",
+   "options": "Asignee"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Hazardous Material",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "supported_documents_section",
+   "fieldtype": "Section Break",
+   "label": "Supported Documents"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Upload All"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-07-14 12:19:13.472940",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Hazardous Material",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

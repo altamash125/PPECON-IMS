@@ -1,0 +1,111 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-07-19 10:24:52.343860",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "s_no",
+  "work_order",
+  "plan_from_date",
+  "column_break_gvtr",
+  "date_of_planning",
+  "required_delivery_date",
+  "plan_to_date",
+  "execution_plan_process_section",
+  "table_ccmy",
+  "supporting_files_section",
+  "bulk_upload"
+ ],
+ "fields": [
+  {
+   "fieldname": "s_no",
+   "fieldtype": "Select",
+   "label": "S No"
+  },
+  {
+   "fieldname": "work_order",
+   "fieldtype": "Data",
+   "label": "Work Order"
+  },
+  {
+   "fieldname": "plan_from_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Plan From Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_gvtr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_of_planning",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date Of Planning",
+   "reqd": 1
+  },
+  {
+   "fieldname": "required_delivery_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Required Delivery Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "plan_to_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Plan To Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "supporting_files_section",
+   "fieldtype": "Section Break",
+   "label": "  Supporting Files"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Upload All"
+  },
+  {
+   "fieldname": "execution_plan_process_section",
+   "fieldtype": "Section Break",
+   "label": "Execution Plan Process"
+  },
+  {
+   "fieldname": "table_ccmy",
+   "fieldtype": "Table",
+   "options": "Execution Plan Process"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-19 10:34:04.736742",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Execution Plan",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

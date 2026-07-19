@@ -1,0 +1,138 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-14 11:53:33.841590",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "work_permit_type",
+  "work_permit_status",
+  "external_employee_email",
+  "validity_from_date",
+  "validity_to_date",
+  "remarks",
+  "column_break_atsj",
+  "process_name",
+  "employee_category",
+  "external_employee",
+  "location",
+  "special_instructions",
+  "supported_documents_section",
+  "bulk_upload"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "S No"
+  },
+  {
+   "fieldname": "work_permit_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Work Permit Type",
+   "options": "\nHot Work(Welding/Soldering/Cutting)\nWorking From Height\nWorking in Confined spaces\nWorking With Electricity Supply System\nWorking With Hazardous Substance/ Chemicals",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_atsj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "process_name",
+   "fieldtype": "Select",
+   "label": "Process Name",
+   "options": "\nDescription for Control of Integrated Management System (IMS) Documents\nEmployee Welfare Guidelines\nProcess Description for Project Planning and Execution\nProcess Description for Quality Assurance & Quality Control\nProcess Description for Environmental Aspects Impact Identification\nProcess Description for Internal & External Communication\nProcess Description for Risks & Opportunities\nProcess Description for Change Management\nProcess Description for Environmental Aspects Impact Identification\nProcess Description on Health & Safety Instructions"
+  },
+  {
+   "fieldname": "external_employee_email",
+   "fieldtype": "Data",
+   "label": "External Employee Email"
+  },
+  {
+   "fieldname": "employee_category",
+   "fieldtype": "Select",
+   "label": "Employee Category",
+   "options": "\nContractor\nSub Contractor\nInternal\nSupplier/Service/Provider\nVisitor",
+   "reqd": 1
+  },
+  {
+   "fieldname": "validity_from_date",
+   "fieldtype": "Date",
+   "label": "Validity From Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "validity_to_date",
+   "fieldtype": "Date",
+   "label": "Validity To Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "external_employee",
+   "fieldtype": "Data",
+   "label": "External Employee"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location"
+  },
+  {
+   "fieldname": "special_instructions",
+   "fieldtype": "Small Text",
+   "label": "Special Instructions"
+  },
+  {
+   "fieldname": "work_permit_status",
+   "fieldtype": "Select",
+   "label": "Work Permit Status",
+   "options": "\nActive\nCancelled\nExpired"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "supported_documents_section",
+   "fieldtype": "Section Break",
+   "label": "Supported Documents"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Upload All"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-15 15:25:09.183234",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Work Permit",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

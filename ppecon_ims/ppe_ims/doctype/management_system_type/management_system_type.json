@@ -1,0 +1,48 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:management_system_type",
+ "creation": "2026-07-07 09:14:48.895036",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "management_system_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "management_system_type",
+   "fieldtype": "Data",
+   "label": "Management System Type",
+   "unique": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-07 11:06:22.311031",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Management System Type",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "management_system_type"
+}
