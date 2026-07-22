@@ -6,22 +6,105 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "naming_series"
+  "naming_series",
+  "chemicalidentity_name",
+  "chemical_compositionhazardous_ingredient",
+  "cas_number",
+  "type_of_msds",
+  "remarks",
+  "column_break_enqh",
+  "storagehandling_instructions",
+  "type_of_ppe_used",
+  "instructions_in_case_of_spillageleakage",
+  "occupational_health_safety_consequence",
+  "immediate_first_aid_measures",
+  "section_break_fuvg",
+  "bulk_upload"
  ],
  "fields": [
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
-   "label": "S No"
+   "label": "S No",
+   "options": "MDS-.#####"
+  },
+  {
+   "fieldname": "chemicalidentity_name",
+   "fieldtype": "Data",
+   "label": "Chemical/Identity Name"
+  },
+  {
+   "fieldname": "chemical_compositionhazardous_ingredient",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Chemical Composition/Hazardous Ingredient",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cas_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "CAS Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "type_of_msds",
+   "fieldtype": "Select",
+   "label": "Type Of MSDS",
+   "options": "\nANSI\nGHS\nOSHA\nWHIMS"
+  },
+  {
+   "fieldname": "storagehandling_instructions",
+   "fieldtype": "Data",
+   "label": "Storage/Handling Instructions"
+  },
+  {
+   "fieldname": "type_of_ppe_used",
+   "fieldtype": "Select",
+   "label": "Type of PPE used"
+  },
+  {
+   "fieldname": "instructions_in_case_of_spillageleakage",
+   "fieldtype": "Data",
+   "label": "Instructions in case of Spillage/Leakage"
+  },
+  {
+   "fieldname": "occupational_health_safety_consequence",
+   "fieldtype": "Data",
+   "label": "Occupational Health Safety Consequence"
+  },
+  {
+   "fieldname": "column_break_enqh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_fuvg",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Upload All"
+  },
+  {
+   "fieldname": "immediate_first_aid_measures",
+   "fieldtype": "Data",
+   "label": "Immediate first aid measures"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-19 11:31:32.497742",
+ "modified": "2026-07-22 16:27:17.056064",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Material Safety Data Sheet",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {

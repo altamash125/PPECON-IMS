@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class HazardandRiskAssement(Document):
+class HazardandRiskAssesment(Document):
 	pass

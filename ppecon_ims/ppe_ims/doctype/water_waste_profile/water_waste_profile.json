@@ -1,14 +1,16 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "naming_series:",
  "creation": "2026-07-19 10:52:10.546408",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "s_no",
+  "naming_series",
   "processes",
   "existing_control",
   "monitoring_frequency",
+  "column_break_dxdz",
   "air_monitoring_supplier",
   "air_monitoring_equipment",
   "responsibility",
@@ -18,11 +20,6 @@
   "bulk_upload"
  ],
  "fields": [
-  {
-   "fieldname": "s_no",
-   "fieldtype": "Select",
-   "label": "S No"
-  },
   {
    "fieldname": "processes",
    "fieldtype": "Data",
@@ -43,12 +40,12 @@
   {
    "fieldname": "air_monitoring_supplier",
    "fieldtype": "Data",
-   "label": "Air Monitoring Supplier"
+   "label": "Water Monitoring Supplier"
   },
   {
    "fieldname": "air_monitoring_equipment",
    "fieldtype": "Data",
-   "label": "Air Monitoring Equipment"
+   "label": "Water Monitoring Equipment"
   },
   {
    "fieldname": "responsibility",
@@ -68,22 +65,33 @@
   },
   {
    "fieldname": "supporting_files_section",
-   "fieldtype": "Section Break",
-   "label": "Supporting Files"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "bulk_upload",
    "fieldtype": "HTML",
    "label": "Upload All"
+  },
+  {
+   "fieldname": "column_break_dxdz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "S No",
+   "options": "IMS-WWP-.#####"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-19 10:52:10.546408",
+ "modified": "2026-07-22 16:11:13.984008",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Water Waste Profile",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {

@@ -1,7 +1,7 @@
 // Copyright (c) 2026, altamash@ppecon.com and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("Hazard and Risk Assement", {
+// frappe.ui.form.on("Monitoring", {
 // 	refresh(frm) {
 
 // 	},
