@@ -5,19 +5,31 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "s_no"
+  "s_no",
+  "check_list_name",
+  "remarks"
  ],
  "fields": [
   {
    "fieldname": "s_no",
    "fieldtype": "Select",
    "label": "S No"
+  },
+  {
+   "fieldname": "check_list_name",
+   "fieldtype": "Data",
+   "label": "Check List Name"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-19 12:02:11.431159",
+ "modified": "2026-07-21 15:41:59.300102",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Internal Audit CheckList Master",

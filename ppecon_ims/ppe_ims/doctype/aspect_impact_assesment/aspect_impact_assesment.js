@@ -1,7 +1,7 @@
 // Copyright (c) 2026, altamash@ppecon.com and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("PPE Master", {
+// frappe.ui.form.on("Aspect-Impact Assesment", {
 // 	refresh(frm) {
 
 // 	},

@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestPPEMaster(FrappeTestCase):
+class TestPPEMasterList(FrappeTestCase):
 	pass

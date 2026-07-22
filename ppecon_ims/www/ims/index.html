@@ -55,30 +55,30 @@
 			<!-- ============ ADMINISTRATION ============ -->
 			<div class="menu-group" data-group="admin">
 				<div class="group-header">
-					<i class="menu-icon">⚙</i><span>Administration</span><i class="chevron">▸</i>
+					<i class="menu-icon">⚙</i><span>System Settings</span><i class="chevron">▸</i>
 				</div>
 				<div class="group-items">
 					<!-- <a href="/ims/site" class="menu-item">Site</a> -->
 					<a href="/app/resource-planning" class="menu-item">Resource Planning</a>
 					<a href="/app/asset" class="menu-item">Asset</a>
-					<a href="/app/doctype" class="menu-item">Master Builder</a>
+					<!-- <a href="/app/doctype" class="menu-item">Master Builder</a> -->
 					<!-- <a href="/app/customize-form" class="menu-item">Form Builder</a> -->
-					<a href="/app/workflow" class="menu-item">Workflow Builder</a>
-					<a href="/app/workflow-state" class="menu-item">Workflow Master</a>
-					<a href="/app/workspace" class="menu-item">Menu Builder</a>
-					<a href="/app/report" class="menu-item">Report Builder</a>
+					<!-- <a href="/app/workflow" class="menu-item">Workflow Builder</a> -->
+					<!-- <a href="/app/workflow-state" class="menu-item">Workflow Master</a> -->
+					<!-- <a href="/app/workspace" class="menu-item">Menu Builder</a> -->
+					<!-- <a href="/app/report" class="menu-item">Report Builder</a> -->
 					<a href="/app/notification" class="menu-item">Notification Builder</a>
-					<a href="/app/dashboard" class="menu-item">Dashboard Builder</a>
+					<!-- <a href="/app/dashboard" class="menu-item">Dashboard Builder</a> -->
 					<!-- <a href="/app/server-script" class="menu-item">Script Builder</a> -->
-					<a href="/app/print-format" class="menu-item">Print Builder</a>
+					<!-- <a href="/app/print-format" class="menu-item">Print Builder</a> -->
 					<a href="/app/reminder" class="menu-item">Reminder Builder</a>
-					<a href="/app/scheduled-job-type" class="menu-item">Script Scheduler</a>
-					<a href="/app/role" class="menu-item">Roles</a>
-					<a href="/app/user" class="menu-item">Users</a>
-					<a href="/app/email-template" class="menu-item">Email Templates</a>
-					<a href="/app/language" class="menu-item">Languages</a>
-					<a href="/app/activity-log" class="menu-item">Audit Logs</a>
-					<a href="/app/email-queue" class="menu-item">Mail Logs</a>
+					<!-- <a href="/app/scheduled-job-type" class="menu-item">Script Scheduler</a> -->
+					<!-- <a href="/app/role" class="menu-item">Roles</a> -->
+					<!-- <a href="/app/user" class="menu-item">Users</a> -->
+					<!-- <a href="/app/email-template" class="menu-item">Email Templates</a> -->
+					<!-- <a href="/app/language" class="menu-item">Languages</a> -->
+					<!-- <a href="/app/activity-log" class="menu-item">Audit Logs</a> -->
+					<!-- <a href="/app/email-queue" class="menu-item">Mail Logs</a> -->
 
 					<div class="menu-item" id="vsOpen">
 						<i class="menu-icon">🎨</i><span>Visual Settings</span>
@@ -142,11 +142,11 @@
 					><i class="chevron">▸</i>
 				</div>
 				<div class="group-items">
-					<a href="/app/lead" class="menu-item">Enquiry (Lead)</a>
-					<a href="/app/opportunity" class="menu-item">Enquiry Followup (Opportunity)</a>
+					<a href="/app/lead" class="menu-item">Inquiry (Lead)</a>
+					<a href="/app/opportunity" class="menu-item">Inquiry Followup (Opportunity)</a>
 					<a href="/app/enquiry-internal-proposal" class="menu-item"
-						>Enquiry Internal Proposal</a
-					>
+						>Inquiry Estimation Response
+					</a>
 					<a href="/app/quality-feedback" class="menu-item">Customer Feedback</a>
 					<a href="https://ppecon.erpnext.com/client-portal" class="menu-item"
 						>Client Portal</a
@@ -194,6 +194,7 @@
 					<a href="/app/process-validation" class="menu-item">Process Validation</a>
 					<a href="/app/external-property" class="menu-item">External Property</a>
 					<a href="/app/change-management" class="menu-item">Change Management</a>
+					<a href="/app/method-statement" class="menu-item">Method Statement</a>
 				</div>
 			</div>
 
@@ -204,7 +205,7 @@
 					><i class="chevron">▸</i>
 				</div>
 				<div class="group-items">
-					<a href="https:/ppecon.erpnext.com/ppe-policy" class="menu-item">Policy</a>
+					<a href="https:/ppe-policy" class="menu-item">Policy</a>
 					<a href="/app/quality-goal" class="menu-item">Objective</a>
 				</div>
 			</div>
@@ -212,7 +213,7 @@
 			<!-- ============ QUALITY ============ -->
 			<div class="menu-group" data-group="quality">
 				<div class="group-header">
-					<i class="menu-icon">✓</i><span>Quality</span><i class="chevron">▸</i>
+					<i class="menu-icon">✓</i><span>QA/QC</span><i class="chevron">▸</i>
 				</div>
 				<div class="group-items">
 					<a href="/app/quality-inspection-template" class="menu-item"
@@ -220,6 +221,10 @@
 					>
 					<a href="/app/quality-inspection" class="menu-item">Quality Records</a>
 					<a href="/app/quality-action" class="menu-item">Improvement</a>
+					<a href="app/incoming-materials" class="menu-item">Incoming Material</a>
+					<a href="app/incoming-materials" class="menu-item"
+						>Incoming Inspection Quality Plan</a
+					>
 				</div>
 			</div>
 
@@ -230,7 +235,7 @@
 					><i class="chevron">▸</i>
 				</div>
 				<div class="group-items">
-					<a href="/app/ims-documents" class="menu-item">Controlled Documents</a>
+					<a href="/app/ims-documents" class="menu-item">IMS Documents</a>
 				</div>
 			</div>
 
@@ -246,11 +251,15 @@
 				</div>
 				<div class="group-items">
 					<!-- <a href="//audit-program" class="menu-item">Audit Program</a> -->
-					<a href="/app/internal-audit-schedule" class="menu-item">Audit Plan</a>
+					<a href="/app/internal-audit-schedule" class="menu-item"
+						>Interanl Audit Schedule</a
+					>
 					<a href="/app/internal-audit-checklist-master" class="menu-item"
 						>Audit Checklist</a
 					>
-					<a href="/app/internal-audit-schedule" class="menu-item">Audit Scheduled</a>
+					<a href="/app/internal-audit-schedule" class="menu-item"
+						>Internal Audit Report</a
+					>
 				</div>
 			</div>
 
@@ -260,8 +269,8 @@
 					<i class="menu-icon">⇄</i><span>MRM</span><i class="chevron">▸</i>
 				</div>
 				<div class="group-items">
-					<a href="/app/quality-meeting" class="menu-item">MRM Meeting</a>
-					<a href="/ims/mrm-action" class="menu-item">MRM Action Items</a>
+					<a href="/app/quality-meeting" class="menu-item">Management Review Meeting</a>
+					<!-- <a href="/ims/mrm-action" class="menu-item">MRM Action Items</a> -->
 				</div>
 			</div>
 
@@ -355,7 +364,6 @@
 							<a href="/app/calculate-ltr--tar-asr" class="menu-item"
 								>Calculate LTR/TAR/ASR</a
 							>
-							<a href="/app/method-statement" class="menu-item">Method Statement</a>
 						</div>
 					</div>
 
