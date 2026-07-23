@@ -1,13 +1,14 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2026-07-15 12:10:01.070056",
+ "autoname": "naming_series:",
+ "creation": "2026-07-23 14:31:13.854815",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "section_break_ufqb",
   "amended_from",
-  "s_no",
+  "naming_series",
   "project_name",
   "incoming_material_category",
   "column_break_vnoa",
@@ -15,6 +16,8 @@
   "management_system_type",
   "delivery_note",
   "technical_details",
+  "section_break_uaoa",
+  "material_inspection_details",
   "attach_documents_section",
   "bulk_upload"
  ],
@@ -34,11 +37,6 @@
    "search_index": 1
   },
   {
-   "fieldname": "s_no",
-   "fieldtype": "Data",
-   "label": "S No"
-  },
-  {
    "fieldname": "project_name",
    "fieldtype": "Link",
    "label": "Project Name",
@@ -56,7 +54,7 @@
   {
    "fieldname": "incoming_material",
    "fieldtype": "Data",
-   "label": "Incoming Material"
+   "label": "Received Material"
   },
   {
    "fieldname": "management_system_type",
@@ -80,22 +78,49 @@
   {
    "fieldname": "attach_documents_section",
    "fieldtype": "Section Break",
-   "label": "Attach Details"
+   "label": " "
   },
   {
    "fieldname": "bulk_upload",
    "fieldtype": "HTML",
    "label": "Upload All"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Incoming materials",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "section_break_uaoa",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "material_inspection_details",
+   "fieldtype": "Table",
+   "label": "Material Inspection Details",
+   "options": "Received Material Details"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "S No",
+   "options": "RM-.#####"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-07-15 13:02:07.427693",
+ "modified": "2026-07-23 14:39:18.632567",
  "modified_by": "Administrator",
  "module": "PPE IMS",
- "name": "Incoming materials",
+ "name": "Received Materials",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
