@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestAspectImpactAssement(FrappeTestCase):
+class TestAspectImpactAssessment(FrappeTestCase):
 	pass

@@ -1,0 +1,149 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-23 09:14:59.576136",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_rcpg",
+  "amended_from",
+  "naming_series",
+  "processes",
+  "source",
+  "condition",
+  "remarks",
+  "column_break_fwxh",
+  "aspect_type",
+  "activity",
+  "aspectimpact_description",
+  "result_section",
+  "quantity",
+  "severity",
+  "section_break_piqj",
+  "bulk_upload"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_rcpg",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Aspect - Impact Assessment",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "S No",
+   "options": "IMS-AIA-.#####"
+  },
+  {
+   "fieldname": "processes",
+   "fieldtype": "Link",
+   "label": "Process",
+   "options": "IMS Documents",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Data",
+   "label": "Source"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "column_break_fwxh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "activity",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Activity",
+   "reqd": 1
+  },
+  {
+   "fieldname": "aspectimpact_description",
+   "fieldtype": "Small Text",
+   "label": "Aspect/Impact Description"
+  },
+  {
+   "fieldname": "result_section",
+   "fieldtype": "Section Break",
+   "label": "Result"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Select",
+   "label": "Quantity",
+   "options": "\n1\n2\n3\n4\n5"
+  },
+  {
+   "fieldname": "severity",
+   "fieldtype": "Select",
+   "label": "Severity",
+   "options": "\n1\n2\n3\n4\n5"
+  },
+  {
+   "fieldname": "section_break_piqj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Upload All"
+  },
+  {
+   "fieldname": "condition",
+   "fieldtype": "Select",
+   "label": "Condition",
+   "options": "\nNormal\nAbnormal\nEmergency"
+  },
+  {
+   "fieldname": "aspect_type",
+   "fieldtype": "Data",
+   "label": "Aspect Type"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-07-23 09:34:19.420073",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Aspect - Impact Assessment",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
