@@ -7,7 +7,18 @@
  "field_order": [
   "s_no",
   "check_list_name",
-  "remarks"
+  "doc_no",
+  "audit_no",
+  "audit_date",
+  "remarks",
+  "column_break_bmpx",
+  "issue_date",
+  "department",
+  "revision_no",
+  "auditor",
+  "auditee",
+  "section_break_cwny",
+  "check_list_point"
  ],
  "fields": [
   {
@@ -22,14 +33,69 @@
   },
   {
    "fieldname": "remarks",
-   "fieldtype": "Small Text",
+   "fieldtype": "Data",
    "label": "Remarks"
+  },
+  {
+   "fieldname": "audit_no",
+   "fieldtype": "Data",
+   "label": "Audit No"
+  },
+  {
+   "fieldname": "audit_date",
+   "fieldtype": "Date",
+   "label": "Audit Date"
+  },
+  {
+   "fieldname": "column_break_bmpx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "revision_no",
+   "fieldtype": "Int",
+   "label": "Revision No"
+  },
+  {
+   "fieldname": "auditor",
+   "fieldtype": "Data",
+   "label": "Auditor"
+  },
+  {
+   "fieldname": "auditee",
+   "fieldtype": "Data",
+   "label": "Auditee"
+  },
+  {
+   "fieldname": "doc_no",
+   "fieldtype": "Data",
+   "label": "Doc No"
+  },
+  {
+   "fieldname": "issue_date",
+   "fieldtype": "Date",
+   "label": "Issue Date"
+  },
+  {
+   "fieldname": "section_break_cwny",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "check_list_point",
+   "fieldtype": "Table",
+   "label": "Check List Point",
+   "options": "Check List Point"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-21 15:41:59.300102",
+ "modified": "2026-07-26 09:18:50.488478",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Internal Audit CheckList Master",

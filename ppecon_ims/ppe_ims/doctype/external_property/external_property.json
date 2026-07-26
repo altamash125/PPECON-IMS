@@ -5,19 +5,81 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "s_no"
+  "s_no",
+  "date",
+  "external_property_owner",
+  "external_property_type",
+  "column_break_jkel",
+  "external_property_name",
+  "customer_supplier_name",
+  "remar",
+  "external_property_status",
+  "section_break_mfsu",
+  "bulk_upload"
  ],
  "fields": [
   {
    "fieldname": "s_no",
    "fieldtype": "Select",
    "label": "S No"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "external_property_owner",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "External Property Owner",
+   "reqd": 1
+  },
+  {
+   "fieldname": "external_property_type",
+   "fieldtype": "Select",
+   "label": "External Property Type",
+   "options": "\nPhysical\nIntellactual"
+  },
+  {
+   "fieldname": "column_break_jkel",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "external_property_name",
+   "fieldtype": "Data",
+   "label": "External Property Name"
+  },
+  {
+   "fieldname": "customer_supplier_name",
+   "fieldtype": "Data",
+   "label": "Customer Supplier Name"
+  },
+  {
+   "fieldname": "remar",
+   "fieldtype": "Data",
+   "label": "Remark"
+  },
+  {
+   "fieldname": "section_break_mfsu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Upload All"
+  },
+  {
+   "fieldname": "external_property_status",
+   "fieldtype": "Select",
+   "label": "External Property Status",
+   "options": "\nCompromised\nDamaged\nFound Unsuitable"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-19 11:54:22.026095",
+ "modified": "2026-07-25 20:58:47.634912",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "External Property",

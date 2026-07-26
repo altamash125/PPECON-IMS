@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2026-07-19 11:54:52.529810",
+ "creation": "2026-07-24 19:14:53.154013",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -255,10 +255,10 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-24 19:08:28.553507",
+ "modified": "2026-07-24 19:14:53.154013",
  "modified_by": "Administrator",
  "module": "PPE IMS",
- "name": "Change Management",
+ "name": "Document Change Request",
  "owner": "Administrator",
  "permissions": [
   {

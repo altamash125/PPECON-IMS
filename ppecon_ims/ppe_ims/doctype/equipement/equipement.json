@@ -76,8 +76,7 @@
   },
   {
    "fieldname": "supporting_file_section",
-   "fieldtype": "Section Break",
-   "label": "Supporting File"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "bulk_upload",
@@ -88,7 +87,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-19 10:40:28.968771",
+ "modified": "2026-07-25 19:42:42.964423",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Equipement",

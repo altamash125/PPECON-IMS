@@ -9,9 +9,19 @@
   "section_break_84g2",
   "amended_from",
   "naming_series",
+  "document_no",
   "processes",
+  "hawiya_condition",
+  "transport_performance",
+  "follow_up",
   "column_break_uwzc",
   "monitoring_type",
+  "date",
+  "segregation_status",
+  "total_trips_made",
+  "total_weight",
+  "non_compliance",
+  "approved_by",
   "section_break_tchl",
   "bulk_upload"
  ],
@@ -61,13 +71,67 @@
    "fieldtype": "Select",
    "label": "Monitoring Type",
    "options": "\nAir Emission Monitoring\nWater Waster Monitoring\nSolid Waste Monitoring"
+  },
+  {
+   "fieldname": "hawiya_condition",
+   "fieldtype": "Select",
+   "label": "Hawiya Condition",
+   "options": "\nGood\nFair\nPoor"
+  },
+  {
+   "fieldname": "transport_performance",
+   "fieldtype": "Select",
+   "label": "Transport Performance ",
+   "options": "\nSatisfactory\nNeeds Improvement"
+  },
+  {
+   "fieldname": "follow_up",
+   "fieldtype": "Data",
+   "label": "Follow-up Action"
+  },
+  {
+   "fieldname": "segregation_status",
+   "fieldtype": "Select",
+   "label": "Segregation Status",
+   "options": "\nPoor\nMixed"
+  },
+  {
+   "fieldname": "total_trips_made",
+   "fieldtype": "Int",
+   "label": "Total Trips Made"
+  },
+  {
+   "fieldname": "total_weight",
+   "fieldtype": "Float",
+   "label": "Total Weight (Tons)"
+  },
+  {
+   "fieldname": "non_compliance",
+   "fieldtype": "Data",
+   "label": "Non-Compliance / NCR"
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User"
+  },
+  {
+   "fieldname": "document_no",
+   "fieldtype": "Data",
+   "label": "Document No"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-07-22 16:04:21.025958",
+ "modified": "2026-07-24 18:54:07.620669",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Monitoring",

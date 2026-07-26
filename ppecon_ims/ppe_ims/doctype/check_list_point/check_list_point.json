@@ -1,0 +1,47 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-07-26 09:09:54.594965",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "check_point",
+  "conformance",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "check_point",
+   "fieldtype": "Select",
+   "label": "Check Point",
+   "options": "\nDo you have an IMS objective? Please elaborate\nAre you aware of our IMS Policy? Do you communicate this to your staff? How?\nDo you understand the purpose and scope of this PD?\nDid you receive a formal request for estimation from the Sales Department, Project Manager, or client?\nDid you document the request using an Estimation Request Form, including all relevant project details?\nDid the Estimations Manager (BD) review the request to ensure all necessary information is provided?\nDid the Estimations Manager assign an Estimator to the project?\nDid you collect detailed project specifications, drawings, and any other relevant documents?\nDid you consult with project stakeholders to clarify requirements and assumptions?\nDid you conduct a site visit?\nDid you review historical data and previous project estimates for reference?\nDid you identify any cost trends or recurring issues that may affect the current estimate?\nDid you divide the project into manageable components or work packages?\nDid you identify all cost elements, including materials, labor, equipment, subcontractors, and overheads?\nDid you use standard estimation tools and software to calculate costs for each component?\nDid you apply appropriate rates and factors, ensuring consistency with company standards and market conditions?\nDid you collect supplier and service provider prices?\nDid you assess potential risks and uncertainties associated with the project?\nDid you include contingency allowances to cover unforeseen costs?\nDid the estimator conduct a self-review of the prepared estimate for accuracy and completeness?\nDid the estimator submit the estimate to the Estimations Manager for review?\nDid the QA team review the estimate for compliance with quality standards and accuracy?\nDid the QA team provide feedback and request revisions if necessary?\nDid the Estimations Manager review the final estimate, incorporating QA feedback?\nDid the Estimations Manager approve the estimate or request further revisions if needed?\nDid you prepare the final estimate report, including detailed breakdowns and justifications?\nDid you submit the estimate to the BDM or client as required?\nDid you maintain detailed records of all estimation documents, including initial requests, data collected, calculations, and approvals?\nAre the records stored securely and easily retrievable for future reference?\nDid you gather feedback from project stakeholders on the accuracy and usefulness of the estimate?\nDid you prepare a detailed project budget and get approval from Business Director in order to share it with the commercial and project team?\nDid you analyze feedback and identify areas for improvement in the estimation process?\nDid you implement changes to enhance accuracy and efficiency in future estimates?"
+  },
+  {
+   "fieldname": "conformance",
+   "fieldtype": "Select",
+   "label": "Conformance",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-07-26 09:17:21.673823",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Check List Point",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

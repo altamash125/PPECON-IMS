@@ -5,19 +5,102 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "s_no"
+  "s_no",
+  "department",
+  "department_process",
+  "validation_date",
+  "revalidation",
+  "validation_result",
+  "revalidation_date",
+  "column_break_mrho",
+  "name_of_the_qualified_person",
+  "brief_process_description",
+  "name_of_the_machine__equipment_to_be_used",
+  "description_of_process_steps",
+  "operator_qualification__competence",
+  "section_break_kfth",
+  "bulk_upload"
  ],
  "fields": [
   {
    "fieldname": "s_no",
    "fieldtype": "Select",
    "label": "S No"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "department_process",
+   "fieldtype": "Data",
+   "label": "Department Process"
+  },
+  {
+   "fieldname": "validation_date",
+   "fieldtype": "Date",
+   "label": "Validation Date"
+  },
+  {
+   "fieldname": "revalidation",
+   "fieldtype": "Date",
+   "label": "Re-Validation Date"
+  },
+  {
+   "fieldname": "validation_result",
+   "fieldtype": "Data",
+   "label": "Validation Result"
+  },
+  {
+   "fieldname": "revalidation_date",
+   "fieldtype": "Date",
+   "label": "Re-Validation Due Date"
+  },
+  {
+   "fieldname": "column_break_mrho",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "name_of_the_qualified_person",
+   "fieldtype": "Data",
+   "label": "Name Of The Qualified Person"
+  },
+  {
+   "fieldname": "brief_process_description",
+   "fieldtype": "Date",
+   "label": "Brief Process Description"
+  },
+  {
+   "fieldname": "name_of_the_machine__equipment_to_be_used",
+   "fieldtype": "Data",
+   "label": "Name Of The Machine / Equipment To Be Used"
+  },
+  {
+   "fieldname": "description_of_process_steps",
+   "fieldtype": "Small Text",
+   "label": "Description Of Process Steps"
+  },
+  {
+   "fieldname": "operator_qualification__competence",
+   "fieldtype": "Small Text",
+   "label": "Operator Qualification / Competence"
+  },
+  {
+   "fieldname": "section_break_kfth",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Upload All"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-19 11:35:58.329756",
+ "modified": "2026-07-25 19:40:52.099458",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Process Validation",

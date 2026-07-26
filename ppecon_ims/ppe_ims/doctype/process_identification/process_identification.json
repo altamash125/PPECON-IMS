@@ -5,19 +5,130 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "s_no"
+  "s_no",
+  "management_system_type",
+  "process_name",
+  "document_code",
+  "revision_date",
+  "accountable_person",
+  "how_the_knowledge_would_be_made_available",
+  "column_break_xzpl",
+  "department",
+  "scope",
+  "definition",
+  "revision_number",
+  "what_knowledge_is_required_",
+  "process_inputs_section",
+  "input_required",
+  "source_of_input",
+  "associated_dataresources_required",
+  "section_break_axzk",
+  "bulk_upload"
  ],
  "fields": [
   {
    "fieldname": "s_no",
    "fieldtype": "Select",
    "label": "S No"
+  },
+  {
+   "fieldname": "management_system_type",
+   "fieldtype": "Link",
+   "label": "Management System Type",
+   "options": "Management System Type"
+  },
+  {
+   "fieldname": "process_name",
+   "fieldtype": "Link",
+   "label": "Process Name",
+   "options": "IMS Documents"
+  },
+  {
+   "fieldname": "document_code",
+   "fieldtype": "Data",
+   "label": "Document Code"
+  },
+  {
+   "fieldname": "revision_date",
+   "fieldtype": "Date",
+   "label": "Revision Date"
+  },
+  {
+   "fieldname": "accountable_person",
+   "fieldtype": "Link",
+   "label": "Accountable Person",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "how_the_knowledge_would_be_made_available",
+   "fieldtype": "Small Text",
+   "label": "How The Knowledge Would Be Made Available "
+  },
+  {
+   "fieldname": "column_break_xzpl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "scope",
+   "fieldtype": "Link",
+   "label": "Scope",
+   "options": "Scope"
+  },
+  {
+   "fieldname": "definition",
+   "fieldtype": "Data",
+   "label": "Definition"
+  },
+  {
+   "fieldname": "revision_number",
+   "fieldtype": "Int",
+   "label": "Revision Number"
+  },
+  {
+   "fieldname": "what_knowledge_is_required_",
+   "fieldtype": "Data",
+   "label": "What Knowledge Is Required ?"
+  },
+  {
+   "fieldname": "process_inputs_section",
+   "fieldtype": "Section Break",
+   "label": "Process Inputs  "
+  },
+  {
+   "fieldname": "input_required",
+   "fieldtype": "Data",
+   "label": "Input Required"
+  },
+  {
+   "fieldname": "source_of_input",
+   "fieldtype": "Data",
+   "label": " Source Of Input"
+  },
+  {
+   "fieldname": "associated_dataresources_required",
+   "fieldtype": "Data",
+   "label": "Associated Data/Resources Required"
+  },
+  {
+   "fieldname": "section_break_axzk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Upload All"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-19 11:51:51.615242",
+ "modified": "2026-07-25 19:35:38.929727",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Process Identification",

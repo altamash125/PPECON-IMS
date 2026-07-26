@@ -19,7 +19,7 @@
   "knowledge_required",
   "infrastructure_resource",
   "requirement_analysis",
-  "supported_documents_section",
+  "supported_docuents_section",
   "bulk_upload"
  ],
  "fields": [
@@ -95,20 +95,19 @@
    "label": "Infrastructure Resource"
   },
   {
-   "fieldname": "supported_documents_section",
-   "fieldtype": "Section Break",
-   "label": "Supported Documents"
-  },
-  {
    "fieldname": "bulk_upload",
    "fieldtype": "HTML",
    "label": "Upload All"
+  },
+  {
+   "fieldname": "supported_docuents_section",
+   "fieldtype": "Section Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-19 10:24:05.281200",
+ "modified": "2026-07-25 19:36:56.516705",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Operation Planning",
