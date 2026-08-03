@@ -18,7 +18,6 @@
   --radius: 8px;
 }
 
-/* ---- hide default Frappe website chrome (navbar / footer) ---- */
 header.navbar,
 nav.navbar,
 .web-footer,
@@ -34,7 +33,6 @@ footer.web-footer,
   max-width: 100% !important;
 }
 
-/* ---- base ---- */
 * { box-sizing: border-box; }
 
 body {
@@ -51,9 +49,6 @@ a { text-decoration: none; }
   min-height: 100vh;
 }
 
-/* ===========================================================================
-   SIDEBAR
-   =========================================================================== */
 .ims-sidebar {
   width: var(--sb-width);
   position: fixed;
@@ -74,33 +69,6 @@ a { text-decoration: none; }
   border-bottom: 1px solid rgba(255, 255, 255, .08);
 }
 
-.logo-icon {
-  width: 38px;
-  height: 38px;
-  flex: 0 0 38px;
-  background: #fff;
-  color: var(--accent-dark);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 20px;
-}
-
-.logo-text .brand {
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 1px;
-  color: #fff;
-}
-
-.logo-text .sub {
-  font-size: 11px;
-  opacity: .7;
-}
-
-/* ---- search ---- */
 .ims-search { padding: 12px 14px; }
 
 .ims-search input {
@@ -117,7 +85,6 @@ a { text-decoration: none; }
 .ims-search input::placeholder { color: rgba(255, 255, 255, .5); }
 .ims-search input:focus { background: rgba(255, 255, 255, .16); }
 
-/* ---- menu ---- */
 .ims-menu {
   flex: 1;
   overflow-y: auto;
@@ -199,7 +166,6 @@ a { text-decoration: none; }
   font-size: 12.5px;
 }
 
-/* ---- nested sub-groups (HSE) ---- */
 .menu-group.sub > .group-header {
   padding-left: 34px;
   font-size: 12.5px;
@@ -214,7 +180,6 @@ a { text-decoration: none; }
 
 .hidden-by-search { display: none !important; }
 
-/* ---- sidebar footer ---- */
 .ims-footer {
   padding: 12px 18px;
   border-top: 1px solid rgba(255, 255, 255, .08);
@@ -227,9 +192,6 @@ a { text-decoration: none; }
   color: #9dc1ee;
 }
 
-/* ===========================================================================
-   MAIN AREA / TOPBAR
-   =========================================================================== */
 .ims-main {
   margin-left: var(--sb-width);
   flex: 1;
@@ -304,9 +266,6 @@ a { text-decoration: none; }
 }
 .btn-logout:hover { background: #f9d3cf; }
 
-/* ===========================================================================
-   CONTENT
-   =========================================================================== */
 .ims-content { padding: 26px 28px; }
 
 .ims-content h1 {
@@ -321,7 +280,6 @@ a { text-decoration: none; }
   color: #6b7a90;
 }
 
-/* ---- dashboard cards ---- */
 .dashboard-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -357,7 +315,6 @@ a { text-decoration: none; }
   margin: 6px 0 4px;
 }
 
-/* ---- status-wise breakdown (Draft / Submitted) shown under card value ---- */
 .card-breakdown {
   display: flex;
   gap: 12px;
@@ -381,7 +338,6 @@ a { text-decoration: none; }
 }
 .card a:hover { text-decoration: underline; }
 
-/* ---- quick actions ---- */
 .quick-actions h3 {
   font-size: 15px;
   color: var(--accent-dark);
@@ -413,9 +369,47 @@ a { text-decoration: none; }
   transform: translateY(-1px);
 }
 
-/* ===========================================================================
-   RESPONSIVE
-   =========================================================================== */
+/* ---- insights / charts section (NEW) ---- */
+.insights-section {
+  margin-top: 32px;
+}
+
+.insights-section h3 {
+  font-size: 15px;
+  color: var(--accent-dark);
+  margin: 0 0 12px;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.insight-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  padding: 16px 18px;
+}
+
+.insight-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #6b7a90;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  margin-bottom: 12px;
+}
+
+.insight-big-number {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--accent-dark);
+  text-align: center;
+  padding: 30px 0;
+}
+
 @media (max-width: 992px) {
   .ims-sidebar { transform: translateX(-100%); }
 
@@ -428,12 +422,6 @@ a { text-decoration: none; }
 
   .hamburger { display: inline-block; }
 }
-
-/* ===========================================================================
-   VISUAL SETTINGS — THEMES
-   Theme apply hota hai: <html data-ims-theme="green"> — JS localStorage se
-   set karta hai, isliye selection har page pe persist karti hai.
-   =========================================================================== */
 
 html[data-ims-theme="blue"] {
   --sb-bg-1: #1565c0; --sb-bg-2: #0b3d91;
@@ -465,7 +453,6 @@ html[data-ims-theme="dark"] {
   --accent: #4da3ff;  --accent-dark: #2b6cb0;
 }
 
-/* ---- topbar welcome name ---- */
 .welcome-user {
   margin-left: 14px;
   padding-left: 14px;
@@ -475,9 +462,8 @@ html[data-ims-theme="dark"] {
   color: var(--accent-dark);
 }
 
-/* ---- sidebar logo image ---- */
 .logo-wrap {
-  background: #fff;               /* dark sidebar pe logo visible rahe */
+  background: #fff;
   border-radius: 8px;
   padding: 4px 10px;
   width: 100%;

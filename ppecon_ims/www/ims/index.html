@@ -1,14 +1,21 @@
 <!-- =========================================================================
-  PPECON IMS Portal — Main Page
+  PPECON IMS Portal — index.html  (v3 COMPLETE)
   Location : ppecon_ims/www/ims/index.html
-  CSS      : linked from /assets/ppecon_ims/css/ims_portal.css
-  Backend  : ppecon_ims/www/ims/index.py  (dashboard counts)
+  Backend  : ppecon_ims/www/ims/index.py  (v3.1)
+  Sections : IMS/ISO · Sales & Marketing · Procurement + period filter
 ========================================================================== -->
 
 <link rel="stylesheet" href="/assets/ppecon_ims/css/ims_portal.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 
 <script>
-	/* Saved theme ko page render se PEHLE apply karo (flash avoid karne ke liye) */
+	(function () {
+		var link = document.querySelector("link[rel~='icon']") || document.createElement("link");
+		link.rel = "icon";
+		link.href = "/assets/ppecon_ims/img/PPECON.avif";
+		document.getElementsByTagName("head")[0].appendChild(link);
+	})();
+
 	(function () {
 		try {
 			var t = localStorage.getItem("ims_theme");
@@ -27,631 +34,162 @@
 	})();
 </script>
 
-<div class="ims-app" id="imsApp">
-	<!-- ==================== SIDEBAR ==================== -->
-	<aside class="ims-sidebar">
-		<div class="ims-logo">
-			<div class="logo-wrap">
-				<img
-					src="/assets/ppecon_ims/img/PPECON.avif"
-					alt="PPECON IMS Portal"
-					class="logo-img"
-				/>
-			</div>
-		</div>
-
-		<div class="ims-search">
-			<input
-				type="text"
-				placeholder="🔍 Search modules..."
-				id="menuSearch"
-				autocomplete="off"
-			/>
-		</div>
-
-		<nav class="ims-menu" id="imsMenu">
-			<a href="/ims" class="menu-item"><i class="menu-icon">⌂</i><span>Dashboard</span></a>
-
-			<!-- ============ ADMINISTRATION ============ -->
-			<div class="menu-group" data-group="admin">
-				<div class="group-header">
-					<i class="menu-icon">⚙</i><span>System Settings</span><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<!-- <a href="/ims/site" class="menu-item">Site</a> -->
-					<a href="/app/resource-planning" class="menu-item">Resource Planning</a>
-					<a href="/app/asset" class="menu-item">Asset</a>
-					<!-- <a href="/app/doctype" class="menu-item">Master Builder</a> -->
-					<!-- <a href="/app/customize-form" class="menu-item">Form Builder</a> -->
-					<a href="/app/workflow" class="menu-item">Workflow Builder</a>
-					<!-- <a href="/app/workflow-state" class="menu-item">Workflow Master</a> -->
-					<!-- <a href="/app/workspace" class="menu-item">Menu Builder</a> -->
-					<!-- <a href="/app/report" class="menu-item">Report Builder</a> -->
-					<a href="/app/notification" class="menu-item">Notification Builder</a>
-					<!-- <a href="/app/dashboard" class="menu-item">Dashboard Builder</a> -->
-					<!-- <a href="/app/server-script" class="menu-item">Script Builder</a> -->
-					<!-- <a href="/app/print-format" class="menu-item">Print Builder</a> -->
-					<a href="/app/reminder" class="menu-item">Reminder Builder</a>
-					<!-- <a href="/app/scheduled-job-type" class="menu-item">Script Scheduler</a> -->
-					<!-- <a href="/app/role" class="menu-item">Roles</a> -->
-					<!-- <a href="/app/user" class="menu-item">Users</a> -->
-					<!-- <a href="/app/email-template" class="menu-item">Email Templates</a> -->
-					<!-- <a href="/app/language" class="menu-item">Languages</a> -->
-					<!-- <a href="/app/activity-log" class="menu-item">Audit Logs</a> -->
-					<!-- <a href="/app/email-queue" class="menu-item">Mail Logs</a> -->
-
-					<div class="menu-item" id="vsOpen">
-						<i class="menu-icon">🎨</i><span>Visual Settings</span>
-					</div>
-				</div>
-			</div>
-
-			<!-- ============ CONTEXT OF ORGANISATION ============ -->
-			<div class="menu-group" data-group="context">
-				<div class="group-header">
-					<i class="menu-icon">📋</i><span>Context Of Organisation</span
-					><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/context-of-organisation" class="menu-item"
-						>Context Of Organisation</a
-					>
-					<a href="/app/ims-internal-issue" class="menu-item">Internal Issues</a>
-					<a href="/app/ims-external--issue" class="menu-item">External Issues</a>
-					<a href="/app/interested-party" class="menu-item">Interested Party</a>
-					<a href="/app/scope" class="menu-item">Scope</a>
-					<a href="/app/life-cycle-management" class="menu-item"
-						>Life Cycle Management</a
-					>
-				</div>
-			</div>
-
-			<!-- ============ RISK AND OPPORTUNITY ============ -->
-			<div class="menu-group" data-group="risk">
-				<div class="group-header">
-					<i class="menu-icon">🛡</i><span>Risk And Opportunity</span
-					><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/risk-and-opportunity" class="menu-item">Risk And Opportunity</a>
-					<!-- <a href="/app/risk-opportunity/list" class="menu-item">Risk Register</a> -->
-				</div>
-			</div>
-
-			<!-- ============ HR & ADMIN ============ -->
-			<div class="menu-group" data-group="hr">
-				<div class="group-header">
-					<i class="menu-icon">👤</i><span>HR &amp; Admin</span><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/department" class="menu-item">Department</a>
-					<a href="/app/designation" class="menu-item">Designation</a>
-					<a href="/app/employee" class="menu-item">Employee</a>
-					<a href="/app/employee-skill-map" class="menu-item">Competence Evaluation</a>
-					<a href="/app/training-event" class="menu-item">Training</a>
-					<!-- <a href="/employee-satisfaction-survey" class="menu-item"
-						>Employee Satisfaction (HR-F20)</a
-					> -->
-				</div>
-			</div>
-
-			<!-- ============ SALES & MARKETING ============ -->
-			<div class="menu-group" data-group="sales">
-				<div class="group-header">
-					<i class="menu-icon">💼</i><span>Sales &amp; Marketing</span
-					><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/lead" class="menu-item">Inquiry (Lead)</a>
-					<a href="/app/opportunity" class="menu-item">Inquiry Followup (Opportunity)</a>
-					<a href="/app/quotation" class="menu-item">Inquiry Estimation Response </a>
-					<a href="/app/quality-feedback" class="menu-item">Customer Feedback</a>
-					<a href="https://ppecon.erpnext.com/client-portal" class="menu-item"
-						>Client Portal</a
-					>
-				</div>
-			</div>
-
-			<!-- ============ DESIGN & DEVELOPMENT ============ -->
-			<div class="menu-group" data-group="design">
-				<div class="group-header">
-					<i class="menu-icon">📐</i><span>Design &amp; Development</span
-					><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/design-and-development" class="menu-item"
-						>Design &amp; Development</a
-					>
-					<a href="/app/design-and-development-changes" class="menu-item"
-						>Design Changes</a
-					>
-				</div>
-			</div>
-
-			<!-- ============ PURCHASING ============ -->
-			<div class="menu-group" data-group="purchase">
-				<div class="group-header">
-					<i class="menu-icon">🛒</i><span>Purchasing</span><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/supplier" class="menu-item">Supplier Registration</a>
-					<a href="/app/purchase-order" class="menu-item">Purchase Order</a>
-					<a href="/app/supplier-scorecard" class="menu-item">Supplier Reevaluation</a>
-				</div>
-			</div>
-
-			<!-- ============ OPERATIONS ============ -->
-			<div class="menu-group" data-group="ops">
-				<div class="group-header">
-					<i class="menu-icon">🏗</i><span>Operations</span><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/project" class="menu-item">Projects</a>
-					<a href="/app/work-order" class="menu-item">Work Order</a>
-					<a href="/app/process-identification" class="menu-item"
-						>Process Identification</a
-					>
-					<a href="/app/operation-planning" class="menu-item">Operation Planning</a>
-					<a href="/app/process-validation" class="menu-item">Process Validation</a>
-					<a href="/app/execution-plan" class="menu-item">Execution Plan</a>
-					<a href="/app/equipement" class="menu-item">Equipment</a>
-					<a href="/app/calibration-schedule" class="menu-item">Calibration Schedule</a>
-					<a href="/app/calibration-log" class="menu-item">Calibration Log</a>
-					<a href="/app/preventive-maintenance-schedule" class="menu-item"
-						>Preventive Maintenance Schedule</a
-					>
-					<a href="/app/preventive-maintenance-log" class="menu-item"
-						>Preventive Maintenance Log</a
-					>
-					<a href="/app/breakdown-record" class="menu-item">Breakdown Record</a>
-					<a href="/app/external-property" class="menu-item">External Property</a>
-					<a href="/app/kpi" class="menu-item">KPI</a>
-				</div>
-			</div>
-
-			<!-- ============ POLICY & OBJECTIVE ============ -->
-			<div class="menu-group" data-group="policy">
-				<div class="group-header">
-					<i class="menu-icon">🏁</i><span>Policy &amp; Objective</span
-					><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="https:/ppe-policy" class="menu-item">Policy</a>
-					<a href="/app/quality-goal" class="menu-item">Objective</a>
-				</div>
-			</div>
-
-			<!-- ============ QUALITY ============ -->
-			<div class="menu-group" data-group="quality">
-				<div class="group-header">
-					<i class="menu-icon">✓</i><span>QA/QC</span><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/received-materials" class="menu-item">Received Material</a>
-					<!-- <a href="/app/quality-inspection" class="menu-item">Quality Inspection</a> -->
-					<a href="/app/quality-action" class="menu-item">Improvement</a>
-					<a href="/app/final-inspection-quality-plan" class="menu-item"
-						>Final Inspection Quality Record</a
-					>
-					<!-- <a href="/app/quality-inspection-template" class="menu-item"
-						>Inspection Templates</a
-					> -->
-				</div>
-			</div>
-
-			<!-- ============ DOCUMENTED INFORMATION ============ -->
-			<div class="menu-group" data-group="docs">
-				<div class="group-header">
-					<i class="menu-icon">📄</i><span>Documented Information</span
-					><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/ims-documents" class="menu-item">IMS Documents</a>
-					<a href="/app/change-management" class="menu-item">Change Management</a>
-					<a href="/app/document-change-request" class="menu-item"
-						>Document Change Request</a
-					>
-				</div>
-			</div>
-
-			<!-- ============ NON CONFORMANCE ============ -->
-			<a href="/app/non-conformance" class="menu-item"
-				><i class="menu-icon">⚠</i><span>Non Conformance</span></a
-			>
-
-			<!-- ============ INTERNAL AUDIT ============ -->
-			<div class="menu-group" data-group="audit">
-				<div class="group-header">
-					<i class="menu-icon">🔍</i><span>Internal Audit</span><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<!-- <a href="//audit-program" class="menu-item">Audit Program</a> -->
-					<a href="/app/internal-audit-schedule" class="menu-item"
-						>Interanl Audit Schedule</a
-					>
-					<a href="/app/internal-audit-checklist-master" class="menu-item"
-						>Audit Checklist</a
-					>
-					<a href="/app/internal-audit-schedule" class="menu-item"
-						>Internal Audit Report</a
-					>
-				</div>
-			</div>
-
-			<!-- ============ MRM ============ -->
-			<div class="menu-group" data-group="mrm">
-				<div class="group-header">
-					<i class="menu-icon">⇄</i><span>MRM</span><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/quality-meeting" class="menu-item">Management Review Meeting</a>
-					<!-- <a href="/ims/mrm-action" class="menu-item">MRM Action Items</a> -->
-				</div>
-			</div>
-
-			<!-- ============ COMPLIANCE OBLIGATION ============ -->
-			<div class="menu-group" data-group="compliance">
-				<div class="group-header">
-					<i class="menu-icon">🔧</i><span>Compliance Obligation</span
-					><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/compliance-obligation" class="menu-item"
-						>Compliance Obligation</a
-					>
-					<!-- <a href="/ims/compliance-evaluation" class="menu-item"
-						>Compliance Evaluation</a
-					> -->
-				</div>
-			</div>
-
-			<!-- ============ HSE (nested sub-groups) ============ -->
-			<div class="menu-group" data-group="hse">
-				<div class="group-header">
-					<i class="menu-icon">🦺</i><span>HSE</span><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<div class="menu-group sub" data-group="hse-planning">
-						<div class="group-header">
-							<span>HSE Planning</span><i class="chevron">▸</i>
-						</div>
-						<div class="group-items">
-							<a href="/app/aspect---impact-assessment" class="menu-item"
-								>Aspect - Impact Assessment</a
-							>
-							<a href="/app/hazard-and-risk-assesment" class="menu-item"
-								>Hazard and Risk Assessment</a
-							>
-							<!-- <a href="/ims/app/aspect-impact-assessment" class="menu-item"
-								>Aspect Reassessment</a
-							>
-							<a href="/app/hazard-risk" class="menu-item">Hazard Reassessment</a> -->
-						</div>
-					</div>
-
-					<div class="menu-group sub" data-group="hse-waste">
-						<div class="group-header">
-							<span>Waste Management</span><i class="chevron">▸</i>
-						</div>
-						<div class="group-items">
-							<a href="/app/air-emission-profile" class="menu-item"
-								>Air Emission Profile</a
-							>
-							<a href="/app/water-waste-profile" class="menu-item"
-								>Water Waste Profile</a
-							>
-							<a href="/app/solid-waste-profile" class="menu-item"
-								>Solid Waste Profile</a
-							>
-							<a href="/app/monitoring" class="menu-item">Monitoring</a>
-							<!-- <a href="app/solid-waste-profile" class="menu-item"
-								>Water Waste Monitoring</a
-							> -->
-							<!-- <a href="/app/solid-waste-monitoring" class="menu-item"
-								>Solid Waste Monitoring</a
-							> -->
-						</div>
-					</div>
-
-					<div class="menu-group sub" data-group="hse-ops">
-						<div class="group-header">
-							<span>HSE Operations</span><i class="chevron">▸</i>
-						</div>
-						<div class="group-items">
-							<a href="app/planning-emergency" class="menu-item"
-								>Planning Emergency</a
-							>
-							<a href="app/testing-emergency" class="menu-item">Testing Emergency</a>
-							<a href="/app/actual-emergency" class="menu-item">Actual Emergency</a>
-							<a href="/app/work-permit" class="menu-item">Work Permit</a>
-							<a href="/app/hazardous-material" class="menu-item"
-								>Hazardous Material</a
-							>
-							<a href="app/material-safety-data-sheet" class="menu-item"
-								>Material Safety Data Sheet</a
-							>
-							<a href="/app/ppe-master-list" class="menu-item">PPE Master List</a>
-							<a href="/app/ppe-inspection" class="menu-item">PPE Inspection</a>
-							<a href="/app/ppe-process" class="menu-item">PPE Process</a>
-							<a href="/app/accident-incident" class="menu-item"
-								>Accident Incident</a
-							>
-							<a href="/app/calculate-ltr--tar-asr" class="menu-item"
-								>Calculate LTR/TAR/ASR</a
-							>
-						</div>
-					</div>
-
-					<div class="menu-group sub" data-group="hse-performance">
-						<div class="group-header">
-							<span>HSE Documents</span><i class="chevron">▸</i>
-						</div>
-						<div class="group-items">
-							<a href="/app/hse-checklist" class="menu-item">HSE CheckList</a>
-							<!-- <a href="/app/ppe-inspection" class="menu-item">HSE Inspection</a> -->
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- ============ TASK ============ -->
-			<div class="menu-group" data-group="task">
-				<div class="group-header">
-					<i class="menu-icon">📌</i><span>Task</span><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/task/new" class="menu-item">New Task</a>
-					<a href="/app/task" class="menu-item">All Tasks</a>
-					<a href="/app/task?status=Open" class="menu-item">Open Tasks</a>
-					<a href="/app/task?status=Overdue" class="menu-item">Overdue Tasks</a>
-					<a href="/app/todo" class="menu-item">My ToDo</a>
-				</div>
-			</div>
-
-			<!-- ============ REPORTS ============ -->
-			<div class="menu-group" data-group="reports">
-				<div class="group-header">
-					<i class="menu-icon">📊</i><span>Reports</span><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/risk-and-opportunity/view/report" class="menu-item"
-						>Risk Register Report</a
-					>
-					<a href="/app/non-conformance/view/report" class="menu-item"
-						>NC Summary Report</a
-					>
-					<a href="/app/quality-action/view/report" class="menu-item"
-						>Improvement Actions Report</a
-					>
-					<a href="/app/quality-goal/view/report" class="menu-item"
-						>Objectives / KPI Report</a
-					>
-					<a href="/app/training-event/view/report" class="menu-item">Training Report</a>
-					<a href="/app/task/view/report" class="menu-item">Task Status Report</a>
-					<a href="/app/calculate-ltr--tar-asr/view/report" class="menu-item"
-						>LTR / TAR / ASR Report</a
-					>
-				</div>
-			</div>
-		</nav>
-
-		<div class="ims-footer">
-			<div class="version">PPECON IMS v1.0</div>
-			<div class="user" id="userName"></div>
-		</div>
-	</aside>
-
-	<!-- ==================== MAIN ==================== -->
-	<main class="ims-main">
-		<header class="ims-topbar">
-			<div class="topbar-left">
-				<button class="hamburger" id="hamburger">☰</button>
-				<div class="breadcrumb">
-					<a href="/ims">🏠 IMS</a>
-					<span class="welcome-user" id="welcomeUser"></span>
-				</div>
-			</div>
-			<div class="topbar-actions">
-				<a href="/app" class="btn-desk">Switch to Desk</a>
-				<a href="/api/method/logout" class="btn-logout">Logout</a>
-			</div>
-		</header>
-
-		<div class="ims-content">
-			<h1>Welcome to PPECON IMS Portal</h1>
-			<p class="subtitle">Integrated Management System — ISO 9001 : 14001 : 45001</p>
-
-			<div class="dashboard-cards" id="dashboardCards">
-				<div class="card card-blue">
-					<div class="card-label">Open Risks</div>
-					<div class="card-value" id="cnt-risks">—</div>
-					<div class="card-breakdown" id="cnt-risks-breakdown"></div>
-					<a href="app/risk-and-opportunity?docstatus=0" target="_blank" rel="noopener"
-						>View all →</a
-					>
-				</div>
-				<div class="card card-green">
-					<div class="card-label">Approved Contexts</div>
-					<div class="card-value" id="cnt-context">—</div>
-					<div class="card-breakdown" id="cnt-context-breakdown"></div>
-					<a
-						href="/app/context-of-organisation?docstatus=1"
-						target="_blank"
-						rel="noopener"
-						>View all →</a
-					>
-				</div>
-				<div class="card card-orange">
-					<div class="card-label">Open Internal Audit Schedule</div>
-					<div class="card-value" id="cnt-audit">—</div>
-					<div class="card-breakdown" id="cnt-audit-breakdown"></div>
-					<a href="/app/internal-audit-schedule" target="_blank" rel="noopener"
-						>View all →</a
-					>
-				</div>
-				<div class="card card-red">
-					<div class="card-label">Non Conformances</div>
-					<div class="card-value" id="cnt-nc">—</div>
-					<div class="card-breakdown" id="cnt-nc-breakdown"></div>
-					<a href="/app/non-conformance" target="_blank" rel="noopener">View all →</a>
-				</div>
-			</div>
-
-			<div class="quick-actions">
-				<h3>Quick Actions</h3>
-				<div class="action-grid">
-					<a href="/app/risk-and-opportunity" class="action-btn">➕ New Risk</a>
-					<a href="app/context-of-organisation" class="action-btn">➕ New Context</a>
-					<a href="/app/ims-internal-issue" class="action-btn">➕ Internal Issue</a>
-					<a href="/app/accident-incident" class="action-btn">➕ Accident / Incident</a>
-					<a href="/app/internal-audit-schedule" class="action-btn">➕ Internal Audit</a>
-					<a href="/app/ims-documents" class="action-btn">➕ New Document</a>
-				</div>
-			</div>
-		</div>
-	</main>
-</div>
-
-<script>
-	(function () {
-		const app = document.getElementById("imsApp");
-		const menu = document.getElementById("imsMenu");
-
-		/* ---------- group expand / collapse (nested-safe) ---------- */
-		menu.querySelectorAll(".group-header").forEach(function (h) {
-			h.addEventListener("click", function (e) {
-				e.stopPropagation();
-				h.parentElement.classList.toggle("open");
-				try {
-					const open = [].slice
-						.call(menu.querySelectorAll(".menu-group.open"))
-						.map(function (x) {
-							return x.dataset.group;
-						});
-					localStorage.setItem("ims_open_groups", JSON.stringify(open));
-				} catch (err) {}
-			});
-		});
-
-		/* ---------- restore previously-open groups ---------- */
-		try {
-			JSON.parse(localStorage.getItem("ims_open_groups") || "[]").forEach(function (name) {
-				const g = menu.querySelector('.menu-group[data-group="' + name + '"]');
-				if (g) g.classList.add("open");
-			});
-		} catch (err) {}
-
-		/* ---------- highlight active link + open its parent groups ---------- */
-		const path = window.location.pathname;
-		menu.querySelectorAll("a.menu-item").forEach(function (a) {
-			if (a.getAttribute("href").split("?")[0] === path) {
-				a.classList.add("active");
-				let p = a.closest(".menu-group");
-				while (p) {
-					p.classList.add("open");
-					p = p.parentElement.closest(".menu-group");
-				}
-			}
-		});
-
-		/* ---------- module search ---------- */
-		const search = document.getElementById("menuSearch");
-		search.addEventListener("input", function () {
-			const q = this.value.trim().toLowerCase();
-			menu.querySelectorAll("a.menu-item").forEach(function (a) {
-				const match = !q || a.textContent.toLowerCase().indexOf(q) !== -1;
-				a.classList.toggle("hidden-by-search", !match);
-			});
-			menu.querySelectorAll(".menu-group").forEach(function (g) {
-				const hasVisible = g.querySelector("a.menu-item:not(.hidden-by-search)");
-				g.classList.toggle("hidden-by-search", !!q && !hasVisible);
-				if (q && hasVisible) g.classList.add("open");
-			});
-			if (!q) {
-				menu.querySelectorAll(".menu-group").forEach(function (g) {
-					g.classList.remove("hidden-by-search");
-				});
-			}
-		});
-
-		/* ---------- mobile sidebar toggle ---------- */
-		const burger = document.getElementById("hamburger");
-		if (burger) {
-			burger.addEventListener("click", function () {
-				app.classList.toggle("sidebar-open");
-			});
-		}
-
-		/* ---------- open all module / quick-action links in a NEW TAB ----------
-		   Dashboard (home) link, "Switch to Desk" and "Logout" stay in the
-		   same tab intentionally — everything else (sidebar modules +
-		   quick-action buttons) opens in a new tab so the sidebar stays put. */
-		menu.querySelectorAll("a.menu-item").forEach(function (a) {
-			const href = a.getAttribute("href") || "";
-			if (href === "/ims") return; // keep Dashboard link in same tab
-			a.setAttribute("target", "_blank");
-			a.setAttribute("rel", "noopener");
-		});
-		document.querySelectorAll(".action-grid a.action-btn").forEach(function (a) {
-			a.setAttribute("target", "_blank");
-			a.setAttribute("rel", "noopener");
-		});
-
-		/* ---------- logged-in user: footer + topbar welcome ---------- */
-		const u = document.getElementById("userName");
-		const w = document.getElementById("welcomeUser");
-		try {
-			const full = decodeURIComponent(
-				(document.cookie.match(/full_name=([^;]+)/) || [])[1] || "",
-			).replace(/\+/g, " ");
-			const name = full || (window.frappe && frappe.session ? frappe.session.user : "");
-			if (u) u.textContent = name;
-			if (w && name) w.textContent = "Welcome, " + name;
-		} catch (err) {}
-
-		/* ---------- dashboard counts via backend (with status breakdown) ---------- */
-		function setCount(id, val) {
-			const el = document.getElementById(id);
-			if (el) el.textContent = val === undefined || val === null ? "0" : val;
-		}
-		function setBreakdown(id, data) {
-			const el = document.getElementById(id);
-			if (!el || !data) return;
-			el.innerHTML =
-				'<span class="bd-draft">Draft: ' +
-				(data.draft || 0) +
-				"</span>" +
-				'<span class="bd-submit">Submitted: ' +
-				(data.submitted || 0) +
-				"</span>";
-		}
-		if (window.frappe && frappe.call) {
-			frappe.call({
-				method: "ppecon_ims.www.ims.index.get_dashboard_counts",
-				callback: function (r) {
-					if (!r.message) return;
-					const m = r.message;
-
-					setCount("cnt-risks", m.risks.total);
-					setBreakdown("cnt-risks-breakdown", m.risks);
-
-					setCount("cnt-context", m.contexts.total);
-					setBreakdown("cnt-context-breakdown", m.contexts);
-
-					setCount("cnt-audit", m.audit_findings.total);
-					setBreakdown("cnt-audit-breakdown", m.audit_findings);
-
-					setCount("cnt-nc", m.nc.total);
-					setBreakdown("cnt-nc-breakdown", m.nc);
-				},
-			});
-		}
-	})();
-</script>
-
-<!-- ==================== VISUAL SETTINGS MODAL (self-contained) ==================== -->
+<!-- ==================== STYLES ==================== -->
 <style>
-	/* modal ki poori styling yahin hai — external CSS pe depend nahi karti */
+	/* ---- period filter bar ---- */
+	.period-bar {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		flex-wrap: wrap;
+		background: #fff;
+		border: 1px solid #e0e6ee;
+		border-radius: 8px;
+		padding: 10px 14px;
+		margin-bottom: 22px;
+		box-shadow: 0 1px 3px rgba(16, 42, 77, 0.08);
+		position: sticky;
+		top: 56px;
+		z-index: 40;
+	}
+	.period-bar .pb-label {
+		font-size: 11.5px;
+		font-weight: 700;
+		color: #6b7a90;
+		text-transform: uppercase;
+		letter-spacing: 0.4px;
+	}
+	.pb-chip {
+		border: 1px solid #dde6f0;
+		background: #fff;
+		color: #44536b;
+		border-radius: 20px;
+		padding: 5px 14px;
+		font-size: 12.5px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.12s ease;
+	}
+	.pb-chip:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+	.pb-chip.active {
+		background: var(--accent);
+		border-color: var(--accent);
+		color: #fff;
+	}
+	.pb-custom {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		margin-left: auto;
+		flex-wrap: wrap;
+	}
+	.pb-custom input[type="date"] {
+		height: 30px;
+		border: 1px solid #dde6f0;
+		border-radius: 6px;
+		padding: 0 8px;
+		font-size: 12px;
+		background: #fff;
+	}
+	.pb-apply {
+		height: 30px;
+		padding: 0 14px;
+		border: none;
+		border-radius: 6px;
+		background: var(--accent-dark);
+		color: #fff;
+		font-size: 12px;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	.pb-range {
+		font-size: 11.5px;
+		color: #8a97a8;
+	}
+
+	/* ---- summary tiles ---- */
+	.summary-section {
+		margin-bottom: 28px;
+	}
+	.summary-section h3 {
+		font-size: 15px;
+		color: var(--accent-dark);
+		margin: 0 0 12px;
+	}
+	.summary-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+		gap: 12px;
+	}
+	.summary-tile {
+		border-radius: 8px;
+		padding: 14px 16px;
+		color: #fff;
+		box-shadow: 0 1px 3px rgba(16, 42, 77, 0.12);
+	}
+	.summary-tile .st-label {
+		font-size: 11.5px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.4px;
+		opacity: 0.92;
+	}
+	.summary-tile .st-value {
+		font-size: 30px;
+		font-weight: 800;
+		margin-top: 4px;
+	}
+	.summary-tile .st-value.money {
+		font-size: 21px;
+	}
+	.st-blue {
+		background: linear-gradient(135deg, #1f6fd0, #14498f);
+	}
+	.st-teal {
+		background: linear-gradient(135deg, #009688, #00675b);
+	}
+	.st-green {
+		background: linear-gradient(135deg, #2e9e5b, #1d6b3c);
+	}
+	.st-amber {
+		background: linear-gradient(135deg, #e0a020, #a97210);
+	}
+	.st-red {
+		background: linear-gradient(135deg, #d0433f, #96201d);
+	}
+	.st-purple {
+		background: linear-gradient(135deg, #7e57c2, #543a87);
+	}
+	.st-indigo {
+		background: linear-gradient(135deg, #3f51b5, #26327a);
+	}
+	.st-slate {
+		background: linear-gradient(135deg, #546e7a, #37474f);
+	}
+	.st-brown {
+		background: linear-gradient(135deg, #8d6e63, #5d4037);
+	}
+
+	/* ---- insight cards ---- */
+	.insight-card.wide {
+		grid-column: span 2;
+	}
+	@media (max-width: 900px) {
+		.insight-card.wide {
+			grid-column: span 1;
+		}
+	}
+	.chart-loading {
+		text-align: center;
+		color: #b6c0cc;
+		font-size: 12px;
+		padding: 70px 0;
+	}
+
+	/* ---- visual settings modal ---- */
 	#vsmOverlay {
 		display: none;
 		position: fixed;
@@ -798,6 +336,656 @@
 	}
 </style>
 
+<div class="ims-app" id="imsApp">
+	<!-- ==================== SIDEBAR ==================== -->
+	<aside class="ims-sidebar">
+		<div class="ims-logo">
+			<div class="logo-wrap">
+				<img
+					src="/assets/ppecon_ims/img/PPECON.avif"
+					alt="PPECON IMS Portal"
+					class="logo-img"
+				/>
+			</div>
+		</div>
+
+		<div class="ims-search">
+			<input
+				type="text"
+				placeholder="🔍 Search modules..."
+				id="menuSearch"
+				autocomplete="off"
+			/>
+		</div>
+
+		<nav class="ims-menu" id="imsMenu">
+			<a href="/ims" class="menu-item"><i class="menu-icon">⌂</i><span>Dashboard</span></a>
+
+			<div class="menu-group" data-group="admin">
+				<div class="group-header">
+					<i class="menu-icon">⚙</i><span>System Settings</span><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/resource-planning" class="menu-item">Resource Planning</a>
+					<a href="/app/asset" class="menu-item">Asset</a>
+					<a href="/app/workflow" class="menu-item">Workflow Builder</a>
+					<a href="/app/notification" class="menu-item">Notification Builder</a>
+					<a href="/app/reminder" class="menu-item">Reminder Builder</a>
+					<div class="menu-item" id="vsOpen">
+						<i class="menu-icon">🎨</i><span>Visual Settings</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="context">
+				<div class="group-header">
+					<i class="menu-icon">📋</i><span>Context Of Organisation</span
+					><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/context-of-organisation" class="menu-item"
+						>Context Of Organisation</a
+					>
+					<a href="/app/ims-internal-issue" class="menu-item">Internal Issues</a>
+					<a href="/app/ims-external--issue" class="menu-item">External Issues</a>
+					<a href="/app/interested-party" class="menu-item">Interested Party</a>
+					<a href="/app/scope" class="menu-item">Scope</a>
+					<a href="/app/life-cycle-management" class="menu-item"
+						>Life Cycle Management</a
+					>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="risk">
+				<div class="group-header">
+					<i class="menu-icon">🛡</i><span>Risk And Opportunity</span
+					><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/risk-and-opportunity" class="menu-item">Risk And Opportunity</a>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="hr">
+				<div class="group-header">
+					<i class="menu-icon">👤</i><span>HR &amp; Admin</span><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/department" class="menu-item">Department</a>
+					<a href="/app/designation" class="menu-item">Designation</a>
+					<a href="/app/employee" class="menu-item">Employee</a>
+					<a href="/app/employee-skill-map" class="menu-item">Competence Evaluation</a>
+					<a href="/app/training-event" class="menu-item">Training</a>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="sales">
+				<div class="group-header">
+					<i class="menu-icon">💼</i><span>Sales &amp; Marketing</span
+					><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/lead" class="menu-item">Inquiry (Lead)</a>
+					<a href="/app/opportunity" class="menu-item">Inquiry Followup (Opportunity)</a>
+					<a href="/app/quotation" class="menu-item">Inquiry Estimation Response</a>
+					<a href="/app/quality-feedback" class="menu-item">Customer Feedback</a>
+					<a href="https://ppecon.erpnext.com/client-portal" class="menu-item"
+						>Client Portal</a
+					>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="design">
+				<div class="group-header">
+					<i class="menu-icon">📐</i><span>Design &amp; Development</span
+					><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/design-and-development" class="menu-item"
+						>Design &amp; Development</a
+					>
+					<a href="/app/design-and-development-changes" class="menu-item"
+						>Design Changes</a
+					>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="purchase">
+				<div class="group-header">
+					<i class="menu-icon">🛒</i><span>Purchasing</span><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/material-request" class="menu-item">Material Request</a>
+					<a href="/app/request-for-quotation" class="menu-item"
+						>Request for Quotation</a
+					>
+					<a href="/app/supplier-quotation" class="menu-item">Supplier Quotation</a>
+					<a href="/app/supplier" class="menu-item">Supplier Registration</a>
+					<a href="/app/purchase-order" class="menu-item">Purchase Order</a>
+					<a href="/app/purchase-receipt" class="menu-item">Purchase Receipt</a>
+					<a href="/app/supplier-scorecard" class="menu-item">Supplier Evaluation</a>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="ops">
+				<div class="group-header">
+					<i class="menu-icon">🏗</i><span>Operations</span><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/project" class="menu-item">Projects</a>
+					<a href="/app/operation-planning" class="menu-item">Operation Planning</a>
+					<a href="/app/process-identification" class="menu-item"
+						>Process Identification</a
+					>
+					<a href="/app/process-validation" class="menu-item">Process Validation</a>
+					<a href="/app/equipement" class="menu-item">Equipment</a>
+					<a href="/app/calibration-schedule" class="menu-item"
+						>Calibration Log &amp; Schedule</a
+					>
+					<a href="/app/preventive-maintenance-schedule" class="menu-item"
+						>Preventive Maintenance Log &amp; Schedule</a
+					>
+					<a href="/app/breakdown-record" class="menu-item">Breakdown Record</a>
+					<a href="/app/external-property" class="menu-item">External Property</a>
+					<a href="/app/kpi" class="menu-item">KPI</a>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="policy">
+				<div class="group-header">
+					<i class="menu-icon">🏁</i><span>Policy &amp; Objective</span
+					><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/ppe-policy" class="menu-item">Policy</a>
+					<a href="/app/quality-goal" class="menu-item">Objective</a>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="quality">
+				<div class="group-header">
+					<i class="menu-icon">✓</i><span>QA/QC</span><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/received-materials" class="menu-item">Received Material</a>
+					<a href="/app/final-inspection-quality-plan" class="menu-item"
+						>Final Inspection Quality Record</a
+					>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="docs">
+				<div class="group-header">
+					<i class="menu-icon">📄</i><span>Documented Information</span
+					><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/ims-documents" class="menu-item">IMS Documents</a>
+					<a href="/app/change-management" class="menu-item">Change Management</a>
+					<a href="/app/document-change-request" class="menu-item"
+						>Document Change Request</a
+					>
+					<a href="/app/quality-action" class="menu-item">Improvement</a>
+				</div>
+			</div>
+
+			<a href="/app/non-conformance" class="menu-item"
+				><i class="menu-icon">⚠</i><span>Non Conformance</span></a
+			>
+
+			<div class="menu-group" data-group="audit">
+				<div class="group-header">
+					<i class="menu-icon">🔍</i><span>Internal Audit</span><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/internal-audit-schedule" class="menu-item"
+						>Internal Audit Schedule</a
+					>
+					<a href="/app/internal-audit-checklist-master" class="menu-item"
+						>Audit Checklist</a
+					>
+					<a href="/app/internal-audit-report" class="menu-item"
+						>Internal Audit Report</a
+					>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="mrm">
+				<div class="group-header">
+					<i class="menu-icon">⇄</i><span>MRM</span><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/quality-meeting" class="menu-item">Management Review Meeting</a>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="compliance">
+				<div class="group-header">
+					<i class="menu-icon">🔧</i><span>Compliance Obligation</span
+					><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/compliance-obligation" class="menu-item"
+						>Compliance Obligation</a
+					>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="hse">
+				<div class="group-header">
+					<i class="menu-icon">🦺</i><span>HSE</span><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<div class="menu-group sub" data-group="hse-planning">
+						<div class="group-header">
+							<span>HSE Planning</span><i class="chevron">▸</i>
+						</div>
+						<div class="group-items">
+							<a href="/app/aspect---impact-assessment" class="menu-item"
+								>Aspect - Impact Assessment</a
+							>
+							<a href="/app/hazard-and-risk-assesment" class="menu-item"
+								>Hazard and Risk Assessment</a
+							>
+						</div>
+					</div>
+					<div class="menu-group sub" data-group="hse-waste">
+						<div class="group-header">
+							<span>Waste Management</span><i class="chevron">▸</i>
+						</div>
+						<div class="group-items">
+							<a href="/app/air-emission-profile" class="menu-item"
+								>Air Emission Profile</a
+							>
+							<a href="/app/water-waste-profile" class="menu-item"
+								>Water Waste Profile</a
+							>
+							<a href="/app/solid-waste-profile" class="menu-item"
+								>Solid Waste Profile</a
+							>
+							<a href="/app/monitoring" class="menu-item">Monitoring</a>
+						</div>
+					</div>
+					<div class="menu-group sub" data-group="hse-ops">
+						<div class="group-header">
+							<span>HSE Operations</span><i class="chevron">▸</i>
+						</div>
+						<div class="group-items">
+							<a href="/app/planning-emergency" class="menu-item"
+								>Planning Emergency</a
+							>
+							<a href="/app/testing-emergency" class="menu-item"
+								>Testing Emergency</a
+							>
+							<a href="/app/actual-emergency" class="menu-item">Actual Emergency</a>
+							<a href="/app/work-permit" class="menu-item">Work Permit</a>
+							<a href="/app/hazardous-material" class="menu-item"
+								>Hazardous Material</a
+							>
+							<a href="/app/material-safety-data-sheet" class="menu-item"
+								>Material Safety Data Sheet</a
+							>
+							<a href="/app/ppe-master-list" class="menu-item">PPE Master List</a>
+							<a href="/app/ppe-inspection" class="menu-item">PPE Inspection</a>
+							<a href="/app/ppe-process" class="menu-item">PPE Process</a>
+							<a href="/app/accident-incident" class="menu-item"
+								>Accident Incident</a
+							>
+							<a href="/app/calculate-ltr--tar-asr" class="menu-item"
+								>Calculate LTR/TAR/ASR</a
+							>
+						</div>
+					</div>
+					<div class="menu-group sub" data-group="hse-performance">
+						<div class="group-header">
+							<span>HSE Documents</span><i class="chevron">▸</i>
+						</div>
+						<div class="group-items">
+							<a href="/app/hse-checklist" class="menu-item">HSE CheckList</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="task">
+				<div class="group-header">
+					<i class="menu-icon">📌</i><span>Task</span><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/task/new" class="menu-item">New Task</a>
+					<a href="/app/task" class="menu-item">All Tasks</a>
+					<a href="/app/task?status=Open" class="menu-item">Open Tasks</a>
+					<a href="/app/task?status=Overdue" class="menu-item">Overdue Tasks</a>
+					<a href="/app/todo" class="menu-item">My ToDo</a>
+				</div>
+			</div>
+
+			<div class="menu-group" data-group="reports">
+				<div class="group-header">
+					<i class="menu-icon">📊</i><span>Reports</span><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/risk-and-opportunity/view/report" class="menu-item"
+						>Risk Register Report</a
+					>
+					<a href="/app/non-conformance/view/report" class="menu-item"
+						>NC Summary Report</a
+					>
+					<a href="/app/quality-action/view/report" class="menu-item"
+						>Improvement Actions Report</a
+					>
+					<a href="/app/quality-goal/view/report" class="menu-item"
+						>Objectives / KPI Report</a
+					>
+					<a href="/app/training-event/view/report" class="menu-item">Training Report</a>
+					<a href="/app/task/view/report" class="menu-item">Task Status Report</a>
+					<a href="/app/calculate-ltr--tar-asr/view/report" class="menu-item"
+						>LTR / TAR / ASR Report</a
+					>
+				</div>
+			</div>
+		</nav>
+
+		<div class="ims-footer">
+			<div class="version">PPECON IMS v1.0</div>
+			<div class="user" id="userName"></div>
+		</div>
+	</aside>
+
+	<!-- ==================== MAIN ==================== -->
+	<main class="ims-main">
+		<header class="ims-topbar">
+			<div class="topbar-left">
+				<button class="hamburger" id="hamburger">☰</button>
+				<div class="breadcrumb">
+					<a href="/ims">🏠 IMS</a>
+					<span class="welcome-user" id="welcomeUser"></span>
+				</div>
+			</div>
+			<div class="topbar-actions">
+				<a href="/app" class="btn-desk">Switch to Desk</a>
+				<a href="/api/method/logout" class="btn-logout">Logout</a>
+			</div>
+		</header>
+
+		<div class="ims-content">
+			<h1>Welcome to PPECON IMS Portal</h1>
+			<p class="subtitle">Integrated Management System — ISO 9001 : 14001 : 45001</p>
+
+			<!-- ---------- PERIOD FILTER ---------- -->
+			<div class="period-bar" id="periodBar">
+				<span class="pb-label">Period</span>
+				<button class="pb-chip" data-period="this_month">This Month</button>
+				<button class="pb-chip" data-period="this_quarter">This Quarter</button>
+				<button class="pb-chip" data-period="last_quarter">Last Quarter</button>
+				<button class="pb-chip active" data-period="this_year">This Year</button>
+				<button class="pb-chip" data-period="last_year">Last Year</button>
+				<button class="pb-chip" data-period="all_time">All Time</button>
+				<span class="pb-range" id="pbRange"></span>
+				<div class="pb-custom">
+					<input type="date" id="pbFrom" />
+					<span style="font-size: 12px; color: #8a97a8">to</span>
+					<input type="date" id="pbTo" />
+					<button class="pb-apply" id="pbApply">Apply</button>
+				</div>
+			</div>
+
+			<!-- ---------- TOP CARDS ---------- -->
+			<div class="dashboard-cards" id="dashboardCards">
+				<div class="card card-blue">
+					<div class="card-label">Open Risks</div>
+					<div class="card-value" id="cnt-risks">—</div>
+					<div class="card-breakdown" id="cnt-risks-breakdown"></div>
+					<a href="/app/risk-and-opportunity?docstatus=0" target="_blank" rel="noopener"
+						>View all →</a
+					>
+				</div>
+				<div class="card card-green">
+					<div class="card-label">Approved Contexts</div>
+					<div class="card-value" id="cnt-context">—</div>
+					<div class="card-breakdown" id="cnt-context-breakdown"></div>
+					<a
+						href="/app/context-of-organisation?docstatus=1"
+						target="_blank"
+						rel="noopener"
+						>View all →</a
+					>
+				</div>
+				<div class="card card-orange">
+					<div class="card-label">Open Internal Audit Schedule</div>
+					<div class="card-value" id="cnt-audit">—</div>
+					<div class="card-breakdown" id="cnt-audit-breakdown"></div>
+					<a href="/app/internal-audit-schedule" target="_blank" rel="noopener"
+						>View all →</a
+					>
+				</div>
+				<div class="card card-red">
+					<div class="card-label">Non Conformances</div>
+					<div class="card-value" id="cnt-nc">—</div>
+					<div class="card-breakdown" id="cnt-nc-breakdown"></div>
+					<a href="/app/non-conformance" target="_blank" rel="noopener">View all →</a>
+				</div>
+			</div>
+
+			<!-- ---------- SUMMARY TILES ---------- -->
+			<div class="summary-section">
+				<h3>Summary</h3>
+				<div class="summary-grid">
+					<div class="summary-tile st-blue">
+						<div class="st-label">Active Employees</div>
+						<div class="st-value" id="tileEmployees">—</div>
+					</div>
+					<div class="summary-tile st-teal">
+						<div class="st-label">Departments</div>
+						<div class="st-value" id="tileDepartments">—</div>
+					</div>
+					<div class="summary-tile st-green">
+						<div class="st-label">Documents</div>
+						<div class="st-value" id="tileDocuments">—</div>
+					</div>
+					<div class="summary-tile st-amber">
+						<div class="st-label">Risks</div>
+						<div class="st-value" id="tileRisks">—</div>
+					</div>
+					<div class="summary-tile st-red">
+						<div class="st-label">Non Conformances</div>
+						<div class="st-value" id="tileNc">—</div>
+					</div>
+					<div class="summary-tile st-purple">
+						<div class="st-label">Suppliers</div>
+						<div class="st-value" id="tileSuppliers">—</div>
+					</div>
+					<div class="summary-tile st-indigo">
+						<div class="st-label">Open Tasks</div>
+						<div class="st-value" id="tileTasks">—</div>
+					</div>
+					<div class="summary-tile st-slate">
+						<div class="st-label">Projects</div>
+						<div class="st-value" id="tileProjects">—</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ---------- CRM TILES ---------- -->
+			<div class="summary-section">
+				<h3>Sales &amp; Marketing</h3>
+				<div class="summary-grid">
+					<div class="summary-tile st-blue">
+						<div class="st-label">Open Leads</div>
+						<div class="st-value" id="crmOpenLeads">—</div>
+					</div>
+					<div class="summary-tile st-indigo">
+						<div class="st-label">Open Opportunities</div>
+						<div class="st-value" id="crmOpenOpps">—</div>
+					</div>
+					<div class="summary-tile st-green">
+						<div class="st-label">Won</div>
+						<div class="st-value" id="crmWon">—</div>
+					</div>
+					<div class="summary-tile st-red">
+						<div class="st-label">Lost</div>
+						<div class="st-value" id="crmLost">—</div>
+					</div>
+					<div class="summary-tile st-teal">
+						<div class="st-label">Win Rate</div>
+						<div class="st-value" id="crmWinRate">—</div>
+					</div>
+					<div class="summary-tile st-amber">
+						<div class="st-label">Open Quotation Value</div>
+						<div class="st-value money" id="crmQuoteValue">—</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ---------- PROCUREMENT TILES ---------- -->
+			<div class="summary-section">
+				<h3>Procurement</h3>
+				<div class="summary-grid">
+					<div class="summary-tile st-blue">
+						<div class="st-label">Open Material Requests</div>
+						<div class="st-value" id="prcOpenMR">—</div>
+					</div>
+					<div class="summary-tile st-amber">
+						<div class="st-label">Pending Purchase Orders</div>
+						<div class="st-value" id="prcPendingPO">—</div>
+					</div>
+					<div class="summary-tile st-slate">
+						<div class="st-label">Draft POs</div>
+						<div class="st-value" id="prcDraftPO">—</div>
+					</div>
+					<div class="summary-tile st-green">
+						<div class="st-label">PO Value (period)</div>
+						<div class="st-value money" id="prcPOValue">—</div>
+					</div>
+					<div class="summary-tile st-teal">
+						<div class="st-label">Avg PO Value</div>
+						<div class="st-value money" id="prcAvgPO">—</div>
+					</div>
+					<div class="summary-tile st-purple">
+						<div class="st-label">Active Suppliers</div>
+						<div class="st-value" id="prcSuppliers">—</div>
+					</div>
+					<div class="summary-tile st-red">
+						<div class="st-label">Outstanding Payable</div>
+						<div class="st-value money" id="prcPayable">—</div>
+					</div>
+					<div class="summary-tile st-brown">
+						<div class="st-label">POs Issued (period)</div>
+						<div class="st-value" id="prcPOCount">—</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ---------- QUICK ACTIONS ---------- -->
+			<div class="quick-actions">
+				<h3>Quick Actions</h3>
+				<div class="action-grid">
+					<a href="/app/risk-and-opportunity" class="action-btn">➕ New Risk</a>
+					<a href="/app/context-of-organisation" class="action-btn">➕ New Context</a>
+					<a href="/app/ims-internal-issue" class="action-btn">➕ Internal Issue</a>
+					<a href="/app/accident-incident" class="action-btn">➕ Accident / Incident</a>
+					<a href="/app/material-request/new" class="action-btn">➕ Material Request</a>
+					<a href="/app/ims-documents" class="action-btn">➕ New Document</a>
+				</div>
+			</div>
+
+			<!-- ---------- INSIGHTS: IMS ---------- -->
+			<div class="insights-section">
+				<h3>Insights — IMS</h3>
+				<div class="insights-grid">
+					<div class="insight-card">
+						<div class="insight-title">Non Conformance Trend</div>
+						<canvas id="chartNcTrend" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Risk Register — by Status</div>
+						<canvas id="chartRiskStatus" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Documents — by Category</div>
+						<canvas id="chartDocsCategory" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Employees — by Department</div>
+						<canvas id="chartEmpDept" height="200"></canvas>
+					</div>
+				</div>
+			</div>
+
+			<!-- ---------- INSIGHTS: SALES & MARKETING ---------- -->
+			<div class="insights-section">
+				<h3>Insights — Sales &amp; Marketing</h3>
+				<div class="insights-grid">
+					<div class="insight-card">
+						<div class="insight-title">Sales Funnel — Lead to Order</div>
+						<canvas id="chartFunnel" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Leads — by Status</div>
+						<canvas id="chartLeadStatus" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Leads — by Source</div>
+						<canvas id="chartLeadSource" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Opportunities — by Status</div>
+						<canvas id="chartOppStatus" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Opportunities — by Project Type</div>
+						<canvas id="chartOppType" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Quotations — by Status</div>
+						<canvas id="chartQuoteStatus" height="200"></canvas>
+					</div>
+					<div class="insight-card wide">
+						<div class="insight-title">Quotation Value Trend</div>
+						<canvas id="chartQuoteTrend" height="180"></canvas>
+					</div>
+				</div>
+			</div>
+
+			<!-- ---------- INSIGHTS: PROCUREMENT ---------- -->
+			<div class="insights-section">
+				<h3>Insights — Procurement</h3>
+				<div class="insights-grid">
+					<div class="insight-card">
+						<div class="insight-title">Procurement Cycle — MR to Receipt</div>
+						<canvas id="chartPrcFunnel" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Material Requests — by Status</div>
+						<canvas id="chartMrStatus" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Material Requests — by Type</div>
+						<canvas id="chartMrType" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Purchase Orders — by Status</div>
+						<canvas id="chartPoStatus" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Supplier Quotations — by Supplier</div>
+						<canvas id="chartSqSupplier" height="200"></canvas>
+					</div>
+					<div class="insight-card">
+						<div class="insight-title">Top Suppliers — by PO Value</div>
+						<canvas id="chartTopSuppliers" height="200"></canvas>
+					</div>
+					<div class="insight-card wide">
+						<div class="insight-title">Purchase Order Value Trend</div>
+						<canvas id="chartPoTrend" height="180"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</div>
+
+<!-- ==================== VISUAL SETTINGS MODAL ==================== -->
 <div id="vsmOverlay">
 	<div class="vsm-box">
 		<div class="vsm-head">
@@ -869,13 +1057,639 @@
 	</div>
 </div>
 
+<!-- =========================================================================
+     SCRIPT 1 of 2 — sidebar + all dashboard data  (ONLY ONE COPY)
+========================================================================== -->
 <script>
-	/* ==================== VISUAL SETTINGS LOGIC (modal) ==================== */
+	(function () {
+		const app = document.getElementById("imsApp");
+		const menu = document.getElementById("imsMenu");
+
+		/* ==================== SIDEBAR ==================== */
+		menu.querySelectorAll(".group-header").forEach(function (h) {
+			h.addEventListener("click", function (e) {
+				e.stopPropagation();
+				h.parentElement.classList.toggle("open");
+				try {
+					const open = [].slice
+						.call(menu.querySelectorAll(".menu-group.open"))
+						.map(function (x) {
+							return x.dataset.group;
+						});
+					localStorage.setItem("ims_open_groups", JSON.stringify(open));
+				} catch (err) {}
+			});
+		});
+
+		try {
+			JSON.parse(localStorage.getItem("ims_open_groups") || "[]").forEach(function (name) {
+				const g = menu.querySelector('.menu-group[data-group="' + name + '"]');
+				if (g) g.classList.add("open");
+			});
+		} catch (err) {}
+
+		const path = window.location.pathname;
+		menu.querySelectorAll("a.menu-item").forEach(function (a) {
+			if (a.getAttribute("href").split("?")[0] === path) {
+				a.classList.add("active");
+				let p = a.closest(".menu-group");
+				while (p) {
+					p.classList.add("open");
+					p = p.parentElement.closest(".menu-group");
+				}
+			}
+		});
+
+		const search = document.getElementById("menuSearch");
+		search.addEventListener("input", function () {
+			const q = this.value.trim().toLowerCase();
+			menu.querySelectorAll("a.menu-item").forEach(function (a) {
+				const match = !q || a.textContent.toLowerCase().indexOf(q) !== -1;
+				a.classList.toggle("hidden-by-search", !match);
+			});
+			menu.querySelectorAll(".menu-group").forEach(function (g) {
+				const hasVisible = g.querySelector("a.menu-item:not(.hidden-by-search)");
+				g.classList.toggle("hidden-by-search", !!q && !hasVisible);
+				if (q && hasVisible) g.classList.add("open");
+			});
+			if (!q) {
+				menu.querySelectorAll(".menu-group").forEach(function (g) {
+					g.classList.remove("hidden-by-search");
+				});
+			}
+		});
+
+		const burger = document.getElementById("hamburger");
+		if (burger)
+			burger.addEventListener("click", function () {
+				app.classList.toggle("sidebar-open");
+			});
+
+		menu.querySelectorAll("a.menu-item").forEach(function (a) {
+			const href = a.getAttribute("href") || "";
+			if (href === "/ims") return;
+			a.setAttribute("target", "_blank");
+			a.setAttribute("rel", "noopener");
+		});
+		document.querySelectorAll(".action-grid a.action-btn").forEach(function (a) {
+			a.setAttribute("target", "_blank");
+			a.setAttribute("rel", "noopener");
+		});
+
+		const u = document.getElementById("userName");
+		const w = document.getElementById("welcomeUser");
+		try {
+			const full = decodeURIComponent(
+				(document.cookie.match(/full_name=([^;]+)/) || [])[1] || "",
+			).replace(/\+/g, " ");
+			const name = full || (window.frappe && frappe.session ? frappe.session.user : "");
+			if (u) u.textContent = name;
+			if (w && name) w.textContent = "Welcome, " + name;
+		} catch (err) {}
+
+		/* ==================== HELPERS ==================== */
+		var PALETTE = [
+			"#2196f3",
+			"#2e9e5b",
+			"#f5a623",
+			"#e04f4f",
+			"#8e44ad",
+			"#00897b",
+			"#607d8b",
+			"#c2185b",
+			"#5c6bc0",
+			"#8d6e63",
+		];
+
+		var charts = {};
+		var currentPeriod = "this_year";
+
+		function money(v) {
+			v = v || 0;
+			if (Math.abs(v) >= 1e6) return "SAR " + (v / 1e6).toFixed(1) + "M";
+			if (Math.abs(v) >= 1e3) return "SAR " + (v / 1e3).toFixed(0) + "K";
+			return "SAR " + Math.round(v);
+		}
+
+		function callMethod(method, args) {
+			return new Promise(function (resolve, reject) {
+				if (window.frappe && frappe.call) {
+					frappe.call({
+						method: method,
+						args: args || {},
+						callback: function (r) {
+							resolve(r.message);
+						},
+						error: function (e) {
+							reject(e);
+						},
+					});
+				} else {
+					var qs = new URLSearchParams(args || {}).toString();
+					fetch("/api/method/" + method + (qs ? "?" + qs : ""), {
+						headers: { Accept: "application/json" },
+						credentials: "same-origin",
+					})
+						.then(function (res) {
+							return res.json();
+						})
+						.then(function (json) {
+							resolve(json.message);
+						})
+						.catch(reject);
+				}
+			});
+		}
+
+		function setText(id, val) {
+			var el = document.getElementById(id);
+			if (el) el.textContent = val === undefined || val === null ? "0" : val;
+		}
+
+		function setBreakdown(id, data) {
+			var el = document.getElementById(id);
+			if (!el || !data) return;
+			el.innerHTML =
+				'<span class="bd-draft">Draft: ' +
+				(data.draft || 0) +
+				"</span>" +
+				'<span class="bd-submit">Submitted: ' +
+				(data.submitted || 0) +
+				"</span>";
+		}
+
+		function getCanvas(id) {
+			var el = document.getElementById(id);
+			if (el && el.tagName === "CANVAS") return el;
+			var ph = document.querySelector('[data-canvas-holder="' + id + '"]');
+			if (!ph) return null;
+			var c = document.createElement("canvas");
+			c.id = id;
+			c.height = ph.getAttribute("data-height") || 200;
+			ph.parentNode.replaceChild(c, ph);
+			return c;
+		}
+
+		function noData(canvasId) {
+			var c = document.getElementById(canvasId);
+			if (!c || c.tagName !== "CANVAS") return;
+			var h = c.getAttribute("height") || 200;
+			var p = document.createElement("div");
+			p.setAttribute("data-canvas-holder", canvasId);
+			p.setAttribute("data-height", h);
+			p.className = "chart-loading";
+			p.textContent = "No data to display";
+			c.parentNode.replaceChild(p, c);
+		}
+
+		function destroyChart(id) {
+			if (charts[id]) {
+				try {
+					charts[id].destroy();
+				} catch (e) {}
+				delete charts[id];
+			}
+		}
+
+		function simpleChart(id, rows, type, color, horizontal, valueKey, isMoney) {
+			destroyChart(id);
+			var el = getCanvas(id);
+			if (!el) return;
+			if (!rows || !rows.length) {
+				noData(id);
+				return;
+			}
+			var isPie = type === "doughnut" || type === "pie";
+			var vk = valueKey || "count";
+			charts[id] = new Chart(el, {
+				type: type,
+				data: {
+					labels: rows.map(function (x) {
+						return x.label || x.stage || "Not Set";
+					}),
+					datasets: [
+						{
+							label: isMoney ? "Value" : "Count",
+							data: rows.map(function (x) {
+								return x[vk];
+							}),
+							backgroundColor: isPie ? PALETTE : color || "#2196f3",
+							borderRadius: isPie ? 0 : 4,
+							borderWidth: isPie ? 2 : 0,
+							borderColor: "#fff",
+						},
+					],
+				},
+				options: {
+					indexAxis: horizontal ? "y" : "x",
+					plugins: {
+						legend: { display: isPie, position: "bottom" },
+						tooltip: {
+							callbacks: {
+								label: function (c) {
+									var v = isPie
+										? c.parsed
+										: horizontal
+											? c.parsed.x
+											: c.parsed.y;
+									return isMoney ? money(v) : v;
+								},
+							},
+						},
+					},
+					scales: isPie
+						? {}
+						: horizontal
+							? {
+									x: {
+										beginAtZero: true,
+										ticks: {
+											callback: function (v) {
+												return isMoney ? money(v) : v;
+											},
+										},
+									},
+								}
+							: {
+									y: {
+										beginAtZero: true,
+										ticks: {
+											callback: function (v) {
+												return isMoney ? money(v) : v;
+											},
+										},
+									},
+								},
+				},
+			});
+		}
+
+		function funnelChart(id, rows, colors) {
+			destroyChart(id);
+			var el = getCanvas(id);
+			if (!el) return;
+			if (!rows || !rows.length) {
+				noData(id);
+				return;
+			}
+			charts[id] = new Chart(el, {
+				type: "bar",
+				data: {
+					labels: rows.map(function (x) {
+						return x.stage;
+					}),
+					datasets: [
+						{
+							label: "Count",
+							data: rows.map(function (x) {
+								return x.count;
+							}),
+							backgroundColor: colors,
+							borderRadius: 4,
+						},
+					],
+				},
+				options: {
+					indexAxis: "y",
+					plugins: {
+						legend: { display: false },
+						tooltip: {
+							callbacks: {
+								afterLabel: function (c) {
+									var first = c.dataset.data[0] || 1;
+									return (
+										"Conversion from stage 1: " +
+										((c.parsed.x / first) * 100).toFixed(1) +
+										"%"
+									);
+								},
+							},
+						},
+					},
+					scales: { x: { beginAtZero: true, ticks: { precision: 0 } } },
+				},
+			});
+		}
+
+		function valueTrendChart(id, rows, barColor, lineLabel) {
+			destroyChart(id);
+			var el = getCanvas(id);
+			if (!el) return;
+			if (!rows || !rows.length) {
+				noData(id);
+				return;
+			}
+			charts[id] = new Chart(el, {
+				data: {
+					labels: rows.map(function (x) {
+						return x.month;
+					}),
+					datasets: [
+						{
+							type: "bar",
+							label: "Value",
+							data: rows.map(function (x) {
+								return x.value;
+							}),
+							backgroundColor: barColor,
+							borderRadius: 4,
+							yAxisID: "y",
+						},
+						{
+							type: "line",
+							label: lineLabel,
+							data: rows.map(function (x) {
+								return x.count;
+							}),
+							borderColor: "#f5a623",
+							borderWidth: 2,
+							pointRadius: 3,
+							tension: 0.3,
+							yAxisID: "y1",
+						},
+					],
+				},
+				options: {
+					plugins: {
+						legend: { position: "top", labels: { boxWidth: 10 } },
+						tooltip: {
+							callbacks: {
+								label: function (c) {
+									return (
+										c.dataset.label +
+										": " +
+										(c.datasetIndex === 0 ? money(c.parsed.y) : c.parsed.y)
+									);
+								},
+							},
+						},
+					},
+					scales: {
+						y: {
+							position: "left",
+							beginAtZero: true,
+							ticks: {
+								callback: function (v) {
+									return money(v);
+								},
+							},
+						},
+						y1: {
+							position: "right",
+							beginAtZero: true,
+							grid: { drawOnChartArea: false },
+							ticks: { precision: 0 },
+						},
+					},
+				},
+			});
+		}
+
+		/* ==================== LOADERS ==================== */
+		function loadCounts() {
+			callMethod("ppecon_ims.www.ims.index.get_dashboard_counts")
+				.then(function (m) {
+					if (!m) return;
+					setText("cnt-risks", m.risks.total);
+					setBreakdown("cnt-risks-breakdown", m.risks);
+					setText("cnt-context", m.contexts.total);
+					setBreakdown("cnt-context-breakdown", m.contexts);
+					setText("cnt-audit", m.audit_findings.total);
+					setBreakdown("cnt-audit-breakdown", m.audit_findings);
+					setText("cnt-nc", m.nc.total);
+					setBreakdown("cnt-nc-breakdown", m.nc);
+				})
+				.catch(function (e) {
+					console.error("IMS counts failed:", e);
+				});
+		}
+
+		function loadCharts(args) {
+			callMethod(
+				"ppecon_ims.www.ims.index.get_dashboard_charts",
+				args || { period: currentPeriod },
+			)
+				.then(function (d) {
+					if (!d) {
+						console.warn("IMS: no chart data");
+						return;
+					}
+					if (typeof Chart === "undefined") {
+						console.error("IMS: Chart.js not loaded");
+						return;
+					}
+					drawCharts(d);
+				})
+				.catch(function (e) {
+					console.error("IMS charts failed:", e);
+				});
+		}
+
+		/* ==================== DRAW ==================== */
+		function drawCharts(d) {
+			if (d.period) {
+				var r = document.getElementById("pbRange");
+				if (r) r.textContent = d.period.from + "  →  " + d.period.to;
+			}
+
+			/* -------- IMS -------- */
+			destroyChart("chartNcTrend");
+			var ncEl = getCanvas("chartNcTrend");
+			if (ncEl && d.nc_trend && d.nc_trend.length) {
+				charts["chartNcTrend"] = new Chart(ncEl, {
+					type: "line",
+					data: {
+						labels: d.nc_trend.map(function (x) {
+							return x.month;
+						}),
+						datasets: [
+							{
+								label: "Non Conformances",
+								data: d.nc_trend.map(function (x) {
+									return x.count;
+								}),
+								borderColor: "#e04f4f",
+								backgroundColor: "rgba(224,79,79,0.12)",
+								tension: 0.3,
+								fill: true,
+							},
+						],
+					},
+					options: {
+						plugins: { legend: { display: false } },
+						scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+					},
+				});
+			} else {
+				noData("chartNcTrend");
+			}
+
+			simpleChart("chartRiskStatus", d.risk_by_status, "doughnut");
+			simpleChart("chartDocsCategory", d.docs_by_category, "bar", "#1565c0");
+			simpleChart("chartEmpDept", d.employees_by_department, "bar", "#2e9e5b", true);
+
+			/* -------- CRM -------- */
+			funnelChart("chartFunnel", d.sales_funnel, [
+				"#2196f3",
+				"#5c6bc0",
+				"#f5a623",
+				"#2e9e5b",
+			]);
+			simpleChart("chartLeadStatus", d.lead_by_status, "doughnut");
+			simpleChart("chartLeadSource", d.lead_by_source, "bar", "#8e44ad", true);
+			simpleChart("chartOppStatus", d.opportunity_by_status, "doughnut");
+			simpleChart("chartOppType", d.opportunity_by_type, "bar", "#00897b", true);
+			simpleChart("chartQuoteStatus", d.quotation_by_status, "doughnut");
+			valueTrendChart(
+				"chartQuoteTrend",
+				d.quotation_value_trend,
+				"#1565c0",
+				"No. of Quotations",
+			);
+
+			/* -------- PROCUREMENT -------- */
+			funnelChart("chartPrcFunnel", d.procurement_funnel, [
+				"#2196f3",
+				"#5c6bc0",
+				"#8e44ad",
+				"#f5a623",
+				"#2e9e5b",
+			]);
+			simpleChart("chartMrStatus", d.mr_by_status, "doughnut");
+			simpleChart("chartMrType", d.mr_by_type, "bar", "#5c6bc0");
+			simpleChart("chartPoStatus", d.po_by_status, "doughnut");
+			simpleChart("chartSqSupplier", d.sq_by_supplier, "bar", "#00897b", true);
+			simpleChart(
+				"chartTopSuppliers",
+				d.top_suppliers_by_po,
+				"bar",
+				"#b8860b",
+				true,
+				"value",
+				true,
+			);
+			valueTrendChart("chartPoTrend", d.po_value_trend, "#2e9e5b", "No. of POs");
+
+			/* -------- TILES -------- */
+			if (d.summary) {
+				var s = d.summary;
+				[
+					["tileEmployees", s.active_employees],
+					["tileDepartments", s.departments],
+					["tileDocuments", s.documents],
+					["tileRisks", s.risks],
+					["tileNc", s.nc],
+					["tileSuppliers", s.suppliers],
+					["tileTasks", s.open_tasks],
+					["tileProjects", s.projects],
+				].forEach(function (p) {
+					setText(p[0], p[1]);
+				});
+			}
+
+			if (d.crm_summary) {
+				var c = d.crm_summary;
+				[
+					["crmOpenLeads", c.open_leads],
+					["crmOpenOpps", c.open_opportunities],
+					["crmWon", c.won],
+					["crmLost", c.lost],
+				].forEach(function (p) {
+					setText(p[0], p[1]);
+				});
+				var wr = document.getElementById("crmWinRate");
+				if (wr) wr.textContent = (c.win_rate || 0) + "%";
+				var qv = document.getElementById("crmQuoteValue");
+				if (qv) qv.textContent = money(c.open_quote_value);
+			}
+
+			if (d.procurement_summary) {
+				var p = d.procurement_summary;
+				[
+					["prcOpenMR", p.open_mr],
+					["prcPendingPO", p.pending_po],
+					["prcDraftPO", p.draft_po],
+					["prcSuppliers", p.active_suppliers],
+					["prcPOCount", p.po_count],
+				].forEach(function (x) {
+					setText(x[0], x[1]);
+				});
+				var m1 = document.getElementById("prcPOValue");
+				if (m1) m1.textContent = money(p.po_value);
+				var m2 = document.getElementById("prcAvgPO");
+				if (m2) m2.textContent = money(p.avg_po);
+				var m3 = document.getElementById("prcPayable");
+				if (m3) m3.textContent = money(p.outstanding_payable);
+			}
+		}
+
+		/* ==================== PERIOD FILTER ==================== */
+		function setupPeriodFilter() {
+			var bar = document.getElementById("periodBar");
+			if (!bar) return;
+
+			bar.querySelectorAll(".pb-chip").forEach(function (chip) {
+				chip.addEventListener("click", function () {
+					bar.querySelectorAll(".pb-chip").forEach(function (c) {
+						c.classList.remove("active");
+					});
+					chip.classList.add("active");
+					currentPeriod = chip.getAttribute("data-period");
+					document.getElementById("pbFrom").value = "";
+					document.getElementById("pbTo").value = "";
+					loadCharts({ period: currentPeriod });
+				});
+			});
+
+			var applyBtn = document.getElementById("pbApply");
+			if (applyBtn) {
+				applyBtn.addEventListener("click", function () {
+					var f = document.getElementById("pbFrom").value;
+					var t = document.getElementById("pbTo").value;
+					if (!f || !t) {
+						alert("Please pick both From and To dates.");
+						return;
+					}
+					bar.querySelectorAll(".pb-chip").forEach(function (c) {
+						c.classList.remove("active");
+					});
+					loadCharts({ from_date: f, to_date: t });
+				});
+			}
+		}
+
+		function start() {
+			setupPeriodFilter();
+			loadCounts();
+			loadCharts({ period: currentPeriod });
+		}
+
+		if (window.frappe && frappe.ready) {
+			frappe.ready(start);
+		} else {
+			var tries = 0;
+			var timer = setInterval(function () {
+				tries++;
+				if (window.frappe && frappe.ready) {
+					clearInterval(timer);
+					frappe.ready(start);
+				} else if (tries > 20) {
+					clearInterval(timer);
+					start();
+				}
+			}, 150);
+		}
+	})();
+</script>
+
+<!-- =========================================================================
+     SCRIPT 2 of 2 — visual settings / theme modal
+========================================================================== -->
+<script>
 	(function () {
 		var root = document.documentElement;
 		var overlay = document.getElementById("vsmOverlay");
 
-		/* ---- open / close ---- */
 		var opener = document.getElementById("vsOpen");
 		if (opener)
 			opener.addEventListener("click", function () {
@@ -888,7 +1702,6 @@
 			if (e.target === overlay) overlay.classList.remove("show");
 		});
 
-		/* ---- hex darken ---- */
 		function shade(hex, p) {
 			var n = parseInt(hex.slice(1), 16);
 			var r = Math.round(((n >> 16) & 255) * (1 - p));
@@ -920,13 +1733,11 @@
 			markActive(name);
 		}
 
-		/* ---- swatch clicks (event delegation — hamesha kaam karega) ---- */
 		document.getElementById("vsmGrid").addEventListener("click", function (e) {
 			var sw = e.target.closest(".vsm-swatch");
 			if (sw) applyTheme(sw.getAttribute("data-theme"));
 		});
 
-		/* ---- custom apply ---- */
 		document.getElementById("vsmApply").addEventListener("click", function () {
 			var sb = document.getElementById("vsmSidebar").value;
 			var ac = document.getElementById("vsmAccent").value;
@@ -943,7 +1754,6 @@
 			markActive("");
 		});
 
-		/* ---- reset ---- */
 		document.getElementById("vsmReset").addEventListener("click", function () {
 			try {
 				localStorage.removeItem("ims_custom");
@@ -951,7 +1761,6 @@
 			applyTheme("default");
 		});
 
-		/* ---- load pe active tick + saved custom values ---- */
 		try {
 			var saved = localStorage.getItem("ims_theme") || "default";
 			if (saved !== "custom") markActive(saved);
