@@ -1,0 +1,274 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-08-05 14:09:08.457377",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_dzrd",
+  "amended_from",
+  "naming_series",
+  "related_po_no",
+  "date_of_evaluation",
+  "column_break_ythl",
+  "supplier_name",
+  "project",
+  "evaluation_infromation_section",
+  "evaluation_name",
+  "column_break_teua",
+  "position",
+  "performance_evaluation_section",
+  "quality_of_product",
+  "problem_resolution",
+  "adhere_to_contract_terms",
+  "overall_satisfaction",
+  "column_break_eisd",
+  "timelines_of_deliveries",
+  "communication_and_responsiveness",
+  "consistency_and_reliability",
+  "professionalism",
+  "recommendations_section",
+  "area_of_improvement",
+  "site_visit_audit_required",
+  "if_yes_date_peformed",
+  "column_break_dzkp",
+  "recognition_of_outstanding_peroformance",
+  "section_break_fvgt",
+  "total_score",
+  "percentage",
+  "rating",
+  "score_matrix_html"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_dzrd",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Supplier Evaluation",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "S.No",
+   "options": "SEVAL-.YYYY.-.####"
+  },
+  {
+   "fieldname": "related_po_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Related PO No",
+   "options": "Purchase Order",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "related_po_no.supplier",
+   "fieldname": "supplier_name",
+   "fieldtype": "Data",
+   "label": "Supplier Name"
+  },
+  {
+   "fieldname": "date_of_evaluation",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date of Evaluation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "evaluation_infromation_section",
+   "fieldtype": "Section Break",
+   "label": "Evaluator Information"
+  },
+  {
+   "fieldname": "evaluation_name",
+   "fieldtype": "Link",
+   "label": "Evaluated By",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "evaluation_name.designation",
+   "fieldname": "position",
+   "fieldtype": "Data",
+   "label": "Position"
+  },
+  {
+   "fieldname": "column_break_teua",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "performance_evaluation_section",
+   "fieldtype": "Section Break",
+   "label": "Performance Evaluation"
+  },
+  {
+   "fieldname": "quality_of_product",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Quality of Products / Service ",
+   "options": "\nExcellent (5pts)\nGood (4pts)\nSatisfactory (3pts)\nNeeds Improvement (2pts)\nUnsatisfactory (1pts)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_eisd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "timelines_of_deliveries",
+   "fieldtype": "Select",
+   "label": "Timeliness of Deliveries",
+   "options": "\nAlways on Time (5pts)\nMostly on  Time (4pts)\nOccasionally Time (3pts)\nFrequently Late (2pts)\nConsistently Late (1pts)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "problem_resolution",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Problem Resolution",
+   "options": "\nProactive and Timely (5pts)\nAdequate (4pts)\nSlow or Inadequate (3pts)\nFrequent Issues (2pts)\nPersistent Problems (1pts)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "adhere_to_contract_terms",
+   "fieldtype": "Select",
+   "label": "Adhere to Contract Terms",
+   "options": "\nFull Compliance (5pts)\nGenerally Compliant (4pts)\nPartial Compliance (3pts)\nInfrequent Compliance (2pts)\nNon-Compliance (1pts)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "overall_satisfaction",
+   "fieldtype": "Select",
+   "label": "Overall Satisfaction",
+   "options": "\nHighly Satisfied (5pts)\nSatisfied (4pts)\nNeutral (3pts)\nDissatisfied (2pts)\nHighly Dissatisfied (1pts)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "communication_and_responsiveness",
+   "fieldtype": "Select",
+   "label": "Communication and Responsiveness",
+   "options": "\nExcellent (5pts)\nGood (4pts)\nSatisfactory (3pts)\nNeeds Improvement (2pts)\nUnsatisfactory (1pts)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "consistency_and_reliability",
+   "fieldtype": "Select",
+   "label": "Consistency and Reliability",
+   "options": "\nConsistently Reliable (5pts)\nGenerally Reliable (4pts)\nOccasionally Unreliable (3pts)\nFrequently Unreliable (2pts)\nHighly Unreliable (1pts)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "professionalism",
+   "fieldtype": "Select",
+   "label": "Professionalism",
+   "options": "\nHighly Professional (5pts)\nProfessional (4pts)\nAdequate (3pts)\nUnprofessional (2pts)\nHighly Unprofessional (1pts)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "recommendations_section",
+   "fieldtype": "Section Break",
+   "label": "Recommendations"
+  },
+  {
+   "fieldname": "area_of_improvement",
+   "fieldtype": "Small Text",
+   "label": "Area of Improvement"
+  },
+  {
+   "default": "0",
+   "fieldname": "site_visit_audit_required",
+   "fieldtype": "Check",
+   "label": "Site Visit Audit Required"
+  },
+  {
+   "depends_on": "eval:doc.site_visit_audit_required==1",
+   "fieldname": "if_yes_date_peformed",
+   "fieldtype": "Datetime",
+   "label": "If Yes Date Performed",
+   "mandatory_depends_on": "eval:doc.site_visit_audit_required==1"
+  },
+  {
+   "fieldname": "column_break_dzkp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "recognition_of_outstanding_peroformance",
+   "fieldtype": "Small Text",
+   "label": "Recognition of Outstanding Peroformance"
+  },
+  {
+   "fieldname": "section_break_fvgt",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "score_matrix_html",
+   "fieldtype": "HTML",
+   "label": "Score Matrix HTML"
+  },
+  {
+   "fieldname": "total_score",
+   "fieldtype": "Int",
+   "label": "Total Score",
+   "read_only": 1
+  },
+  {
+   "fieldname": "percentage",
+   "fieldtype": "Percent",
+   "label": "Percentage",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rating",
+   "fieldtype": "Data",
+   "label": "Rating",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ythl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "related_po_no.project",
+   "fieldname": "project",
+   "fieldtype": "Data",
+   "label": "Project"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-08-05 15:23:53.658572",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Supplier Evaluation",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
