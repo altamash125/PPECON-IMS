@@ -1,8 +1,9 @@
 <!-- =========================================================================
-  PPECON IMS Portal — index.html  (v3 COMPLETE)
+  PPECON IMS Portal — index.html  (v3.2 COMPLETE)
   Location : ppecon_ims/www/ims/index.html
   Backend  : ppecon_ims/www/ims/index.py  (v3.1)
   Sections : IMS/ISO · Sales & Marketing · Procurement + period filter
+             + IMS Quality Objectives (Supplier | Training side-by-side)
 ========================================================================== -->
 
 <link rel="stylesheet" href="/assets/ppecon_ims/css/ims_portal.css" />
@@ -498,7 +499,7 @@
 				</div>
 				<div class="group-items">
 					<a href="/ppe-policy" class="menu-item">Policy</a>
-					<a href="/app/quality-goal" class="menu-item">Objective</a>
+					<a href="/app/objectives" class="menu-item">Objective</a>
 				</div>
 			</div>
 
@@ -552,18 +553,13 @@
 			</div>
 
 			<div class="menu-group" data-group="mrm">
-    <div class="group-header">
-        <i class="menu-icon">⇄</i>
-        <span>MRM</span>
-        <i class="chevron">▸</i>
-    </div>
-
-    <div class="group-items">
-        <a href="app/quality-meeting" class="menu-item">
-            MRM Agenda
-        </a>
-    </div>
-
+				<div class="group-header">
+					<i class="menu-icon">⇄</i><span>MRM</span><i class="chevron">▸</i>
+				</div>
+				<div class="group-items">
+					<a href="/app/quality-meeting" class="menu-item">MRM Agenda</a>
+				</div>
+			</div>
 
 			<div class="menu-group" data-group="compliance">
 				<div class="group-header">
@@ -915,6 +911,29 @@
 						<div class="insight-title">Employees — by Department</div>
 						<canvas id="chartEmpDept" height="200"></canvas>
 					</div>
+
+					<!-- ---- IMS Quality Objectives (Supplier | Training side-by-side) ---- -->
+					<div class="insight-card full qo-card">
+						<div class="insight-title">IMS Quality Objectives</div>
+
+						<div class="qo-grid">
+							<div class="qo-col">
+								<div class="qo-section-title">Supplier Compliance Stats</div>
+								<div id="tblSupplierCompliance" class="stats-table-wrap"></div>
+								<div class="qo-chart">
+									<canvas id="chartSupplierCompliance" height="200"></canvas>
+								</div>
+							</div>
+
+							<div class="qo-col">
+								<div class="qo-section-title">Training Objectives Stats</div>
+								<div id="tblTrainingStats" class="stats-table-wrap"></div>
+								<div class="qo-chart">
+									<canvas id="chartTrainingStats" height="200"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -1064,7 +1083,7 @@
 </div>
 
 <!-- =========================================================================
-     SCRIPT 1 of 2 — sidebar + all dashboard data  (ONLY ONE COPY)
+     SCRIPT 1 of 3 — sidebar + all dashboard data  (ONLY ONE COPY)
 ========================================================================== -->
 <script>
 	(function () {
@@ -1689,7 +1708,7 @@
 </script>
 
 <!-- =========================================================================
-     SCRIPT 2 of 2 — visual settings / theme modal
+     SCRIPT 2 of 3 — visual settings / theme modal
 ========================================================================== -->
 <script>
 	(function () {
@@ -1776,5 +1795,322 @@
 				document.getElementById("vsmAccent").value = c.ac;
 			}
 		} catch (e) {}
+	})();
+</script>
+
+<!-- =========================================================================
+     SCRIPT 3 of 3 — IMS Quality Objectives (Supplier | Training, table + chart)
+========================================================================== -->
+<script>
+	(function () {
+		var charts3 = {};
+
+		function call(method) {
+			return fetch("/api/method/" + method, {
+				headers: { Accept: "application/json" },
+				credentials: "same-origin",
+			})
+				.then(function (r) {
+					return r.json();
+				})
+				.then(function (j) {
+					return j.message;
+				});
+		}
+
+		function destroy(id) {
+			if (charts3[id]) {
+				try {
+					charts3[id].destroy();
+				} catch (e) {}
+				delete charts3[id];
+			}
+		}
+
+		/* ================= SUPPLIER ================= */
+		function renderSupplierTable(d) {
+			var el = document.getElementById("tblSupplierCompliance");
+			if (!el || !d) return;
+			var rows = d.quarters
+				.map(function (q) {
+					var has = q.evaluated > 0;
+					var comment = "";
+					if (has) {
+						comment = q.objective_met
+							? "Objective met. Non-compliant suppliers " +
+								q.non_compliant_pct +
+								"% (limit 20%)."
+							: "Objective not met. Non-compliant suppliers " +
+								q.non_compliant_pct +
+								"% (limit 20%). Improvement actions required.";
+					}
+					return (
+						"<tr>" +
+						"<td><b>" +
+						q.quarter +
+						"</b></td>" +
+						"<td>" +
+						(has ? q.evaluated : "-") +
+						"</td>" +
+						"<td>" +
+						(has ? q.compliant : "-") +
+						"</td>" +
+						"<td>" +
+						(has ? q.compliance_rate + "%" : "-") +
+						"</td>" +
+						"<td>" +
+						(has ? q.target + "%" : "-") +
+						"</td>" +
+						'<td class="comments">' +
+						comment +
+						"</td>" +
+						"</tr>"
+					);
+				})
+				.join("");
+			el.innerHTML =
+				'<table class="stats-table"><thead><tr>' +
+				"<th>Quarter</th><th>Suppliers<br>Evaluated</th>" +
+				"<th>Compliant<br>Suppliers</th>" +
+				"<th>Compliance<br>Rate (%)</th><th>Target<br>Rate (%)</th>" +
+				"<th>Comments/Actions Taken</th>" +
+				"</tr></thead><tbody>" +
+				rows +
+				"</tbody></table>";
+		}
+
+		function drawSupplierCompliance(d) {
+			renderSupplierTable(d);
+			var el = document.getElementById("chartSupplierCompliance");
+			if (!el || !d) return;
+			destroy("sc");
+
+			var qs = d.quarters.filter(function (x) {
+				return x.evaluated > 0;
+			});
+			if (!qs.length) qs = d.quarters;
+
+			var vals = [];
+			qs.forEach(function (x) {
+				if (x.evaluated > 0) vals.push(x.compliance_rate);
+				vals.push(x.target);
+			});
+			var yMin = Math.max(0, Math.min.apply(null, vals) - 2);
+			var yMax = Math.min(100, Math.max.apply(null, vals) + 1);
+
+			charts3["sc"] = new Chart(el, {
+				type: "bar",
+				data: {
+					labels: qs.map(function (x) {
+						return x.quarter;
+					}),
+					datasets: [
+						{
+							label: "Compliance Rate (%)",
+							data: qs.map(function (x) {
+								return x.compliance_rate;
+							}),
+							backgroundColor: "#8d4a3c",
+							borderRadius: 2,
+							maxBarThickness: 60,
+						},
+						{
+							label: "Target Compliance Rate (%)",
+							data: qs.map(function (x) {
+								return x.target;
+							}),
+							backgroundColor: "#5f7470",
+							borderRadius: 2,
+							maxBarThickness: 60,
+						},
+					],
+				},
+				options: {
+					plugins: {
+						legend: { position: "bottom", labels: { boxWidth: 10 } },
+						tooltip: {
+							callbacks: {
+								afterLabel: function (c) {
+									var q = qs[c.dataIndex];
+									if (c.datasetIndex === 0)
+										return (
+											"Evaluated: " +
+											q.evaluated +
+											" | Compliant: " +
+											q.compliant +
+											" | Non-Compliant: " +
+											q.non_compliant_pct +
+											"%"
+										);
+									return "";
+								},
+							},
+						},
+					},
+					scales: {
+						y: {
+							min: yMin,
+							max: yMax,
+							ticks: {
+								stepSize: 1,
+								callback: function (v) {
+									return v + "%";
+								},
+							},
+						},
+					},
+				},
+			});
+		}
+
+		/* ================= TRAINING ================= */
+		function renderTrainingTable(d) {
+			var el = document.getElementById("tblTrainingStats");
+			if (!el || !d) return;
+			var rows = d.quarters
+				.map(function (q) {
+					var met = q.target > 0 && q.trained >= q.target;
+					var comment =
+						q.trained === 0
+							? "No training conducted this quarter."
+							: met
+								? "Target achieved; 50% employees completed training."
+								: "Below target. " +
+									q.pct_trained +
+									"% trained, additional sessions required.";
+					return (
+						"<tr>" +
+						"<td><b>" +
+						q.quarter +
+						"</b></td>" +
+						"<td>" +
+						q.total_employees +
+						"</td>" +
+						"<td>" +
+						q.target +
+						"</td>" +
+						"<td>" +
+						q.trained +
+						"</td>" +
+						"<td>" +
+						q.pct_trained +
+						"%</td>" +
+						'<td class="comments">' +
+						comment +
+						"</td>" +
+						"</tr>"
+					);
+				})
+				.join("");
+			el.innerHTML =
+				'<table class="stats-table"><thead><tr>' +
+				"<th>Quarter</th><th>Total<br>Employees</th>" +
+				"<th>Target: 50%<br>to Train</th>" +
+				"<th>Employees<br>Trained</th><th>%<br>Trained</th>" +
+				"<th>Comments/Actions Taken</th>" +
+				"</tr></thead><tbody>" +
+				rows +
+				"</tbody></table>";
+		}
+
+		function drawTrainingStats(d) {
+			renderTrainingTable(d);
+			var el = document.getElementById("chartTrainingStats");
+			if (!el || !d) return;
+			destroy("tr");
+			var qs = d.quarters;
+			charts3["tr"] = new Chart(el, {
+				data: {
+					labels: qs.map(function (x) {
+						return x.quarter;
+					}),
+					datasets: [
+						{
+							type: "bar",
+							label: "Total Employees",
+							data: qs.map(function (x) {
+								return x.total_employees;
+							}),
+							backgroundColor: "#8d4a3c",
+							borderRadius: 2,
+							maxBarThickness: 35,
+							yAxisID: "y",
+						},
+						{
+							type: "bar",
+							label: "Target (50%)",
+							data: qs.map(function (x) {
+								return x.target;
+							}),
+							backgroundColor: "#5f7470",
+							borderRadius: 2,
+							maxBarThickness: 35,
+							yAxisID: "y",
+						},
+						{
+							type: "bar",
+							label: "Trained",
+							data: qs.map(function (x) {
+								return x.trained;
+							}),
+							backgroundColor: "#c69a83",
+							borderRadius: 2,
+							maxBarThickness: 35,
+							yAxisID: "y",
+						},
+						{
+							type: "line",
+							label: "% Trained",
+							data: qs.map(function (x) {
+								return x.pct_trained;
+							}),
+							borderColor: "#3d5a45",
+							borderWidth: 2,
+							pointRadius: 3,
+							tension: 0.3,
+							yAxisID: "y1",
+						},
+					],
+				},
+				options: {
+					plugins: { legend: { position: "bottom", labels: { boxWidth: 10 } } },
+					scales: {
+						y: { beginAtZero: true, ticks: { precision: 0 } },
+						y1: {
+							position: "right",
+							beginAtZero: true,
+							max: 100,
+							grid: { drawOnChartArea: false },
+							ticks: {
+								callback: function (v) {
+									return v + "%";
+								},
+							},
+						},
+					},
+				},
+			});
+		}
+
+		/* ================= START ================= */
+		function start3() {
+			if (typeof Chart === "undefined") {
+				setTimeout(start3, 200);
+				return;
+			}
+			call("ppecon_ims.www.ims.index.get_supplier_compliance_stats")
+				.then(drawSupplierCompliance)
+				.catch(function (e) {
+					console.error("Supplier compliance failed:", e);
+				});
+			call("ppecon_ims.www.ims.index.get_training_stats")
+				.then(drawTrainingStats)
+				.catch(function (e) {
+					console.error("Training stats failed:", e);
+				});
+		}
+
+		if (document.readyState === "complete") start3();
+		else window.addEventListener("load", start3);
 	})();
 </script>

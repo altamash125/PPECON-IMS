@@ -507,3 +507,109 @@ def _summary_tiles():
         "open_tasks": _safe_count("Task", {"status": "Open"}),
         "projects": _safe_count("Project"),
     }
+
+
+
+# =========================================================================
+#  SUPPLIER COMPLIANCE & TRAINING OBJECTIVES STATS
+# =========================================================================
+QUARTERS = [
+    ("Q1", "01-01", "03-31"),
+    ("Q2", "04-01", "06-30"),
+    ("Q3", "07-01", "09-30"),
+    ("Q4", "10-01", "12-31"),
+]
+
+
+def _se_date_field():
+    """Supplier Evaluation ka date field auto-detect karo."""
+    for f in ("evaluation_date", "date_of_evaluation", "date"):
+        if _has_field("Supplier Evaluation", f):
+            return f
+    return "creation"
+
+
+@frappe.whitelist()
+def get_supplier_compliance_stats(year=None):
+    """Quarterly compliance from Supplier Evaluation.
+    Compliant = percentage >= 90. Target fixed 90%.
+    Objective: non-compliant < 20% of evaluated."""
+    year = int(year or getdate(today()).year)
+    out = []
+
+    if not _exists("Supplier Evaluation"):
+        return {"year": year, "quarters": []}
+
+    df = _se_date_field()
+
+    for q, f, t in QUARTERS:
+        try:
+            rows = frappe.get_all(
+                "Supplier Evaluation",
+                filters={
+                    "docstatus": 1,
+                    df: ["between", ["%s-%s" % (year, f), "%s-%s" % (year, t)]],
+                },
+                fields=["percentage", "rating", "total_score"],
+                ignore_permissions=True,
+            )
+        except Exception:
+            frappe.log_error(frappe.get_traceback(), "IMS supplier_compliance %s" % q)
+            rows = []
+
+        evaluated = len(rows)
+        compliant = len([r for r in rows if flt(r.percentage) >= 90])
+        avg_pct = round(sum(flt(r.percentage) for r in rows) / evaluated) if evaluated else 0
+        non_compliant_pct = round((evaluated - compliant) / evaluated * 100) if evaluated else 0
+
+        out.append({
+            "quarter": q,
+            "evaluated": evaluated,
+            "compliant": compliant,
+            "compliance_rate": avg_pct,          # avg of percentage field
+            "target": 90,                         # fixed
+            "non_compliant_pct": non_compliant_pct,
+            "objective_met": (non_compliant_pct < 20) if evaluated else None,
+        })
+
+    return {"year": year, "quarters": out}
+
+
+@frappe.whitelist()
+def get_training_stats(year=None):
+    """Quarterly training from Training Event. Target = 50% of active employees."""
+    year = int(year or getdate(today()).year)
+    total_employees = _safe_count("Employee", {"status": "Active"})
+    target_count = round(total_employees * 0.5)
+    out = []
+
+    if not _exists("Training Event"):
+        return {"year": year, "quarters": []}
+
+    for q, f, t in QUARTERS:
+        trained = 0
+        try:
+            trained = frappe.db.sql(
+                """
+                SELECT COUNT(DISTINCT tee.employee)
+                FROM `tabTraining Event Employee` tee
+                JOIN `tabTraining Event` te ON te.name = tee.parent
+                WHERE te.start_time >= %s AND te.start_time < %s
+                  AND te.docstatus < 2
+                """,
+                ("%s-%s 00:00:00" % (year, f),
+                 str(add_days(getdate("%s-%s" % (year, t)), 1)) + " 00:00:00"),
+            )[0][0] or 0
+        except Exception:
+            frappe.log_error(frappe.get_traceback(), "IMS training_stats %s" % q)
+
+        pct = round(trained / total_employees * 100, 1) if total_employees else 0
+        out.append({
+            "quarter": q,
+            "total_employees": total_employees,
+            "target": target_count,
+            "trained": trained,
+            "pct_trained": pct,
+        })
+
+    return {"year": year, "quarters": out}

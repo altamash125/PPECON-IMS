@@ -1,0 +1,123 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-08-05 17:15:11.992586",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_uqat",
+  "amended_from",
+  "naming_series",
+  "department",
+  "specific",
+  "achievable",
+  "time_bound",
+  "column_break_jnwa",
+  "responsible_person",
+  "measurable",
+  "relevant"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_uqat",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Objectives",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "S.No",
+   "options": "OBJ-.YYYY.-.####"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Department",
+   "reqd": 1
+  },
+  {
+   "fieldname": "specific",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Specific",
+   "reqd": 1
+  },
+  {
+   "fieldname": "achievable",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Achievable ",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_jnwa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "responsible_person",
+   "fieldtype": "Link",
+   "label": "Responsible Person",
+   "options": "User"
+  },
+  {
+   "fieldname": "measurable",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Measurable",
+   "reqd": 1
+  },
+  {
+   "fieldname": "relevant",
+   "fieldtype": "Small Text",
+   "label": "Relevant",
+   "reqd": 1
+  },
+  {
+   "fieldname": "time_bound",
+   "fieldtype": "Date",
+   "label": "Time Bound"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-08-05 17:25:32.682248",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Objectives",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class Objective(Document):
+class Objectives(Document):
 	pass
