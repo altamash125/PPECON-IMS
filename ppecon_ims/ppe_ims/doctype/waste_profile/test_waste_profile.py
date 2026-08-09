@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestSolidWasteProfile(FrappeTestCase):
+class TestWasteProfile(FrappeTestCase):
 	pass

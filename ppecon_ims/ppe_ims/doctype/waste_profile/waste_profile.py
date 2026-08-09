@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class SolidWasteProfile(Document):
+class WasteProfile(Document):
 	pass

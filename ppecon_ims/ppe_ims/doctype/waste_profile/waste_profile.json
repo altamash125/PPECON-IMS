@@ -15,6 +15,7 @@
   "air_monitoring_equipment",
   "solid_waste_supplier",
   "responsibility",
+  "waste_profile_type",
   "air_emission_composition_mappings_section",
   "table_qzcm",
   "supporting_files_section",
@@ -90,15 +91,21 @@
    "fieldtype": "Link",
    "label": "Solid Waste Supplier",
    "options": "Supplier"
+  },
+  {
+   "fieldname": "waste_profile_type",
+   "fieldtype": "Select",
+   "label": "Waste Profile Type",
+   "options": "\nSolid Waste Profile\nAir Emission Profile\nWater Waste Profile"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-22 16:16:34.709729",
+ "modified": "2026-08-09 16:49:58.080577",
  "modified_by": "Administrator",
  "module": "PPE IMS",
- "name": "Solid Waste Profile",
+ "name": "Waste Profile",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
