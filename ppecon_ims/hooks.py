@@ -139,14 +139,12 @@ web_include_js = "/assets/ppecon_ims/js/ims_portal.js"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
-
+doc_events = {
+    # ... existing ...
+    "Non Conformance": {
+        "on_update": "ppecon_ims.ppecon_ims.notifications.nc_email.send_nc_review_email",
+    }
+}
 # Scheduled Tasks
 # ---------------
 
