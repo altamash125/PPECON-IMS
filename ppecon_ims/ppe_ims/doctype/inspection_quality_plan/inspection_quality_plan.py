@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class FinalInspectionQualityPlan(Document):
+class InspectionQualityPlan(Document):
 	pass
