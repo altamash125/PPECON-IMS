@@ -1,0 +1,138 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-08-12 15:06:24.962848",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_mw4u",
+  "amended_from",
+  "naming_series",
+  "date_of_request",
+  "requester_name",
+  "requester_contact_number",
+  "request_submitted",
+  "request_to",
+  "column_break_amvi",
+  "project_name",
+  "address",
+  "email",
+  "priority",
+  "section_break_xsvc",
+  "bulk_upload"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_mw4u",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Service Request",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "date_of_request",
+   "fieldtype": "Date",
+   "label": "Date of Request"
+  },
+  {
+   "fieldname": "requester_name",
+   "fieldtype": "Data",
+   "label": "Requester Name"
+  },
+  {
+   "fieldname": "requester_contact_number",
+   "fieldtype": "Data",
+   "label": "Requester Contact Number"
+  },
+  {
+   "fieldname": "request_submitted",
+   "fieldtype": "Select",
+   "label": "Request Submitted",
+   "options": "\nIn Person\nBy Email\nBy Phone"
+  },
+  {
+   "fieldname": "request_to",
+   "fieldtype": "Select",
+   "label": "Request To",
+   "options": "\nPMO\nManagement\nSite Team"
+  },
+  {
+   "fieldname": "column_break_amvi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "project_name",
+   "fieldtype": "Link",
+   "label": "Project Name",
+   "options": "Project"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Data",
+   "label": "Address"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority",
+   "options": "\nNormal\nUrgent (Emergency Only)"
+  },
+  {
+   "fieldname": "section_break_xsvc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Bulk Upload"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "SR-.YYYY.-.####."
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-08-12 15:10:54.461569",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Service Request",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
