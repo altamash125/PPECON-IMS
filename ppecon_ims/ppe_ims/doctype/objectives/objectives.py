@@ -18,6 +18,18 @@ def notify_objective_responsible_person(doc, method):
     send_objective_mail(doc, recipients)
 
 
+def notify_objective_responsible_person_after_submit(doc, method):
+    if not doc.responsible_person:
+        return
+
+    if not doc.has_value_changed("responsible_person"):
+        return
+
+    recipients = [doc.responsible_person]
+
+    send_objective_mail(doc, recipients)
+
+
 def send_objective_mail(doc, recipients):
     document_link = frappe.utils.get_url_to_form("Objectives", doc.name)
 

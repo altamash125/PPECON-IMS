@@ -1,4 +1,3 @@
-
 # Copyright (c) 2026, altamash@ppecon.com and contributors
 # For license information, please see license.txt
 
@@ -11,6 +10,21 @@ class IMSDocuments(Document):
 
 
 def notify_ims_document_assignees(doc, method):
+    if not doc.assigned_to:
+        return
+
+    recipients = []
+    for row in doc.assigned_to:
+        if row.user:
+            recipients.append(row.user)
+
+    if not recipients:
+        return
+
+    send_ims_document_mail(doc, recipients)
+
+
+def notify_ims_document_assignees_after_submit(doc, method):
     if not doc.assigned_to:
         return
 

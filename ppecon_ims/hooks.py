@@ -139,14 +139,18 @@ web_include_js = "/assets/ppecon_ims/js/ims_portal.js"
 # ---------------
 # Hook on document methods and events
 doc_events = {
-    "IMS Documents": {
-        "on_submit": "ppecon_ims.ppe_ims.doctype.ims_documents.ims_documents.notify_ims_document_assignees"
+   "IMS Documents": {
+    "on_submit": "ppecon_ims.ppe_ims.doctype.ims_documents.ims_documents.notify_ims_document_assignees",
+    "on_update_after_submit": "ppecon_ims.ppe_ims.doctype.ims_documents.ims_documents.notify_ims_document_assignees_after_submit"
     },
-    "Objectives": {
-        "on_submit": "ppecon_ims.ppe_ims.doctype.objectives.objectives.notify_objective_responsible_person"
-    },
+
+   "Objectives": {
+    "on_submit": "ppecon_ims.ppe_ims.doctype.objectives.objectives.notify_objective_responsible_person",
+    "on_update_after_submit": "ppecon_ims.ppe_ims.doctype.objectives.objectives.notify_objective_responsible_person_after_submit"
+   },
+   
     "Compliance Obligation": {
-        "on_update": "ppecon_ims.ppe_ims.doctype.compliance_obligation.compliance_obligation.notify_compliance_obligation_responsible_person"
+        "on_submit": "ppecon_ims.ppe_ims.doctype.compliance_obligation.compliance_obligation.notify_compliance_obligation_responsible_person"
     },
     "Risk And Opportunity": {
         "on_submit": "ppecon_ims.ppe_ims.doctype.risk_and_opportunity.risk_and_opportunity.notify_risk_opportunity_assignees"
