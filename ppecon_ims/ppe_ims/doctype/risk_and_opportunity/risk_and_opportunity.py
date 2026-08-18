@@ -5,7 +5,7 @@ import frappe
 from frappe.model.document import Document
 
 
-class RiskAndOpportunity(Document):
+class RiskandOpportunity(Document):
     pass
 
 

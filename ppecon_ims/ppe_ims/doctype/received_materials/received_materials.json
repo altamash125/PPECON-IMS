@@ -31,7 +31,7 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Incoming materials",
+   "options": "Received Materials",
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
@@ -90,7 +90,7 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Incoming materials",
+   "options": "Received Materials",
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
@@ -116,7 +116,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-07-23 14:39:18.632567",
+ "modified": "2026-08-18 14:40:09.875145",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Received Materials",

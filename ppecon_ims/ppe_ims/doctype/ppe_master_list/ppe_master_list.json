@@ -29,7 +29,7 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "PPE Master",
+   "options": "PPE Master List",
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
@@ -96,7 +96,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-07-14 13:40:43.645879",
+ "modified": "2026-08-18 14:53:22.476565",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "PPE Master List",

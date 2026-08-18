@@ -153,9 +153,9 @@ doc_events = {
     "on_submit": "ppecon_ims.ppe_ims.doctype.compliance_obligation.compliance_obligation.notify_compliance_obligation_responsible_person",
     "on_update_after_submit": "ppecon_ims.ppe_ims.doctype.compliance_obligation.compliance_obligation.notify_compliance_obligation_responsible_person_after_submit"
    },
-    "Risk And Opportunity": {
-        "on_submit": "ppecon_ims.ppe_ims.doctype.risk_and_opportunity.risk_and_opportunity.notify_risk_opportunity_assignees"
-    },
+   "Risk and Opportunity": {
+    "on_submit": "ppecon_ims.ppe_ims.doctype.risk_and_opportunity.risk_and_opportunity.notify_risk_opportunity_assignees"
+   },
     "Design and Development": {
         "on_update": "ppecon_ims.ppe_ims.doctype.design_and_development.design_and_development.notify_design_development_project_manager"
     },
