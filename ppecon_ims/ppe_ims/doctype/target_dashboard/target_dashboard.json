@@ -1,0 +1,177 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-08-13 15:21:00.726421",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "sec_target",
+  "year",
+  "sales_person",
+  "cb_target",
+  "annual_target",
+  "currency",
+  "sec_achievement",
+  "sales_order_amount",
+  "remaining_target",
+  "cb_achievement",
+  "achievement",
+  "last_synced",
+  "sec_gauge",
+  "progress_html"
+ ],
+ "fields": [
+  {
+   "default": "TGT-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "TGT-.YYYY.-",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sec_target",
+   "fieldtype": "Section Break",
+   "label": "Target"
+  },
+  {
+   "default": "Today",
+   "fieldname": "year",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Year",
+   "reqd": 1
+  },
+  {
+   "description": "Leave blank for company-wide target",
+   "fieldname": "sales_person",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sales Team / Person (optional)",
+   "options": "Sales Person"
+  },
+  {
+   "fieldname": "cb_target",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "annual_target",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Annual Target",
+   "reqd": 1
+  },
+  {
+   "default": "SAR",
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "sec_achievement",
+   "fieldtype": "Section Break",
+   "label": "Result (auto)"
+  },
+  {
+   "fieldname": "sales_order_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Sales Order Amount (this year)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remaining_target",
+   "fieldtype": "Currency",
+   "label": "Remaining Target",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_achievement",
+   "fieldtype": "Column Break"
+  },
+  {
+   "bold": 1,
+   "fieldname": "achievement",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Achievement %",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_synced",
+   "fieldtype": "Datetime",
+   "label": "Last Synced",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_gauge",
+   "fieldtype": "Section Break",
+   "label": "Dashboard"
+  },
+  {
+   "fieldname": "progress_html",
+   "fieldtype": "HTML",
+   "label": "Progress"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-13 15:21:00.726421",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Target Dashboard",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "year",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "year",
+ "track_changes": 1
+}

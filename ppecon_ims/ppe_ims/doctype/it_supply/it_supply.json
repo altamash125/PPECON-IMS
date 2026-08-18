@@ -1,0 +1,186 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-08-16 15:35:32.708832",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_qkjq",
+  "amended_from",
+  "naming_series",
+  "asset_name",
+  "sn",
+  "asset_type",
+  "hddssd",
+  "ram",
+  "os",
+  "processor",
+  "column_break_lzhp",
+  "model_no",
+  "manufacturerbrand",
+  "purchase_date",
+  "specification",
+  "status",
+  "assigned_to",
+  "assigned_date",
+  "request_reference",
+  "section_break_ebdk",
+  "bulk_upload"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_qkjq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "IT Supply",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "IT-A-PPE-.####"
+  },
+  {
+   "fieldname": "sn",
+   "fieldtype": "Data",
+   "label": "S/N"
+  },
+  {
+   "fieldname": "asset_name",
+   "fieldtype": "Data",
+   "label": "Asset Name"
+  },
+  {
+   "fieldname": "asset_type",
+   "fieldtype": "Select",
+   "label": "Asset Type",
+   "options": "\nLaptop/Desktop\nMonitor\nOthers"
+  },
+  {
+   "fieldname": "model_no",
+   "fieldtype": "Data",
+   "label": "Model No"
+  },
+  {
+   "fieldname": "manufacturerbrand",
+   "fieldtype": "Data",
+   "label": "Manufacturer/Brand"
+  },
+  {
+   "fieldname": "column_break_lzhp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "purchase_date",
+   "fieldtype": "Date",
+   "label": "Purchase Date"
+  },
+  {
+   "fieldname": "specification",
+   "fieldtype": "Small Text",
+   "label": "Specification "
+  },
+  {
+   "depends_on": "eval:doc.asset_type==\"Laptop/Desktop\"",
+   "fieldname": "hddssd",
+   "fieldtype": "Data",
+   "label": "HDD/SSD",
+   "mandatory_depends_on": "eval:doc.asset_type==\"Laptop/Desktop\""
+  },
+  {
+   "depends_on": "eval:doc.asset_type==\"Laptop/Desktop\"",
+   "fieldname": "ram",
+   "fieldtype": "Data",
+   "label": "RAM",
+   "mandatory_depends_on": "eval:doc.asset_type==\"Laptop/Desktop\""
+  },
+  {
+   "depends_on": "eval:doc.asset_type==\"Laptop/Desktop\"",
+   "fieldname": "processor",
+   "fieldtype": "Data",
+   "label": "PROCESSOR",
+   "mandatory_depends_on": "eval:doc.asset_type==\"Laptop/Desktop\""
+  },
+  {
+   "depends_on": "eval:doc.asset_type==\"Laptop/Desktop\"",
+   "fieldname": "os",
+   "fieldtype": "Data",
+   "label": "OS",
+   "mandatory_depends_on": "eval:doc.asset_type==\"Laptop/Desktop\""
+  },
+  {
+   "fieldname": "section_break_ebdk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Bulk Upload"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nIn Stock\nAssigned\nRepair\nRetired"
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Link",
+   "label": "Assigned To",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "assigned_date",
+   "fieldtype": "Date",
+   "label": "Assigned Date"
+  },
+  {
+   "fieldname": "request_reference",
+   "fieldtype": "Link",
+   "label": "Request Reference",
+   "options": "IT Asset Request"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-08-17 12:53:28.329452",
+ "modified_by": "m.farhan@ppecon.com",
+ "module": "PPE IMS",
+ "name": "IT Supply",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "asset_name"
+}

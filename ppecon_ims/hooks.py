@@ -138,7 +138,47 @@ web_include_js = "/assets/ppecon_ims/js/ims_portal.js"
 # Document Events
 # ---------------
 # Hook on document methods and events
-
+doc_events = {
+    "IMS Documents": {
+        "on_submit": "ppecon_ims.ppe_ims.doctype.ims_documents.ims_documents.notify_ims_document_assignees"
+    },
+    "Objectives": {
+        "on_submit": "ppecon_ims.ppe_ims.doctype.objectives.objectives.notify_objective_responsible_person"
+    },
+    "Compliance Obligation": {
+        "on_update": "ppecon_ims.ppe_ims.doctype.compliance_obligation.compliance_obligation.notify_compliance_obligation_responsible_person"
+    },
+    "Risk And Opportunity": {
+        "on_submit": "ppecon_ims.ppe_ims.doctype.risk_and_opportunity.risk_and_opportunity.notify_risk_opportunity_assignees"
+    },
+    "Design and Development": {
+        "on_update": "ppecon_ims.ppe_ims.doctype.design_and_development.design_and_development.notify_design_development_project_manager"
+    },
+    "Process Identification": {
+        "on_submit": "ppecon_ims.ppe_ims.doctype.process_identification.process_identification.notify_process_identification_accountable_person"
+    },
+    "Equipment": {
+        "on_update": "ppecon_ims.ppe_ims.doctype.equipment.equipment.notify_equipment_responsible_staff"
+    },
+    "Breakdown Record": {
+        "on_submit": "ppecon_ims.ppe_ims.doctype.breakdown_record.breakdown_record.notify_breakdown_record_returned_to"
+    },
+    "Aspect - Impact Assessment": {
+        "on_submit": "ppecon_ims.ppe_ims.doctype.aspect___impact_assessment.aspect___impact_assessment.notify_aspect_impact_responsible_persons"
+    },
+    "Accident Incident": {
+        "on_submit": "ppecon_ims.ppe_ims.doctype.accident_incident.accident_incident.notify_accident_incident_assignees"
+    },
+    "Received Material": {
+        "on_submit": "ppecon_ims.ppe_ims.doctype.received_material.received_material.notify_received_material_responsible_persons"
+    },
+    "PPE Masterlist": {
+        "on_submit": "ppecon_ims.ppe_ims.doctype.ppe_masterlist.ppe_masterlist.notify_ppe_masterlist_responsible_persons"
+    },
+    "Supplier Evaluation": {
+    "on_update": "ppecon_ims.ppe_ims.doctype.supplier_evaluation.supplier_evaluation.notify_supplier_evaluation_evaluated_by"
+ }
+}
 
 # Scheduled Tasks
 # ---------------

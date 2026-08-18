@@ -1,0 +1,283 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-08-16 14:50:56.446277",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_thbf",
+  "naming_series",
+  "amended_from",
+  "employee",
+  "employee_name",
+  "phone_number",
+  "email",
+  "column_break_wufg",
+  "date",
+  "priority",
+  "department",
+  "job_title",
+  "asset_details_section",
+  "new_hire",
+  "replacement",
+  "domain_user",
+  "access_removal",
+  "new_desktoplaptop",
+  "telephone_extension",
+  "shared_folder_access",
+  "computer_access",
+  "column_break_upvi",
+  "upgrade",
+  "software_installation_specify_in_below_description",
+  "printerscanner",
+  "email_for_asset",
+  "harware__specify_in_below_description",
+  "other__specify_in_below_description",
+  "section_break_zyii",
+  "description",
+  "item_details_section",
+  "item_details",
+  "section_break_ydis",
+  "it_comments"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_thbf",
+   "fieldtype": "Section Break",
+   "label": "Employee Details"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "IT Asset Request",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Employee ",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.cell_number",
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "Phone Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "IRF-.YYYY.-.####"
+  },
+  {
+   "fieldname": "column_break_wufg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "employee.department",
+   "fieldname": "department",
+   "fieldtype": "Data",
+   "label": "Department ",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fetch_from": "employee.designation",
+   "fieldname": "job_title",
+   "fieldtype": "Data",
+   "label": "Job Title",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "asset_details_section",
+   "fieldtype": "Section Break",
+   "label": "Asset Details"
+  },
+  {
+   "default": "0",
+   "fieldname": "new_hire",
+   "fieldtype": "Check",
+   "label": "New Hire"
+  },
+  {
+   "default": "0",
+   "fieldname": "replacement",
+   "fieldtype": "Check",
+   "label": "Replacement"
+  },
+  {
+   "default": "0",
+   "fieldname": "domain_user",
+   "fieldtype": "Check",
+   "label": "Domain User"
+  },
+  {
+   "default": "0",
+   "fieldname": "access_removal",
+   "fieldtype": "Check",
+   "label": "Access Removal"
+  },
+  {
+   "default": "0",
+   "fieldname": "new_desktoplaptop",
+   "fieldtype": "Check",
+   "label": "New Desktop/Laptop"
+  },
+  {
+   "default": "0",
+   "fieldname": "telephone_extension",
+   "fieldtype": "Check",
+   "label": "Telephone Extension"
+  },
+  {
+   "default": "0",
+   "fieldname": "shared_folder_access",
+   "fieldtype": "Check",
+   "label": "Shared Folder Access"
+  },
+  {
+   "default": "0",
+   "fieldname": "computer_access",
+   "fieldtype": "Check",
+   "label": "Computer Access"
+  },
+  {
+   "fieldname": "column_break_upvi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "upgrade",
+   "fieldtype": "Check",
+   "label": "Upgrade"
+  },
+  {
+   "default": "0",
+   "fieldname": "software_installation_specify_in_below_description",
+   "fieldtype": "Check",
+   "label": "Software Installation (Specify in below Description)"
+  },
+  {
+   "default": "0",
+   "fieldname": "printerscanner",
+   "fieldtype": "Check",
+   "label": "Printer/Scanner"
+  },
+  {
+   "fetch_from": "employee.personal_email",
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email-ID",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "harware__specify_in_below_description",
+   "fieldtype": "Check",
+   "label": "Harware  (Specify in below Description)"
+  },
+  {
+   "default": "0",
+   "fieldname": "other__specify_in_below_description",
+   "fieldtype": "Check",
+   "label": "Other  (Specify in below Description)"
+  },
+  {
+   "fieldname": "section_break_zyii",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority",
+   "options": "\nNormal\nUrgent"
+  },
+  {
+   "fieldname": "it_comments",
+   "fieldtype": "Text Editor",
+   "label": "IT Comments"
+  },
+  {
+   "fieldname": "item_details_section",
+   "fieldtype": "Section Break",
+   "label": "Item Details"
+  },
+  {
+   "fieldname": "section_break_ydis",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "email_for_asset",
+   "fieldtype": "Check",
+   "label": "Email  (Specify in below Description)"
+  },
+  {
+   "fieldname": "item_details",
+   "fieldtype": "Table",
+   "label": "Item",
+   "options": "IT Supplier item"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-08-17 12:50:05.688429",
+ "modified_by": "m.farhan@ppecon.com",
+ "module": "PPE IMS",
+ "name": "IT Asset Request",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "route": "IT Request Form",
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

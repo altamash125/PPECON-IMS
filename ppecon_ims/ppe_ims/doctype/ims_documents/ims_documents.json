@@ -12,13 +12,15 @@
   "document_name",
   "document_number",
   "document_code",
+  "document_issue_date",
   "column_break_tczk",
   "document_category",
   "department",
   "revision_number",
   "document_type",
+  "assigned_to",
   "documents_section",
-  "text_editor_vaqj",
+  "document_description",
   "bulk_upload"
  ],
  "fields": [
@@ -94,7 +96,18 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "text_editor_vaqj",
+   "fieldname": "assigned_to",
+   "fieldtype": "Table MultiSelect",
+   "label": "Assigned To",
+   "options": "Asignee"
+  },
+  {
+   "fieldname": "document_issue_date",
+   "fieldtype": "Date",
+   "label": "Document Issue Date"
+  },
+  {
+   "fieldname": "document_description",
    "fieldtype": "Text Editor",
    "label": "Documents"
   }
@@ -103,7 +116,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-07-09 15:57:19.288510",
+ "modified": "2026-08-18 09:53:00.295044",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "IMS Documents",
