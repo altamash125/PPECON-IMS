@@ -57,6 +57,19 @@ class SupplierEvaluation(Document):
 # Copyright (c) 2026, altamash@ppecon.com and contributors
 # For license information, please see license.txt
 
+# Copyright (c) 2026, altamash@ppecon.com and contributors
+# For license information, please see license.txt
+
+# Copyright (c) 2026, altamash@ppecon.com and contributors
+# For license information, please see license.txt
+
+import frappe
+from frappe.model.document import Document
+
+
+class SupplierEvaluation(Document):
+    pass
+
 
 def notify_supplier_evaluation_evaluated_by(doc, method):
     if not doc.evaluated_by:
@@ -64,16 +77,39 @@ def notify_supplier_evaluation_evaluated_by(doc, method):
 
     recipients = [doc.evaluated_by]
 
-    send_supplier_evaluation_mail(doc, recipients)
+    send_supplier_evaluation_mail(doc, recipients, is_update=False)
 
 
-def send_supplier_evaluation_mail(doc, recipients):
+def notify_supplier_evaluation_evaluated_by_after_submit(doc, method):
+    # 1. Agar evaluated_by naya set/change hua hai to unhe mail
+    if doc.evaluated_by and doc.has_value_changed("evaluated_by"):
+        send_supplier_evaluation_mail(doc, [doc.evaluated_by], is_update=False)
+
+    # 2. Document ka koi bhi update ho to creator (owner) ko notify karo
+    notify_document_creator_on_update(doc)
+
+
+def notify_document_creator_on_update(doc):
+    if not doc.owner:
+        return
+
+    recipients = [doc.owner]
+
+    send_supplier_evaluation_mail(doc, recipients, is_update=True)
+
+
+def send_supplier_evaluation_mail(doc, recipients, is_update=False):
     document_link = frappe.utils.get_url_to_form("Supplier Evaluation", doc.name)
-
-    subject = f"Supplier Evaluation Assigned: {doc.supplier_name or doc.name}"
 
     current_user = frappe.session.user
     created_by = frappe.db.get_value("User", current_user, "full_name") or current_user
+
+    if is_update:
+        subject = f"Supplier Evaluation Updated: {doc.supplier_name or doc.name}"
+        intro_text = f"The following <b>Supplier Evaluation</b> (created by you) has been updated by <b>{created_by}</b>. Please review the changes below."
+    else:
+        subject = f"Supplier Evaluation Assigned: {doc.supplier_name or doc.name}"
+        intro_text = f"You have been assigned as the <b>Evaluator</b> for the following Supplier Evaluation by <b>{created_by}</b>. Please review the details below."
 
     fields_to_show = [
         ("Supplier Name", doc.supplier_name),
@@ -81,7 +117,7 @@ def send_supplier_evaluation_mail(doc, recipients):
         ("Project", doc.project),
         ("Date of Evaluation", doc.date_of_evaluation),
         ("Evaluated By", frappe.db.get_value("User", doc.evaluated_by, "full_name") or doc.evaluated_by),
-        ("Updated By", created_by),
+        ("Updated By" if is_update else "Submitted By", created_by),
     ]
 
     rows_html = ""
@@ -97,12 +133,12 @@ def send_supplier_evaluation_mail(doc, recipients):
     message = f"""
     <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 620px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
         <div style="background-color: #1a3c6e; padding: 20px; text-align: center;">
-            <h2 style="color: #ffffff; margin: 0;">📝 Supplier Evaluation Assignment</h2>
+            <h2 style="color: #ffffff; margin: 0;">📝 Supplier Evaluation {"Update" if is_update else "Assignment"}</h2>
         </div>
         <div style="padding: 25px; background-color: #ffffff;">
             <p style="font-size: 15px; color: #333;">Hi,</p>
             <p style="font-size: 15px; color: #333;">
-                You have been assigned as the <b>Evaluator</b> for the following Supplier Evaluation by <b>{created_by}</b>. Please review the details below.
+                {intro_text}
             </p>
             <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
                 {rows_html}

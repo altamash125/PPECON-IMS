@@ -149,10 +149,10 @@ doc_events = {
     "on_update_after_submit": "ppecon_ims.ppe_ims.doctype.objectives.objectives.notify_objective_responsible_person_after_submit"
    },
 
-   "Compliance Obligation": {
+  "Compliance Obligation": {
     "on_submit": "ppecon_ims.ppe_ims.doctype.compliance_obligation.compliance_obligation.notify_compliance_obligation_responsible_person",
     "on_update_after_submit": "ppecon_ims.ppe_ims.doctype.compliance_obligation.compliance_obligation.notify_compliance_obligation_responsible_person_after_submit"
-   },
+},
    "Risk and Opportunity": {
     "on_submit": "ppecon_ims.ppe_ims.doctype.risk_and_opportunity.risk_and_opportunity.notify_risk_opportunity_assignees"
    },
@@ -180,14 +180,24 @@ doc_events = {
     "PPE Masterlist": {
         "on_submit": "ppecon_ims.ppe_ims.doctype.ppe_masterlist.ppe_masterlist.notify_ppe_masterlist_responsible_persons"
     },
-    "Supplier Evaluation": {
-    "on_update": "ppecon_ims.ppe_ims.doctype.supplier_evaluation.supplier_evaluation.notify_supplier_evaluation_evaluated_by"
+
+   "Supplier Evaluation": {
+    "on_submit": "ppecon_ims.ppe_ims.doctype.supplier_evaluation.supplier_evaluation.notify_supplier_evaluation_evaluated_by",
+    "on_update_after_submit": "ppecon_ims.ppe_ims.doctype.supplier_evaluation.supplier_evaluation.notify_supplier_evaluation_evaluated_by_after_submit"
  }
 }
 
 # Scheduled Tasks
 # ---------------
-
+scheduler_events = {
+    "daily": [
+        # ... existing daily tasks ...
+        "ppecon_ims.ppe_ims.doctype.compliance_obligation.compliance_obligation.send_compliance_obligation_expiry_reminders"
+    ],
+    "cron": {
+        # ... existing cron tasks ...
+    }
+}
 # scheduler_events = {
 # 	"all": [
 # 		"ppecon_ims.tasks.all"
