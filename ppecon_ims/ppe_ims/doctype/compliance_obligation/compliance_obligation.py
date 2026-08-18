@@ -13,7 +13,16 @@ def notify_compliance_obligation_responsible_person(doc, method):
     if not doc.responsible_person:
         return
 
-    # Sirf tab bhejo jab responsible_person naya set/change hua ho (har save pe spam na ho)
+    recipients = [doc.responsible_person]
+
+    send_compliance_obligation_mail(doc, recipients)
+
+
+def notify_compliance_obligation_responsible_person_after_submit(doc, method):
+    if not doc.responsible_person:
+        return
+
+    # Sirf tab bhejo jab responsible_person naya set/change hua ho (already-submitted doc mein baad mein assign hone pe)
     if not doc.has_value_changed("responsible_person"):
         return
 
@@ -40,7 +49,7 @@ def send_compliance_obligation_mail(doc, recipients):
         ("Date Renewed", doc.date_renewed),
         ("Expiration Date", doc.expiration_date),
         ("Responsible Person", frappe.db.get_value("User", doc.responsible_person, "full_name") or doc.responsible_person),
-        ("Updated By", created_by),
+        ("Submitted By", created_by),
     ]
 
     rows_html = ""
