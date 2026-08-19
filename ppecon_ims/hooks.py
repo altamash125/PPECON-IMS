@@ -184,7 +184,15 @@ doc_events = {
    "Supplier Evaluation": {
     "on_submit": "ppecon_ims.ppe_ims.doctype.supplier_evaluation.supplier_evaluation.notify_supplier_evaluation_evaluated_by",
     "on_update_after_submit": "ppecon_ims.ppe_ims.doctype.supplier_evaluation.supplier_evaluation.notify_supplier_evaluation_evaluated_by_after_submit"
- }
+ },
+ 
+    "IT Asset Request": {
+        "on_submit": "ppecon_ims.ppe_ims.doctype.it_asset_request.it_asset_request.on_asset_request_submit"
+    },
+    "IT Supply": {
+        "on_update": "ppecon_ims.ppe_ims.doctype.it_supply.it_supply.on_it_supply_update"
+    }
+
 }
 
 # Scheduled Tasks
