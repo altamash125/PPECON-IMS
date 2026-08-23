@@ -1,0 +1,216 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-08-20 11:48:27.434746",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "sec_emp",
+  "employee",
+  "employee_name",
+  "cb_emp",
+  "department",
+  "request_date",
+  "last_working_day",
+  "sec_items",
+  "fetch_assets_html",
+  "items",
+  "sec_status",
+  "status",
+  "cb_status",
+  "cleared_by",
+  "cleared_on",
+  "sec_remarks",
+  "remarks",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "default": "ITCLR-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "ITCLR-.YYYY.-",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sec_emp",
+   "fieldtype": "Section Break",
+   "label": "Employee"
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employee Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_emp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "employee.department",
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department",
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "request_date",
+   "fieldtype": "Date",
+   "label": "Request Date",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "employee.relieving_date",
+   "fieldname": "last_working_day",
+   "fieldtype": "Date",
+   "label": "Last Working Day"
+  },
+  {
+   "fieldname": "sec_items",
+   "fieldtype": "Section Break",
+   "label": "Assigned IT Assets"
+  },
+  {
+   "fieldname": "fetch_assets_html",
+   "fieldtype": "HTML",
+   "label": "Fetch"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "IT Asset Clearance Item"
+  },
+  {
+   "fieldname": "sec_status",
+   "fieldtype": "Section Break",
+   "label": "Clearance Status"
+  },
+  {
+   "bold": 1,
+   "default": "Pending",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Pending\nCleared",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_status",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cleared_by",
+   "fieldtype": "Link",
+   "label": "Cleared By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cleared_on",
+   "fieldtype": "Datetime",
+   "label": "Cleared On",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sec_remarks",
+   "fieldtype": "Section Break",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "IT Asset Clearance",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-08-20 11:48:27.434746",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "IT Asset Clearance",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "search_fields": "employee,employee_name,status",
+ "sort_field": "request_date",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "employee_name",
+ "track_changes": 1
+}

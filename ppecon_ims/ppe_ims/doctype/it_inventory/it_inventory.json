@@ -2,12 +2,11 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "naming_series:",
- "creation": "2026-08-16 15:35:32.708832",
+ "creation": "2026-08-19 15:59:39.946801",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "section_break_qkjq",
-  "amended_from",
   "naming_series",
   "asset_name",
   "sn",
@@ -16,17 +15,19 @@
   "ram",
   "os",
   "processor",
+  "status",
   "column_break_lzhp",
   "model_no",
   "manufacturerbrand",
   "purchase_date",
   "specification",
-  "status",
   "assigned_to",
+  "name1",
   "assigned_date",
   "request_reference",
   "section_break_ebdk",
-  "bulk_upload"
+  "bulk_upload",
+  "amended_from"
  ],
  "fields": [
   {
@@ -38,7 +39,7 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "IT Supply",
+   "options": "IT Inventory",
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
@@ -51,44 +52,20 @@
    "options": "IT-A-PPE-.####"
   },
   {
-   "fieldname": "sn",
-   "fieldtype": "Data",
-   "label": "S/N"
-  },
-  {
    "fieldname": "asset_name",
    "fieldtype": "Data",
    "label": "Asset Name"
+  },
+  {
+   "fieldname": "sn",
+   "fieldtype": "Data",
+   "label": "S/N"
   },
   {
    "fieldname": "asset_type",
    "fieldtype": "Select",
    "label": "Asset Type",
    "options": "\nLaptop/Desktop\nMonitor\nOthers"
-  },
-  {
-   "fieldname": "model_no",
-   "fieldtype": "Data",
-   "label": "Model No"
-  },
-  {
-   "fieldname": "manufacturerbrand",
-   "fieldtype": "Data",
-   "label": "Manufacturer/Brand"
-  },
-  {
-   "fieldname": "column_break_lzhp",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "purchase_date",
-   "fieldtype": "Date",
-   "label": "Purchase Date"
-  },
-  {
-   "fieldname": "specification",
-   "fieldtype": "Small Text",
-   "label": "Specification "
   },
   {
    "depends_on": "eval:doc.asset_type==\"Laptop/Desktop\"",
@@ -106,34 +83,53 @@
   },
   {
    "depends_on": "eval:doc.asset_type==\"Laptop/Desktop\"",
-   "fieldname": "processor",
-   "fieldtype": "Data",
-   "label": "PROCESSOR",
-   "mandatory_depends_on": "eval:doc.asset_type==\"Laptop/Desktop\""
-  },
-  {
-   "depends_on": "eval:doc.asset_type==\"Laptop/Desktop\"",
    "fieldname": "os",
    "fieldtype": "Data",
    "label": "OS",
    "mandatory_depends_on": "eval:doc.asset_type==\"Laptop/Desktop\""
   },
   {
-   "fieldname": "section_break_ebdk",
-   "fieldtype": "Section Break"
+   "depends_on": "eval:doc.asset_type==\"Laptop/Desktop\"",
+   "fieldname": "processor",
+   "fieldtype": "Data",
+   "label": "PROCESSOR",
+   "mandatory_depends_on": "eval:doc.asset_type==\"Laptop/Desktop\""
   },
   {
-   "fieldname": "bulk_upload",
-   "fieldtype": "HTML",
-   "label": "Bulk Upload"
+   "fieldname": "column_break_lzhp",
+   "fieldtype": "Column Break"
   },
   {
+   "fieldname": "model_no",
+   "fieldtype": "Data",
+   "label": "Model No"
+  },
+  {
+   "fieldname": "manufacturerbrand",
+   "fieldtype": "Data",
+   "label": "Manufacturer/Brand"
+  },
+  {
+   "fieldname": "purchase_date",
+   "fieldtype": "Date",
+   "label": "Purchase Date"
+  },
+  {
+   "fieldname": "specification",
+   "fieldtype": "Small Text",
+   "label": "Specification "
+  },
+  {
+   "allow_on_submit": 1,
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Status",
-   "options": "\nIn Stock\nAssigned\nRepair\nRetired"
+   "options": "\nIn Stock\nAssigned\nRepair\nRetired",
+   "reqd": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "assigned_to",
    "fieldtype": "Link",
    "label": "Assigned To",
@@ -149,16 +145,43 @@
    "fieldtype": "Link",
    "label": "Request Reference",
    "options": "IT Asset Request"
+  },
+  {
+   "fieldname": "section_break_ebdk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Bulk Upload"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "IT Inventory",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fetch_from": "assigned_to.employee_name",
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "label": "Name",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-08-17 12:53:28.329452",
- "modified_by": "m.farhan@ppecon.com",
+ "modified": "2026-08-20 10:14:49.693237",
+ "modified_by": "Administrator",
  "module": "PPE IMS",
- "name": "IT Supply",
+ "name": "IT Inventory",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [

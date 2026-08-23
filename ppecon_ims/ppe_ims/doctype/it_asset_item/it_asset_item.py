@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class ITSupplieritem(Document):
+class ITAssetItem(Document):
 	pass

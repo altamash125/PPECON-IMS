@@ -18,6 +18,7 @@
   "priority",
   "department",
   "job_title",
+  "manager_approval",
   "asset_details_section",
   "new_hire",
   "replacement",
@@ -36,8 +37,6 @@
   "other__specify_in_below_description",
   "section_break_zyii",
   "description",
-  "item_details_section",
-  "item_details",
   "section_break_ydis",
   "it_comments"
  ],
@@ -213,7 +212,7 @@
    "fieldname": "date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Date",
+   "label": " Request Date",
    "reqd": 1
   },
   {
@@ -228,11 +227,6 @@
    "label": "IT Comments"
   },
   {
-   "fieldname": "item_details_section",
-   "fieldtype": "Section Break",
-   "label": "Item Details"
-  },
-  {
    "fieldname": "section_break_ydis",
    "fieldtype": "Section Break"
   },
@@ -243,18 +237,19 @@
    "label": "Email  (Specify in below Description)"
   },
   {
-   "fieldname": "item_details",
-   "fieldtype": "Table",
-   "label": "Item",
-   "options": "IT Supplier item"
+   "fetch_from": "employee.leave_approver",
+   "fieldname": "manager_approval",
+   "fieldtype": "Data",
+   "label": "Manager Approval",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-08-17 12:50:05.688429",
- "modified_by": "m.farhan@ppecon.com",
+ "modified": "2026-08-20 11:23:30.718667",
+ "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "IT Asset Request",
  "naming_rule": "By \"Naming Series\" field",

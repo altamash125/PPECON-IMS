@@ -1,0 +1,71 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-08-20 11:26:13.588541",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "it_inventory",
+  "asset_name",
+  "asset_reference",
+  "asset_type",
+  "asset_condition"
+ ],
+ "fields": [
+  {
+   "fieldname": "it_inventory",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "IT Inventory",
+   "options": "IT Inventory",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "it_inventory.asset_name",
+   "fieldname": "asset_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Asset Name",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "it_inventory.request_reference",
+   "fieldname": "asset_reference",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Asset Reference",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "it_inventory.asset_type",
+   "fieldname": "asset_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Asset Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "asset_condition",
+   "fieldtype": "Select",
+   "label": "Asset Condition",
+   "options": "\nGood\nExcellent\nNeed Service\nDamaged\nLost",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-20 11:37:25.455203",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "IT Asset Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

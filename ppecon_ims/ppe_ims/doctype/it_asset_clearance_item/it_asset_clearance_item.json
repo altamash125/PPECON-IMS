@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-08-20 11:48:26.979782",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "it_inventory",
+  "asset_name",
+  "asset_type",
+  "sn",
+  "returned",
+  "condition",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "it_inventory",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "IT Inventory",
+   "options": "IT Inventory",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "asset_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Asset Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "asset_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sn",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Serial No.",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "returned",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Returned"
+  },
+  {
+   "fieldname": "condition",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Condition",
+   "options": "\nGood\nDamaged\nLost"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-20 11:48:26.979782",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "IT Asset Clearance Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
