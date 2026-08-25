@@ -12,9 +12,9 @@
   "employee",
   "employee_name",
   "phone_number",
-  "email",
+  "email_id",
   "column_break_wufg",
-  "date",
+  "request_date",
   "priority",
   "department",
   "job_title",
@@ -181,13 +181,6 @@
    "label": "Printer/Scanner"
   },
   {
-   "fetch_from": "employee.personal_email",
-   "fieldname": "email",
-   "fieldtype": "Data",
-   "label": "Email-ID",
-   "read_only": 1
-  },
-  {
    "default": "0",
    "fieldname": "harware__specify_in_below_description",
    "fieldtype": "Check",
@@ -207,13 +200,6 @@
    "fieldname": "description",
    "fieldtype": "Text Editor",
    "label": "Description"
-  },
-  {
-   "fieldname": "date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": " Request Date",
-   "reqd": 1
   },
   {
    "fieldname": "priority",
@@ -242,13 +228,27 @@
    "fieldtype": "Data",
    "label": "Manager Approval",
    "read_only": 1
+  },
+  {
+   "fieldname": "request_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": " Request Date",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "employee.personal_email",
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email-ID",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-08-20 11:23:30.718667",
+ "modified": "2026-08-25 14:18:04.452806",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "IT Asset Request",
