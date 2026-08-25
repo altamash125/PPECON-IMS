@@ -92,6 +92,10 @@ def fetch_assigned_assets(employee):
 IT_TEAM_EMAIL = "it@ppecon.com"
 
 
+class ITAssetClearance(Document):
+    pass
+
+
 def notify_on_asset_return(doc, method):
     before_doc = doc.get_doc_before_save()
 
@@ -123,10 +127,10 @@ def send_asset_return_mail(doc, row):
         ("Department", doc.department),
         ("IT Inventory", row.it_inventory),
         ("Asset Name", row.asset_name),
-        ("Type", row.type),
+        ("Type", row.asset_type),
         ("Serial No.", row.sn),
         ("Condition", row.condition),
-        ("Returned To", frappe.db.get_value("User", row.returned_to, "full_name") or row.returned_to),
+        ("Returned To", row.name1 or frappe.db.get_value("User", row.returned_to, "full_name") or row.returned_to),
         ("Remarks", row.remarks),
     ]
 
