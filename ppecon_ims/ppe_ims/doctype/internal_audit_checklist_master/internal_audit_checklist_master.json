@@ -1,31 +1,20 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "naming_series:",
  "creation": "2026-07-19 12:02:04.256398",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "s_no",
+  "naming_series",
   "check_list_name",
-  "doc_no",
-  "audit_no",
-  "audit_date",
   "remarks",
   "column_break_bmpx",
   "issue_date",
-  "department",
-  "revision_no",
-  "auditor",
-  "auditee",
   "section_break_cwny",
   "check_list_point"
  ],
  "fields": [
-  {
-   "fieldname": "s_no",
-   "fieldtype": "Select",
-   "label": "S No"
-  },
   {
    "fieldname": "check_list_name",
    "fieldtype": "Data",
@@ -37,44 +26,8 @@
    "label": "Remarks"
   },
   {
-   "fieldname": "audit_no",
-   "fieldtype": "Data",
-   "label": "Audit No"
-  },
-  {
-   "fieldname": "audit_date",
-   "fieldtype": "Date",
-   "label": "Audit Date"
-  },
-  {
    "fieldname": "column_break_bmpx",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "department",
-   "fieldtype": "Link",
-   "label": "Department",
-   "options": "Department"
-  },
-  {
-   "fieldname": "revision_no",
-   "fieldtype": "Int",
-   "label": "Revision No"
-  },
-  {
-   "fieldname": "auditor",
-   "fieldtype": "Data",
-   "label": "Auditor"
-  },
-  {
-   "fieldname": "auditee",
-   "fieldtype": "Data",
-   "label": "Auditee"
-  },
-  {
-   "fieldname": "doc_no",
-   "fieldtype": "Data",
-   "label": "Doc No"
   },
   {
    "fieldname": "issue_date",
@@ -90,15 +43,23 @@
    "fieldtype": "Table",
    "label": "Check List Point",
    "options": "Check List Point"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "S No",
+   "options": "IAS-.YYYY.-.####"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-26 09:18:50.488478",
+ "modified": "2026-08-25 11:40:24.887129",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Internal Audit CheckList Master",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -116,7 +77,9 @@
  ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "check_list_name"
 }

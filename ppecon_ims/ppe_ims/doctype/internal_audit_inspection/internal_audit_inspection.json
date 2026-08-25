@@ -1,0 +1,127 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-08-24 17:11:28.102693",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_rk9t",
+  "naming_series",
+  "amended_from",
+  "check_list_name",
+  "audit_date",
+  "audit_no",
+  "remarks",
+  "column_break_tgbb",
+  "department",
+  "auditor",
+  "auditee",
+  "section_break_irqc",
+  "check_list_point"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_rk9t",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Internal Audit Inspection",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "check_list_name",
+   "fieldtype": "Data",
+   "label": "Check List Name"
+  },
+  {
+   "fieldname": "audit_date",
+   "fieldtype": "Date",
+   "label": "Audit Date"
+  },
+  {
+   "fieldname": "audit_no",
+   "fieldtype": "Data",
+   "label": "Audit No"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "column_break_tgbb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "auditor",
+   "fieldtype": "Table MultiSelect",
+   "label": "Auditor",
+   "options": "Asignee"
+  },
+  {
+   "fieldname": "auditee",
+   "fieldtype": "Data",
+   "label": "Auditee"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "S No",
+   "options": "IAI-.YYYY.-.###"
+  },
+  {
+   "fieldname": "section_break_irqc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "check_list_point",
+   "fieldtype": "Table",
+   "label": "Check List Point",
+   "options": "Check List Point"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-08-25 11:42:24.330193",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Internal Audit Inspection",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
