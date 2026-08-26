@@ -60,8 +60,9 @@
   },
   {
    "fieldname": "type_of_ppe_used",
-   "fieldtype": "Select",
-   "label": "Type of PPE used"
+   "fieldtype": "Table MultiSelect",
+   "label": "Type of PPE used",
+   "options": "Types of PPE Used MultiSelect"
   },
   {
    "fieldname": "instructions_in_case_of_spillageleakage",
@@ -100,7 +101,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-22 16:27:17.056064",
+ "modified": "2026-08-26 10:46:43.666856",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Material Safety Data Sheet",

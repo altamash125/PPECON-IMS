@@ -10,15 +10,17 @@ class ITAssetClearance(Document):
 
 
 
+# Copyright (c) 2026, altamash@ppecon.com and contributors
+# For license information, please see license.txt
 
-# =========================================================================
-#  apps/ppecon_ims/ppecon_ims/ppe_ims/doctype/it_asset_clearance/it_asset_clearance.py
-# =========================================================================
 import frappe
 from frappe.model.document import Document
-from frappe.utils import now_datetime
+from frappe.utils import now_datetime, get_url_to_form
 
 from ppecon_ims.it_assets.employee_custody import get_custody_details
+
+
+IT_TEAM_EMAIL = "it@ppecon.com"
 
 
 class ITAssetClearance(Document):
@@ -43,6 +45,7 @@ class ITAssetClearance(Document):
                     frappe.db.set_value("IT Inventory", row.it_inventory, {
                         "assigned_to": None,
                         "assigned_date": None,
+                        "status": "In Stock",
                     })
                     released += 1
                 except Exception:
@@ -51,15 +54,16 @@ class ITAssetClearance(Document):
 
         self.db_set("cleared_by", frappe.session.user)
         self.db_set("cleared_on", now_datetime())
-        frappe.msgprint(f"{released} asset(s) released from custody.")
+        frappe.msgprint(f"{released} asset(s) released from custody and marked In Stock.")
 
     def on_cancel(self):
-        # re-assign the assets back if the clearance is cancelled
+        # Re-assign the assets back if the clearance is cancelled
         for row in self.items:
             if row.returned and row.it_inventory:
                 try:
                     frappe.db.set_value("IT Inventory", row.it_inventory, {
                         "assigned_to": self.employee,
+                        "status": "Assigned",
                     })
                 except Exception:
                     frappe.log_error(frappe.get_traceback(),
@@ -83,23 +87,25 @@ def fetch_assigned_assets(employee):
     ]
 
 
+# ============================================================
+#  Notifications
+# ============================================================
 
+def notify_on_update(doc, method):
+    # 1. Asset-level "Returned" tick — sends to returned_to first, then IT
+    notify_on_asset_return(doc, method)
 
-# Copyright (c) 2026, altamash@ppecon.com and contributors
-# For license information, please see license.txt
-
-
-IT_TEAM_EMAIL = "it@ppecon.com"
-
-
-class ITAssetClearance(Document):
-    pass
+    # 2. Workflow state transitions
+    if doc.has_value_changed("workflow_state"):
+        if doc.workflow_state == "Pending IT Clearance":
+            notify_it_team_hr_cleared(doc)
+        elif doc.workflow_state == "Cleared":
+            notify_employee_acknowledgment(doc)
 
 
 def notify_on_asset_return(doc, method):
     before_doc = doc.get_doc_before_save()
 
-    # Purani rows ka "returned" status map bana lo (row.name -> returned)
     before_returned_map = {}
     if before_doc:
         for row in before_doc.items:
@@ -108,19 +114,19 @@ def notify_on_asset_return(doc, method):
     for row in doc.items:
         was_returned = before_returned_map.get(row.name, 0)
 
-        # Sirf tab mail bhejo jab pehle "Returned" nahi tha, ab hai
         if row.returned and not was_returned:
-            send_asset_return_mail(doc, row)
+            # Pehle returned_to (generally HR) ko mail
+            if row.returned_to:
+                send_asset_return_mail(doc, row, recipients=[row.returned_to])
+
+            # Uske baad IT team ko mail
+            send_asset_return_mail(doc, row, recipients=[IT_TEAM_EMAIL])
 
 
-def send_asset_return_mail(doc, row):
-    document_link = frappe.utils.get_url_to_form("IT Asset Clearance", doc.name)
+def send_asset_return_mail(doc, row, recipients):
+    document_link = get_url_to_form("IT Asset Clearance", doc.name)
 
     subject = f"IT Asset Returned: {row.asset_name or row.it_inventory}"
-
-    recipients = [IT_TEAM_EMAIL]
-    if row.returned_to:
-        recipients.append(row.returned_to)
 
     fields_to_show = [
         ("Employee", doc.employee_name or doc.employee),
@@ -134,15 +140,7 @@ def send_asset_return_mail(doc, row):
         ("Remarks", row.remarks),
     ]
 
-    rows_html = ""
-    for label, value in fields_to_show:
-        if value:
-            rows_html += f"""
-                <tr>
-                    <td style="padding: 10px; background-color: #f8f9fa; font-weight: bold; border: 1px solid #e0e0e0; width: 40%; vertical-align: top;">{label}</td>
-                    <td style="padding: 10px; border: 1px solid #e0e0e0;">{value}</td>
-                </tr>
-            """
+    rows_html = build_rows_html(fields_to_show)
 
     message = f"""
     <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 620px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
@@ -169,9 +167,105 @@ def send_asset_return_mail(doc, row):
     </div>
     """
 
-    frappe.sendmail(
-        recipients=recipients,
-        subject=subject,
-        message=message,
-        now=True
-    )
+    frappe.sendmail(recipients=recipients, subject=subject, message=message, now=True)
+
+
+def notify_it_team_hr_cleared(doc):
+    document_link = get_url_to_form("IT Asset Clearance", doc.name)
+
+    subject = f"IT Asset Clearance — HR Approved: {doc.name}"
+
+    fields_to_show = [
+        ("Employee", doc.employee_name or doc.employee),
+        ("Department", doc.department),
+        ("Last Working Date", doc.last_working_day),
+        ("Status", "Approved by HR — Pending IT Clearance"),
+    ]
+
+    rows_html = build_rows_html(fields_to_show)
+
+    message = f"""
+    <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 620px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+        <div style="background-color: #1a3c6e; padding: 20px; text-align: center;">
+            <h2 style="color: #ffffff; margin: 0;">✅ Clearance Approved by HR</h2>
+        </div>
+        <div style="padding: 25px; background-color: #ffffff;">
+            <p style="font-size: 15px; color: #333;">Hi Team,</p>
+            <p style="font-size: 15px; color: #333;">
+                This employee's <b>IT Asset Clearance</b> has been approved by HR and is now awaiting <b>IT Supervisor</b> approval. Please review the details below.
+            </p>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                {rows_html}
+            </table>
+            <div style="text-align: center; margin-top: 25px;">
+                <a href="{document_link}" style="background-color: #2c7be5; color: #ffffff; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-size: 14px;">
+                    View Clearance
+                </a>
+            </div>
+        </div>
+        <div style="background-color: #f8f9fa; padding: 12px; text-align: center; font-size: 12px; color: #888;">
+            This is an automated notification from your ERP system.
+        </div>
+    </div>
+    """
+
+    frappe.sendmail(recipients=[IT_TEAM_EMAIL], subject=subject, message=message, now=True)
+
+
+def notify_employee_acknowledgment(doc):
+    document_link = get_url_to_form("IT Asset Clearance", doc.name)
+
+    employee_email = doc.get("email_id") or frappe.db.get_value("Employee", doc.employee, "user_id")
+    if not employee_email:
+        return
+
+    subject = f"IT Asset Clearance Completed: {doc.name}"
+
+    fields_to_show = [
+        ("Employee", doc.employee_name or doc.employee),
+        ("Department", doc.department),
+        ("Last Working Date", doc.last_working_day),
+        ("Status", "Fully Cleared"),
+    ]
+
+    rows_html = build_rows_html(fields_to_show)
+
+    message = f"""
+    <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 620px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+        <div style="background-color: #1a6e3c; padding: 20px; text-align: center;">
+            <h2 style="color: #ffffff; margin: 0;">🎉 IT Asset Clearance Completed</h2>
+        </div>
+        <div style="padding: 25px; background-color: #ffffff;">
+            <p style="font-size: 15px; color: #333;">Hi {doc.employee_name or ''},</p>
+            <p style="font-size: 15px; color: #333;">
+                Your <b>IT Asset Clearance</b> has been fully processed and approved by both HR and IT. Please find the summary below.
+            </p>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                {rows_html}
+            </table>
+            <div style="text-align: center; margin-top: 25px;">
+                <a href="{document_link}" style="background-color: #2c7be5; color: #ffffff; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-size: 14px;">
+                    View Clearance
+                </a>
+            </div>
+        </div>
+        <div style="background-color: #f8f9fa; padding: 12px; text-align: center; font-size: 12px; color: #888;">
+            This is an automated notification from your ERP system.
+        </div>
+    </div>
+    """
+
+    frappe.sendmail(recipients=[employee_email], subject=subject, message=message, now=True)
+
+
+def build_rows_html(fields_to_show):
+    rows_html = ""
+    for label, value in fields_to_show:
+        if value:
+            rows_html += f"""
+                <tr>
+                    <td style="padding: 10px; background-color: #f8f9fa; font-weight: bold; border: 1px solid #e0e0e0; width: 40%; vertical-align: top;">{label}</td>
+                    <td style="padding: 10px; border: 1px solid #e0e0e0;">{value}</td>
+                </tr>
+            """
+    return rows_html
