@@ -157,7 +157,7 @@ doc_events = {
     "on_submit": "ppecon_ims.ppe_ims.doctype.risk_and_opportunity.risk_and_opportunity.notify_risk_opportunity_assignees"
    },
     "Design and Development": {
-        "on_update": "ppecon_ims.ppe_ims.doctype.design_and_development.design_and_development.notify_design_development_project_manager"
+        "on_update": "ppecon_ims.ppe_ims.doctype.design_and_development.design_and_development.notify_design_development_lead"
     },
     "Process Identification": {
         "on_submit": "ppecon_ims.ppe_ims.doctype.process_identification.process_identification.notify_process_identification_accountable_person"

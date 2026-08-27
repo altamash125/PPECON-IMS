@@ -9,11 +9,11 @@ class DesignandDevelopment(Document):
     pass
 
 
-def notify_design_development_project_manager(doc, method):
-    if not doc.project_manager:
+def notify_design_development_lead(doc, method):
+    if not doc.design_lead:
         return
 
-    recipients = [doc.project_manager]
+    recipients = [doc.design_lead]
 
     send_design_development_mail(doc, recipients)
 
@@ -21,20 +21,23 @@ def notify_design_development_project_manager(doc, method):
 def send_design_development_mail(doc, recipients):
     document_link = frappe.utils.get_url_to_form("Design and Development", doc.name)
 
-    subject = f"Design and Development Update: {doc.project_name or doc.name}"
+    subject = f"Design and Development Update: {doc.prospect_company or doc.name}"
 
     current_user = frappe.session.user
-    created_by = frappe.db.get_value("User", current_user, "full_name") or current_user
+    updated_by = frappe.db.get_value("User", current_user, "full_name") or current_user
+
+    lead_name = frappe.db.get_value("User", doc.design_lead, "full_name") or doc.design_lead
 
     fields_to_show = [
-        ("Prospect Name", doc.prospect_company),
         ("Folder Number", doc.folder_number),
-        ("Brief Description", doc.brief_description),
-        ("Project Description", doc.proejct_description),
+        ("Prospect Company", doc.prospect_company),
+        ("Opportunity Date", doc.transaction_date),
+        ("Design Lead", lead_name),
         ("Planning Date", doc.planning_date),
         ("Target Date", doc.target_date),
-        ("Design Lead", frappe.db.get_value("User", doc.design_lead, "full_name") or doc.design_lead),
-        ("Updated By", created_by),
+        ("Brief Description", doc.brief_description),
+        ("Project Description", doc.project_description),
+        ("Updated By", updated_by),
     ]
 
     rows_html = ""
@@ -53,9 +56,9 @@ def send_design_development_mail(doc, recipients):
             <h2 style="color: #ffffff; margin: 0;">🛠️ Design and Development Update</h2>
         </div>
         <div style="padding: 25px; background-color: #ffffff;">
-            <p style="font-size: 15px; color: #333;">Hi,</p>
+            <p style="font-size: 15px; color: #333;">Hi {lead_name},</p>
             <p style="font-size: 15px; color: #333;">
-                The following <b>Design and Development</b> record has been updated by <b>{created_by}</b>. Please review the details below.
+                The following <b>Design and Development</b> record has been updated by <b>{updated_by}</b>. Please review the details below.
             </p>
             <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
                 {rows_html}
