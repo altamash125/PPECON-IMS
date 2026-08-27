@@ -27,13 +27,13 @@ def send_design_development_mail(doc, recipients):
     created_by = frappe.db.get_value("User", current_user, "full_name") or current_user
 
     fields_to_show = [
-        ("Project Name", doc.project_name),
+        ("Prospect Name", doc.prospect_company),
         ("Folder Number", doc.folder_number),
         ("Brief Description", doc.brief_description),
         ("Project Description", doc.proejct_description),
         ("Planning Date", doc.planning_date),
         ("Target Date", doc.target_date),
-        ("Project Manager", frappe.db.get_value("User", doc.project_manager, "full_name") or doc.project_manager),
+        ("Design Lead", frappe.db.get_value("User", doc.design_lead, "full_name") or doc.design_lead),
         ("Updated By", created_by),
     ]
 

@@ -188,9 +188,9 @@ doc_events = {
     "IT Asset Request": {
     "on_update": "ppecon_ims.ppe_ims.doctype.it_asset_request.it_asset_request.notify_on_workflow_change"
   },
-   "IT Asset Clearance": {
-    "on_update": "ppecon_ims.ppe_ims.doctype.it_asset_clearance.it_asset_clearance.notify_on_asset_return"
- }
+  "IT Asset Clearance": {
+    "on_update": "ppecon_ims.ppe_ims.doctype.it_asset_clearance.it_asset_clearance.notify_on_update"
+   }
 
 }
 

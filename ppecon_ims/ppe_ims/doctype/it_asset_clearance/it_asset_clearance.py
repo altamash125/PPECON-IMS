@@ -1,18 +1,6 @@
 # Copyright (c) 2026, altamash@ppecon.com and contributors
 # For license information, please see license.txt
 
-# import frappe
-from frappe.model.document import Document
-
-
-class ITAssetClearance(Document):
-	pass
-
-
-
-# Copyright (c) 2026, altamash@ppecon.com and contributors
-# For license information, please see license.txt
-
 import frappe
 from frappe.model.document import Document
 from frappe.utils import now_datetime, get_url_to_form
@@ -46,6 +34,7 @@ class ITAssetClearance(Document):
                         "assigned_to": None,
                         "assigned_date": None,
                         "status": "In Stock",
+                        "name1": None,
                     })
                     released += 1
                 except Exception:
@@ -61,9 +50,11 @@ class ITAssetClearance(Document):
         for row in self.items:
             if row.returned and row.it_inventory:
                 try:
+                    employee_name = frappe.db.get_value("Employee", self.employee, "employee_name")
                     frappe.db.set_value("IT Inventory", row.it_inventory, {
                         "assigned_to": self.employee,
                         "status": "Assigned",
+                        "name1": employee_name,
                     })
                 except Exception:
                     frappe.log_error(frappe.get_traceback(),
@@ -93,14 +84,20 @@ def fetch_assigned_assets(employee):
 
 def notify_on_update(doc, method):
     # 1. Asset-level "Returned" tick — sends to returned_to first, then IT
-    notify_on_asset_return(doc, method)
+    try:
+        notify_on_asset_return(doc, method)
+    except Exception:
+        frappe.log_error(frappe.get_traceback(), "IT Asset Clearance: asset return notify failed")
 
     # 2. Workflow state transitions
     if doc.has_value_changed("workflow_state"):
-        if doc.workflow_state == "Pending IT Clearance":
-            notify_it_team_hr_cleared(doc)
-        elif doc.workflow_state == "Cleared":
-            notify_employee_acknowledgment(doc)
+        try:
+            if doc.workflow_state == "Pending IT Clearance":
+                notify_it_team_hr_cleared(doc)
+            elif doc.workflow_state == "Cleared":
+                notify_employee_acknowledgment(doc)
+        except Exception:
+            frappe.log_error(frappe.get_traceback(), "IT Asset Clearance: workflow notify failed")
 
 
 def notify_on_asset_return(doc, method):
@@ -190,9 +187,9 @@ def notify_it_team_hr_cleared(doc):
             <h2 style="color: #ffffff; margin: 0;">✅ Clearance Approved by HR</h2>
         </div>
         <div style="padding: 25px; background-color: #ffffff;">
-            <p style="font-size: 15px; color: #333;">Hi Team,</p>
+            <p style="font-size: 15px; color: #333;">Dear IT Team,</p>
             <p style="font-size: 15px; color: #333;">
-                This employee's <b>IT Asset Clearance</b> has been approved by HR and is now awaiting <b>IT Supervisor</b> approval. Please review the details below.
+                HR has approved this employee's <b>IT Asset Clearance</b>. It is now awaiting <b>IT Supervisor</b> approval. Please review the details below.
             </p>
             <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
                 {rows_html}
@@ -269,3 +266,4 @@ def build_rows_html(fields_to_show):
                 </tr>
             """
     return rows_html
+
