@@ -9,16 +9,20 @@
   "naming_series",
   "check_list_for",
   "remarks",
-  "hse_check_list_items_section",
-  "check_list_item",
+  "image",
+  "column_break_tbig",
+  "section_break_gpyf",
+  "hse_checklist_item",
   "upload_all_documents_section",
   "bulk_upload"
  ],
  "fields": [
   {
    "fieldname": "naming_series",
-   "fieldtype": "Data",
-   "label": "S No"
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "S No",
+   "options": "HCLM-.YYYY.-.###"
   },
   {
    "fieldname": "check_list_for",
@@ -33,17 +37,6 @@
    "label": "Remarks"
   },
   {
-   "fieldname": "hse_check_list_items_section",
-   "fieldtype": "Section Break",
-   "label": "HSE Check List Items"
-  },
-  {
-   "fieldname": "check_list_item",
-   "fieldtype": "Table",
-   "label": "Check list item",
-   "options": "HSE Check List Items"
-  },
-  {
    "fieldname": "upload_all_documents_section",
    "fieldtype": "Section Break",
    "label": "Support Files"
@@ -52,15 +45,38 @@
    "fieldname": "bulk_upload",
    "fieldtype": "HTML",
    "label": "Upload All"
+  },
+  {
+   "fieldname": "section_break_gpyf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "hse_checklist_item",
+   "fieldtype": "Table",
+   "label": "HSE Checklist Item",
+   "options": "HSE Check List Items"
+  },
+  {
+   "fieldname": "column_break_tbig",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Image",
+   "no_copy": 1,
+   "print_hide": 1
   }
  ],
  "grid_page_length": 50,
+ "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-14 11:10:42.116647",
+ "modified": "2026-08-30 14:45:07.070868",
  "modified_by": "Administrator",
  "module": "PPE IMS",
- "name": "HSE Checklist",
+ "name": "HSE Checklist Master",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
@@ -79,7 +95,9 @@
  ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "check_list_for"
 }

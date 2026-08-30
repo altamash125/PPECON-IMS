@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestHSEChecklist(FrappeTestCase):
+class TestHSEChecklistMaster(FrappeTestCase):
 	pass

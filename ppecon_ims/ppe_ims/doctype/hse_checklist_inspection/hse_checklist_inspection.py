@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class HSEChecklist(Document):
+class HSEChecklistInspection(Document):
 	pass
