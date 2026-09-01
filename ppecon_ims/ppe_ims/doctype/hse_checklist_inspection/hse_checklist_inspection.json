@@ -11,10 +11,13 @@
   "naming_series",
   "check_list_for",
   "document_code",
+  "project",
   "column_break_lpmj",
   "inspection_date",
   "duration_of_checklist",
   "image",
+  "user",
+  "name1",
   "section_break_ydcs",
   "hse_checklist_item",
   "section_break_mype",
@@ -43,7 +46,7 @@
    "options": "HCLI-.YYYY.-.###"
   },
   {
-   "description": "Choose Templates from Master",
+   "description": "Choose Templates from HSE Master",
    "fieldname": "check_list_for",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -96,6 +99,25 @@
    "hidden": 1,
    "in_preview": 1,
    "label": "Image"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "User",
+   "options": "User"
+  },
+  {
+   "fetch_from": "user.full_name",
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "label": "Name",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
@@ -103,7 +125,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-08-30 14:40:34.944749",
+ "modified": "2026-08-30 15:32:39.841151",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "HSE Checklist Inspection",

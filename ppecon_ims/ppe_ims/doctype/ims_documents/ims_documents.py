@@ -54,7 +54,6 @@ def send_ims_document_mail(doc, recipients):
         ("Document Category", doc.document_category),
         ("Document Issue Date", doc.document_issue_date),
         ("Document Code", doc.document_code),
-        ("Document Number", doc.document_number),
         ("Document Type", doc.document_type),
         ("Department", doc.department),
         ("Revision Number", doc.revision_number),
