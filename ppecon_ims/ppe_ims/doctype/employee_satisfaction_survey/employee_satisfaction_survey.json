@@ -1,0 +1,256 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "ESS-.YYYY.-.#####",
+ "creation": "2026-09-02 12:46:16.926911",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sb_we",
+  "we_comfortable_rating",
+  "we_clean_safe_rating",
+  "we_resources_rating",
+  "sb_js",
+  "js_role_responsibilities_rating",
+  "js_personal_achievement_rating",
+  "js_motivated_rating",
+  "sb_ml",
+  "ml_supported_manager_rating",
+  "ml_communication_rating",
+  "ml_feedback_rating",
+  "sb_cb",
+  "cb_compensation_rating",
+  "cb_competitive_benefits_rating",
+  "sb_cg",
+  "cg_opportunities_rating",
+  "cg_training_rating",
+  "cg_advancement_rating",
+  "sb_wlb",
+  "wlb_good_balance_rating",
+  "wlb_flexible_schedule_rating",
+  "sb_open",
+  "recommendations",
+  "what_you_like",
+  "areas_improvement",
+  "suggestions_satisfaction",
+  "professional_growth_support",
+  "submitted_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "sb_we",
+   "fieldtype": "Section Break",
+   "label": "Work Environment"
+  },
+  {
+   "fieldname": "we_comfortable_rating",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "I feel comfortable in my work environment",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "we_clean_safe_rating",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "The workplace is clean and safe",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "we_resources_rating",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "I have the resources and equipment needed to do my job effectively",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_js",
+   "fieldtype": "Section Break",
+   "label": "Job Satisfaction"
+  },
+  {
+   "fieldname": "js_role_responsibilities_rating",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "I am satisfied with my current role and responsibilities",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "js_personal_achievement_rating",
+   "fieldtype": "Select",
+   "label": "My job provides me with a sense of personal achievement",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "js_motivated_rating",
+   "fieldtype": "Select",
+   "label": "I feel motivated to do my best work",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_ml",
+   "fieldtype": "Section Break",
+   "label": "Management and Leadership"
+  },
+  {
+   "fieldname": "ml_supported_manager_rating",
+   "fieldtype": "Select",
+   "label": "I feel supported by my manager/supervisor",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ml_communication_rating",
+   "fieldtype": "Select",
+   "label": "Management communicates effectively with staff",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ml_feedback_rating",
+   "fieldtype": "Select",
+   "label": "I receive regular feedback on my performance",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_cb",
+   "fieldtype": "Section Break",
+   "label": "Compensation & Benefits"
+  },
+  {
+   "fieldname": "cb_compensation_rating",
+   "fieldtype": "Select",
+   "label": "I am satisfied with my compensation (salary and benefits)",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_competitive_benefits_rating",
+   "fieldtype": "Select",
+   "label": "The company offers competitive benefits compared to other employers",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_cg",
+   "fieldtype": "Section Break",
+   "label": "Career Growth and Development"
+  },
+  {
+   "fieldname": "cg_opportunities_rating",
+   "fieldtype": "Select",
+   "label": "I have opportunities for professional development",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cg_training_rating",
+   "fieldtype": "Select",
+   "label": "I am satisfied with the training provided by the company",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cg_advancement_rating",
+   "fieldtype": "Select",
+   "label": "There is potential for career advancement within the company",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_wlb",
+   "fieldtype": "Section Break",
+   "label": "Work-Life Balance"
+  },
+  {
+   "fieldname": "wlb_good_balance_rating",
+   "fieldtype": "Select",
+   "label": "I have a good work-life balance",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "wlb_flexible_schedule_rating",
+   "fieldtype": "Select",
+   "label": "The company is flexible with my work schedule when needed",
+   "options": "1\n2\n3\n4\n5",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_open",
+   "fieldtype": "Section Break",
+   "label": "Open Feedback"
+  },
+  {
+   "fieldname": "recommendations",
+   "fieldtype": "Small Text",
+   "label": "Recommendations on how PPECON can improve in different aspects"
+  },
+  {
+   "fieldname": "what_you_like",
+   "fieldtype": "Small Text",
+   "label": "What do you like most about working at the company?",
+   "reqd": 1
+  },
+  {
+   "fieldname": "areas_improvement",
+   "fieldtype": "Small Text",
+   "label": "What areas do you believe need improvement?",
+   "reqd": 1
+  },
+  {
+   "fieldname": "suggestions_satisfaction",
+   "fieldtype": "Small Text",
+   "label": "Do you have any suggestions for improving employee satisfaction?",
+   "reqd": 1
+  },
+  {
+   "fieldname": "professional_growth_support",
+   "fieldtype": "Small Text",
+   "label": "How do you feel the company can better support your professional growth?",
+   "reqd": 1
+  },
+  {
+   "default": "Now",
+   "fieldname": "submitted_on",
+   "fieldtype": "Datetime",
+   "label": "Submitted On",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-02 12:46:16.926911",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Employee Satisfaction Survey",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

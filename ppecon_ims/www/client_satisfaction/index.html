@@ -32,8 +32,8 @@
 				gap: 20px;
 			}
 			.header img {
-				height: 70px;
-				max-width: 240px;
+				height: 80px;
+				max-width: 260px;
 				object-fit: contain;
 				background: #fff;
 				padding: 8px 14px;
@@ -305,8 +305,18 @@
 							<label>Project Type *</label>
 							<select name="project_type" required>
 								<option value="">-- Select --</option>
+								<option value="Design">Design</option>
 								<option value="Design & Build">Design & Build</option>
 								<option value="Fit-Out Execution">Fit-Out Execution</option>
+								<option value="Furnishing">Furnishing</option>
+								<option value="Construction">Construction</option>
+								<option value="Civil Works">Civil Works</option>
+								<option value="Renovation">Renovation</option>
+								<option value="Landscape">Landscape</option>
+								<option value="MEP - HVAC">MEP - HVAC</option>
+								<option value="IT - CCTV & Security System">
+									IT - CCTV & Security System
+								</option>
 							</select>
 						</div>
 					</div>
@@ -456,7 +466,10 @@
 						"/api/method/ppecon_ims.ppe_ims.api.submit_client_satisfaction",
 						{
 							method: "POST",
-							headers: { "Content-Type": "application/json" },
+							credentials: "omit",
+							headers: {
+								"Content-Type": "application/json",
+							},
 							body: JSON.stringify(data),
 						},
 					);
@@ -467,7 +480,7 @@
 						form.reset();
 					} else {
 						msgEl.style.color = "red";
-						msgEl.innerText = "Error submitting. Please try again.";
+						msgEl.innerText = result.message || "Error submitting. Please try again.";
 						console.error(result);
 					}
 				} catch (err) {

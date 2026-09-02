@@ -59,7 +59,7 @@
    "fieldname": "project_type",
    "fieldtype": "Select",
    "label": "Project Type",
-   "options": "Design & Build\nFit-Out Execution"
+   "options": "Design\nDesign & Build\nFit-Out Execution\nFurnishing\nConstruction\nCivil Works\nRenovation\nLandscape\nMEP - HVAC\nIT - CCTV & Security System"
   },
   {
    "fieldname": "sb_part1",
@@ -242,7 +242,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-02 10:44:52.453751",
+ "modified": "2026-09-02 12:22:09.774738",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Client Satisfaction Survey",
