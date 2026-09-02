@@ -1,0 +1,269 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "hash",
+ "creation": "2026-09-02 10:44:52.453751",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "client_name",
+  "project",
+  "project_type",
+  "sb_part1",
+  "design_requirements_rating",
+  "coordination_design_operation_rating",
+  "hse_commitment_rating",
+  "project_duration_rating",
+  "weekly_reports_rating",
+  "sb_part2",
+  "functionality_rating",
+  "quality_compliance_rating",
+  "snags_taking_rating",
+  "snags_closing_rating",
+  "sb_part3",
+  "delivery_rating",
+  "warranty_aftersales_rating",
+  "work_again_rating",
+  "recommend_rating",
+  "sb_part4",
+  "comm_tender_rating",
+  "comm_proposal_rating",
+  "comm_design_prep_rating",
+  "comm_execution_rating",
+  "comm_snags_handover_rating",
+  "comm_aftersales_rating",
+  "comm_invoicing_rating",
+  "material_delivery_rating",
+  "sb_part5",
+  "feedback",
+  "signature_name",
+  "email",
+  "mobile",
+  "survey_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Client Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Data",
+   "label": "Project Name"
+  },
+  {
+   "fieldname": "project_type",
+   "fieldtype": "Select",
+   "label": "Project Type",
+   "options": "Design & Build\nFit-Out Execution"
+  },
+  {
+   "fieldname": "sb_part1",
+   "fieldtype": "Section Break",
+   "label": "Part 1: Service Quality"
+  },
+  {
+   "fieldname": "design_requirements_rating",
+   "fieldtype": "Select",
+   "label": "Satisfaction with design requirements and expectations",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "coordination_design_operation_rating",
+   "fieldtype": "Select",
+   "label": "Satisfaction with coordination between Design & Operation",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "hse_commitment_rating",
+   "fieldtype": "Select",
+   "label": "Satisfaction with HSE commitment during execution",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "project_duration_rating",
+   "fieldtype": "Select",
+   "label": "Satisfaction with the project duration",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "weekly_reports_rating",
+   "fieldtype": "Select",
+   "label": "Satisfaction with progress weekly reports",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "sb_part2",
+   "fieldtype": "Section Break",
+   "label": "Part 2: Project Outcome and Satisfaction"
+  },
+  {
+   "fieldname": "functionality_rating",
+   "fieldtype": "Select",
+   "label": "Functionality of the completed design",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "quality_compliance_rating",
+   "fieldtype": "Select",
+   "label": "Quality compliance with approved design and specifications",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "snags_taking_rating",
+   "fieldtype": "Select",
+   "label": "Taking of snags",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "snags_closing_rating",
+   "fieldtype": "Select",
+   "label": "Closing of snags",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "sb_part3",
+   "fieldtype": "Section Break",
+   "label": "Part 3: Overall Experience"
+  },
+  {
+   "fieldname": "delivery_rating",
+   "fieldtype": "Select",
+   "label": "Satisfaction with project delivery",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "warranty_aftersales_rating",
+   "fieldtype": "Select",
+   "label": "Satisfaction with warranty and after sales services",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "work_again_rating",
+   "fieldtype": "Select",
+   "label": "Potential to work with us again",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "recommend_rating",
+   "fieldtype": "Select",
+   "label": "Potential to recommend us to others",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "sb_part4",
+   "fieldtype": "Section Break",
+   "label": "Part 4: Communication"
+  },
+  {
+   "fieldname": "comm_tender_rating",
+   "fieldtype": "Select",
+   "label": "Communication during tender launching phase",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "comm_proposal_rating",
+   "fieldtype": "Select",
+   "label": "Communication during proposal negotiation phase",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "comm_design_prep_rating",
+   "fieldtype": "Select",
+   "label": "Communication during design preparation phase",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "comm_execution_rating",
+   "fieldtype": "Select",
+   "label": "Communication during execution phase",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "comm_snags_handover_rating",
+   "fieldtype": "Select",
+   "label": "Communication during snags & handover phase",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "comm_aftersales_rating",
+   "fieldtype": "Select",
+   "label": "Communication during after sales service phase",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "comm_invoicing_rating",
+   "fieldtype": "Select",
+   "label": "Communication during invoicing and collection phase",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "material_delivery_rating",
+   "fieldtype": "Select",
+   "label": "Material delivery time & quality",
+   "options": "1\n2\n3\n4\n5\nNA"
+  },
+  {
+   "fieldname": "sb_part5",
+   "fieldtype": "Section Break",
+   "label": "Part 5: Overall Feedback"
+  },
+  {
+   "fieldname": "feedback",
+   "fieldtype": "Small Text",
+   "label": "Feedback"
+  },
+  {
+   "fieldname": "signature_name",
+   "fieldtype": "Data",
+   "label": "Name"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "fieldname": "mobile",
+   "fieldtype": "Data",
+   "label": "Mobile"
+  },
+  {
+   "default": "Today",
+   "fieldname": "survey_date",
+   "fieldtype": "Date",
+   "label": "Date"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-02 10:44:52.453751",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Client Satisfaction Survey",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

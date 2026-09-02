@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Client Satisfaction Survey | Pioneer Projects Executer Company</title>
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+				background: #f4f6f9;
+				margin: 0;
+				padding: 30px 15px;
+				color: #2d3748;
+			}
+			.container {
+				max-width: 900px;
+				margin: 0 auto;
+				background: #fff;
+				border-radius: 10px;
+				box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+				overflow: hidden;
+			}
+			.header {
+				background: linear-gradient(135deg, #1e4e8c, #2b6cb0);
+				color: #fff;
+				padding: 30px 35px;
+				display: flex;
+				align-items: center;
+				gap: 20px;
+			}
+			.header img {
+				height: 70px;
+				max-width: 240px;
+				object-fit: contain;
+				background: #fff;
+				padding: 8px 14px;
+				border-radius: 8px;
+			}
+			.header h1 {
+				margin: 0;
+				font-size: 22px;
+			}
+			.header p {
+				margin: 4px 0 0;
+				font-size: 13px;
+				opacity: 0.9;
+			}
+
+			.body-content {
+				padding: 30px 35px 40px;
+			}
+			.intro {
+				font-size: 14px;
+				background: #eef4fb;
+				border-left: 4px solid #2b6cb0;
+				padding: 14px 16px;
+				border-radius: 6px;
+				margin-bottom: 25px;
+				line-height: 1.6;
+			}
+			.scale-legend {
+				font-size: 12px;
+				color: #555;
+				margin-bottom: 25px;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 12px;
+			}
+			.scale-legend span {
+				background: #f0f0f0;
+				padding: 4px 10px;
+				border-radius: 12px;
+			}
+
+			.row {
+				display: flex;
+				gap: 20px;
+				margin-bottom: 16px;
+				flex-wrap: wrap;
+			}
+			.row > div {
+				flex: 1;
+				min-width: 200px;
+			}
+			.row label {
+				font-weight: 600;
+				display: block;
+				margin-bottom: 5px;
+				font-size: 13px;
+				color: #444;
+			}
+			.row input,
+			.row select {
+				width: 100%;
+				padding: 9px 10px;
+				border: 1px solid #d5dbe3;
+				border-radius: 6px;
+				font-size: 14px;
+			}
+			.row input:focus,
+			.row select:focus,
+			textarea:focus {
+				outline: none;
+				border-color: #2b6cb0;
+			}
+
+			h3.section-title {
+				font-size: 15px;
+				color: #1e4e8c;
+				margin: 30px 0 12px;
+				padding-bottom: 6px;
+				border-bottom: 2px solid #e2e8f0;
+			}
+
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-bottom: 10px;
+				font-size: 13px;
+			}
+			th,
+			td {
+				border: 1px solid #e2e8f0;
+				padding: 8px;
+				text-align: center;
+			}
+			th {
+				background: #f7f9fc;
+				color: #333;
+				font-weight: 600;
+			}
+			td.qtext {
+				text-align: left;
+				width: 42%;
+				color: #333;
+			}
+			tr:hover td {
+				background: #fafcff;
+			}
+			input[type="radio"] {
+				width: 16px;
+				height: 16px;
+				cursor: pointer;
+				accent-color: #2b6cb0;
+			}
+
+			textarea {
+				width: 100%;
+				padding: 10px;
+				border: 1px solid #d5dbe3;
+				border-radius: 6px;
+				font-size: 14px;
+				resize: vertical;
+			}
+
+			.submit-wrap {
+				text-align: center;
+				margin-top: 30px;
+			}
+			button#submitBtn {
+				background: #2b6cb0;
+				color: #fff;
+				border: none;
+				padding: 13px 40px;
+				font-size: 15px;
+				border-radius: 30px;
+				cursor: pointer;
+				font-weight: 600;
+				transition: background 0.2s;
+			}
+			button#submitBtn:hover {
+				background: #1e4e8c;
+			}
+			button#submitBtn:disabled {
+				background: #9db4cc;
+				cursor: not-allowed;
+			}
+
+			.msg {
+				margin-top: 14px;
+				font-weight: 600;
+				font-size: 13px;
+				text-align: center;
+			}
+
+			/* Modal */
+			.modal-overlay {
+				display: none;
+				position: fixed;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.5);
+				align-items: center;
+				justify-content: center;
+				z-index: 1000;
+			}
+			.modal-overlay.active {
+				display: flex;
+			}
+			.modal-box {
+				background: #fff;
+				border-radius: 12px;
+				padding: 40px 35px;
+				max-width: 380px;
+				text-align: center;
+				animation: popIn 0.25s ease-out;
+			}
+			@keyframes popIn {
+				from {
+					transform: scale(0.85);
+					opacity: 0;
+				}
+				to {
+					transform: scale(1);
+					opacity: 1;
+				}
+			}
+			.modal-box .checkmark {
+				width: 64px;
+				height: 64px;
+				border-radius: 50%;
+				background: #38a169;
+				color: #fff;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 34px;
+				margin: 0 auto 18px;
+			}
+			.modal-box h2 {
+				margin: 0 0 8px;
+				font-size: 19px;
+				color: #2d3748;
+			}
+			.modal-box p {
+				font-size: 13px;
+				color: #666;
+				margin: 0 0 22px;
+				line-height: 1.5;
+			}
+			.modal-box button {
+				background: #2b6cb0;
+				color: #fff;
+				border: none;
+				padding: 10px 30px;
+				border-radius: 25px;
+				font-size: 14px;
+				cursor: pointer;
+			}
+
+			.footer-note {
+				text-align: center;
+				font-size: 11px;
+				color: #999;
+				margin-top: 25px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<img
+					src="/assets/ppecon_ims/img/PPECON.avif"
+					alt="Company Logo"
+					onerror="this.style.display = 'none'"
+				/>
+				<div>
+					<h1>Pioneer Projects Executer Company</h1>
+					<p>Client Satisfaction Survey</p>
+				</div>
+			</div>
+
+			<div class="body-content">
+				<div class="intro">
+					Thank you for choosing Pioneer Projects Executer Company for your interior
+					design / execution needs. Your feedback is invaluable in helping us improve and
+					ensuring we continue to provide top-quality service.
+				</div>
+
+				<div class="scale-legend">
+					<span>1 = Very Unsatisfied</span>
+					<span>2 = Unsatisfied</span>
+					<span>3 = Neutral</span>
+					<span>4 = Satisfied</span>
+					<span>5 = Very Satisfied</span>
+					<span>NA = Not Applicable</span>
+				</div>
+
+				<form id="csform">
+					<div class="row">
+						<div>
+							<label>Client Name *</label
+							><input type="text" name="client_name" required />
+						</div>
+						<div>
+							<label>Project Name *</label
+							><input type="text" name="project" required />
+						</div>
+					</div>
+
+					<div class="row">
+						<div>
+							<label>Project Type *</label>
+							<select name="project_type" required>
+								<option value="">-- Select --</option>
+								<option value="Design & Build">Design & Build</option>
+								<option value="Fit-Out Execution">Fit-Out Execution</option>
+							</select>
+						</div>
+					</div>
+
+					<h3 class="section-title">Part 1: Service Quality</h3>
+					<table id="part1"></table>
+
+					<h3 class="section-title">Part 2: Project Outcome and Satisfaction</h3>
+					<table id="part2"></table>
+
+					<h3 class="section-title">Part 3: Overall Experience</h3>
+					<table id="part3"></table>
+
+					<h3 class="section-title">Part 4: Communication</h3>
+					<table id="part4"></table>
+
+					<h3 class="section-title">Part 5: Overall Feedback</h3>
+					<textarea
+						name="feedback"
+						rows="4"
+						placeholder="We would appreciate any feedback that can help us serve you better..."
+					></textarea>
+
+					<div class="row" style="margin-top: 18px">
+						<div><label>Name</label><input type="text" name="signature_name" /></div>
+						<div><label>Email</label><input type="email" name="email" /></div>
+						<div><label>Mobile</label><input type="text" name="mobile" /></div>
+					</div>
+
+					<div class="submit-wrap">
+						<button type="submit" id="submitBtn">Submit Survey</button>
+						<div class="msg" id="msg"></div>
+					</div>
+				</form>
+
+				<div class="footer-note">
+					Your insights are crucial to our continual improvement. Thank you for your
+					time.
+				</div>
+			</div>
+		</div>
+
+		<!-- Success Modal -->
+		<div class="modal-overlay" id="modalOverlay">
+			<div class="modal-box">
+				<div class="checkmark">&#10003;</div>
+				<h2>Thank You!</h2>
+				<p>
+					Your feedback has been submitted successfully. We truly appreciate your time
+					and valuable input.
+				</p>
+				<button
+					onclick="document.getElementById('modalOverlay').classList.remove('active')"
+				>
+					Close
+				</button>
+			</div>
+		</div>
+
+		<script>
+			const scale = ["1", "2", "3", "4", "5", "NA"];
+
+			const parts = {
+				part1: [
+					[
+						"design_requirements_rating",
+						"Satisfaction with design requirements and expectations",
+					],
+					[
+						"coordination_design_operation_rating",
+						"Satisfaction with coordination between Design & Operation",
+					],
+					["hse_commitment_rating", "Satisfaction with HSE commitment during execution"],
+					["project_duration_rating", "Satisfaction with the project duration"],
+					["weekly_reports_rating", "Satisfaction with progress weekly reports"],
+				],
+				part2: [
+					["functionality_rating", "Functionality of the completed design"],
+					[
+						"quality_compliance_rating",
+						"Quality compliance with approved design and specifications",
+					],
+					["snags_taking_rating", "Taking of snags"],
+					["snags_closing_rating", "Closing of snags"],
+				],
+				part3: [
+					["delivery_rating", "Satisfaction with project delivery"],
+					[
+						"warranty_aftersales_rating",
+						"Satisfaction with warranty and after sales services",
+					],
+					["work_again_rating", "Potential to work with us again"],
+					["recommend_rating", "Potential to recommend us to others"],
+				],
+				part4: [
+					["comm_tender_rating", "Communication during tender launching phase"],
+					["comm_proposal_rating", "Communication during proposal negotiation phase"],
+					["comm_design_prep_rating", "Communication during design preparation phase"],
+					["comm_execution_rating", "Communication during execution phase"],
+					["comm_snags_handover_rating", "Communication during snags & handover phase"],
+					["comm_aftersales_rating", "Communication during after sales service phase"],
+					[
+						"comm_invoicing_rating",
+						"Communication during invoicing and collection phase",
+					],
+					["material_delivery_rating", "Material delivery time & quality"],
+				],
+			};
+
+			function buildTable(id, rows) {
+				let table = document.getElementById(id);
+				let head =
+					"<tr><th class='qtext'>Question</th>" +
+					scale.map((s) => `<th>${s}</th>`).join("") +
+					"</tr>";
+				let body = rows
+					.map(([fname, label]) => {
+						let cells = scale
+							.map(
+								(s) =>
+									`<td><input type="radio" name="${fname}" value="${s}" required></td>`,
+							)
+							.join("");
+						return `<tr><td class="qtext">${label}</td>${cells}</tr>`;
+					})
+					.join("");
+				table.innerHTML = head + body;
+			}
+
+			Object.keys(parts).forEach((k) => buildTable(k, parts[k]));
+
+			const form = document.getElementById("csform");
+			const submitBtn = document.getElementById("submitBtn");
+			const msgEl = document.getElementById("msg");
+
+			form.addEventListener("submit", async function (e) {
+				e.preventDefault();
+				submitBtn.disabled = true;
+				submitBtn.innerText = "Submitting...";
+				msgEl.innerText = "";
+
+				let formData = new FormData(this);
+				let data = Object.fromEntries(formData.entries());
+
+				try {
+					let res = await fetch(
+						"/api/method/ppecon_ims.ppe_ims.api.submit_client_satisfaction",
+						{
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify(data),
+						},
+					);
+					let result = await res.json();
+
+					if (res.ok) {
+						document.getElementById("modalOverlay").classList.add("active");
+						form.reset();
+					} else {
+						msgEl.style.color = "red";
+						msgEl.innerText = "Error submitting. Please try again.";
+						console.error(result);
+					}
+				} catch (err) {
+					msgEl.style.color = "red";
+					msgEl.innerText = "Network error. Please try again.";
+					console.error(err);
+				} finally {
+					submitBtn.disabled = false;
+					submitBtn.innerText = "Submit Survey";
+				}
+			});
+		</script>
+	</body>
+</html>
