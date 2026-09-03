@@ -1,9 +1,7 @@
 <!-- =========================================================================
-  PPECON IMS Portal — index.html  (v3.2 COMPLETE)
+  PPECON IMS Portal — index.html  (v3.3 COMPLETE — Estimation fixed)
   Location : ppecon_ims/www/ims/index.html
-  Backend  : ppecon_ims/www/ims/index.py  (v3.1)
-  Sections : IMS/ISO · Sales & Marketing · Procurement + period filter
-             + IMS Quality Objectives (Supplier | Training side-by-side)
+  Backend  : ppecon_ims/www/ims/index.py  (v3.3)
 ========================================================================== -->
 
 <link rel="stylesheet" href="/assets/ppecon_ims/css/ims_portal.css" />
@@ -37,7 +35,6 @@
 
 <!-- ==================== STYLES ==================== -->
 <style>
-	/* ---- period filter bar ---- */
 	.period-bar {
 		display: flex;
 		align-items: center;
@@ -111,7 +108,6 @@
 		color: #8a97a8;
 	}
 
-	/* ---- summary tiles ---- */
 	.summary-section {
 		margin-bottom: 28px;
 	}
@@ -174,7 +170,6 @@
 		background: linear-gradient(135deg, #8d6e63, #5d4037);
 	}
 
-	/* ---- insight cards ---- */
 	.insight-card.wide {
 		grid-column: span 2;
 	}
@@ -188,6 +183,138 @@
 		color: #b6c0cc;
 		font-size: 12px;
 		padding: 70px 0;
+	}
+
+	/* ---- Estimation Turnaround card ---- */
+	.est-card {
+		grid-column: 1 / -1;
+	}
+	.est-top {
+		display: flex;
+		gap: 14px;
+		flex-wrap: wrap;
+		align-items: stretch;
+		margin-bottom: 14px;
+	}
+	.est-stat {
+		flex: 1;
+		min-width: 140px;
+		border-radius: 8px;
+		padding: 12px 14px;
+		color: #fff;
+	}
+	.est-stat .es-lbl {
+		font-size: 10.5px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.4px;
+		opacity: 0.9;
+	}
+	.est-stat .es-val {
+		font-size: 24px;
+		font-weight: 800;
+		margin-top: 3px;
+	}
+	.est-green {
+		background: linear-gradient(135deg, #2e9e5b, #1d6b3c);
+	}
+	.est-red {
+		background: linear-gradient(135deg, #d0433f, #96201d);
+	}
+	.est-blue {
+		background: linear-gradient(135deg, #1f6fd0, #14498f);
+	}
+	.est-slate {
+		background: linear-gradient(135deg, #546e7a, #37474f);
+	}
+	.est-bar-wrap {
+		height: 14px;
+		border-radius: 8px;
+		overflow: hidden;
+		display: flex;
+		background: #eef0f2;
+		margin-bottom: 6px;
+	}
+	.est-bar-wrap .seg-ontime {
+		background: #2e9e5b;
+	}
+	.est-bar-wrap .seg-delayed {
+		background: #d0433f;
+	}
+	.est-legend {
+		display: flex;
+		gap: 16px;
+		font-size: 11.5px;
+		color: #6c7680;
+		margin-bottom: 14px;
+	}
+	.est-legend span::before {
+		content: "●";
+		margin-right: 4px;
+	}
+	.est-legend .lg-ontime::before {
+		color: #2e9e5b;
+	}
+	.est-legend .lg-delayed::before {
+		color: #d0433f;
+	}
+
+	/* ---- IMS Quality Objectives card ---- */
+	.qo-card {
+		grid-column: 1 / -1;
+	}
+	.qo-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 20px;
+		margin-top: 10px;
+	}
+	@media (max-width: 900px) {
+		.qo-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+	.qo-col {
+		border: 1px solid #e0e6ee;
+		border-radius: 8px;
+		padding: 14px;
+		background: #fbfcfd;
+	}
+	.qo-section-title {
+		font-size: 13px;
+		font-weight: 700;
+		color: var(--accent-dark);
+		margin-bottom: 10px;
+	}
+	.qo-chart {
+		margin-top: 12px;
+	}
+	.stats-table-wrap {
+		overflow-x: auto;
+	}
+	table.stats-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 11.5px;
+	}
+	table.stats-table th {
+		background: #f4f5f6;
+		text-align: left;
+		padding: 6px 8px;
+		font-size: 10px;
+		text-transform: uppercase;
+		color: #8d99a6;
+		border-bottom: 1px solid #e2e6ea;
+	}
+	table.stats-table td {
+		padding: 6px 8px;
+		border-bottom: 1px solid #edf0f2;
+		vertical-align: top;
+	}
+	table.stats-table td.comments {
+		font-size: 11px;
+		color: #566072;
+		max-width: 220px;
 	}
 
 	/* ---- visual settings modal ---- */
@@ -367,7 +494,6 @@
 					<i class="menu-icon">⚙</i><span>System Settings</span><i class="chevron">▸</i>
 				</div>
 				<div class="group-items">
-					<!-- <a href="/app/resource-planning" class="menu-item">Resource Planning</a> -->
 					<a href="/app/asset" class="menu-item">Asset</a>
 					<a href="/app/workflow" class="menu-item">Workflow Builder</a>
 					<a href="/app/notification" class="menu-item">Notification Builder</a>
@@ -433,7 +559,7 @@
 					<i class="menu-icon">🔍</i><span>Internal Audit</span><i class="chevron">▸</i>
 				</div>
 				<div class="group-items">
-				<a href="/app/internal-audit-checklist-master" class="menu-item"
+					<a href="/app/internal-audit-checklist-master" class="menu-item"
 						>Audit Checklist Master</a
 					>
 					<a href="/app/internal-audit-schedule" class="menu-item"
@@ -489,9 +615,12 @@
 					<a href="/app/employee" class="menu-item">Employee</a>
 					<a href="/app/employee-skill-map" class="menu-item">Competence Evaluation</a>
 					<a href="/app/training-event" class="menu-item">Training</a>
-					<a href="/app/employee-satisfaction-survey" class="menu-item">Employee Satisfaction Survey</a>
-					<a href="https://ppecon.erpnext.com/employee_satisfaction" class="menu-item">Employee Satisfaction Survey Form</a>
-
+					<a href="/app/employee-satisfaction-survey" class="menu-item"
+						>Employee Satisfaction Survey</a
+					>
+					<a href="https://ppecon.erpnext.com/employee_satisfaction" class="menu-item"
+						>Employee Satisfaction Survey Form</a
+					>
 				</div>
 			</div>
 
@@ -503,15 +632,13 @@
 				<div class="group-items">
 					<a href="/app/lead" class="menu-item">Inquiry (Lead)</a>
 					<a href="/app/opportunity" class="menu-item">Inquiry Followup (Opportunity)</a>
-					<!-- <a href="/app/quotation" class="menu-item">Inquiry Estimation Response</a> -->
-					<a href="/app/client-satisfaction-survey" class="menu-item">Customer Feedback</a>
-					<a href="https://ppecon.erpnext.com/client_satisfaction" class="menu-item"
-						>Client Satisfaction Survey</a
+					<a href="/app/client-satisfaction-survey" class="menu-item"
+						>Customer Feedback</a
 					>
 				</div>
 			</div>
 
-			<div class="menu-group" data-group="sales">
+			<div class="menu-group" data-group="estimation">
 				<div class="group-header">
 					<i class="menu-icon">💼</i><span>Estimation</span><i class="chevron">▸</i>
 				</div>
@@ -552,13 +679,6 @@
 				</div>
 			</div>
 
-
-         <div class ="menu-group" data-group="planningcontrol">
-				<div class="group-header">
-					<i class="menu-icon">📊</i><span>Planning & Control</span><i class="chevron">▸</i>
-				</div>
-
-
 			<div class="menu-group" data-group="ops">
 				<div class="group-header">
 					<i class="menu-icon">🏗</i><span>Operations</span><i class="chevron">▸</i>
@@ -566,26 +686,15 @@
 				<div class="group-items">
 					<a href="/app/project" class="menu-item">Projects</a>
 					<a href="/app/operation-planning" class="menu-item">Operation Planning</a>
-					<!-- <a href="/app/process-identification" class="menu-item"
-						>Process Identification</a
-					>
-					<a href="/app/process-validation" class="menu-item">Process Validation</a> -->
 					<a href="/app/equipment" class="menu-item">Equipment</a>
-					<!-- <a href="/app/calibration-schedule" class="menu-item"
-						>Calibration Log &amp; Schedule</a
-					> -->
-					<!-- <a href="/app/preventive-maintenance-schedule" class="menu-item"
-						>Preventive Maintenance Log &amp; Schedule</a
-					> -->
 					<a href="/app/breakdown-record" class="menu-item">Breakdown Record</a>
 					<a href="/app/external-property" class="menu-item">External Property</a>
-
-					<!-- <a href="/app/kpi" class="menu-item">KPI</a> -->
 				</div>
 			</div>
-			<div class="menu-group" data-group="quality">
+
+			<div class="menu-group" data-group="maintenance">
 				<div class="group-header">
-					<i class="menu-icon">✓</i><span>Repair & Maintenance</span
+					<i class="menu-icon">✓</i><span>Repair &amp; Maintenance</span
 					><i class="chevron">▸</i>
 				</div>
 				<div class="group-items">
@@ -604,21 +713,6 @@
 					>
 				</div>
 			</div>
-
-			<!-- <div class="menu-group" data-group="audit">
-				<div class="group-header">
-					<i class="menu-icon">🔍</i><span>Internal Audit</span><i class="chevron">▸</i>
-				</div>
-				<div class="group-items">
-					<a href="/app/internal-audit-schedule" class="menu-item"
-						>Internal Audit Schedule</a
-					>
-					
-					<a href="/app/internal-audit-report" class="menu-item"
-						>Internal Audit Report</a
-					>
-				</div>
-			</div> -->
 
 			<div class="menu-group" data-group="hse">
 				<div class="group-header">
@@ -643,18 +737,11 @@
 							<span>Environmental Management</span><i class="chevron">▸</i>
 						</div>
 						<div class="group-items">
-							<!-- <a href="/app/air-emission-profile" class="menu-item"
-								>Air Emission Profile</a
-							> -->
-							<!-- <a href="/app/water-waste-profile" class="menu-item"
-								>Water Waste Profile</a
-							> -->
-
-							<a href="/app/waste-profile" class="menu-item"> Waste Profile</a>
+							<a href="/app/waste-profile" class="menu-item">Waste Profile</a>
 							<a href="/app/monitoring" class="menu-item">Monitoring</a>
 							<a href="/app/electricity-consumption" class="menu-item"
-								>Electricity Consumption
-							</a>
+								>Electricity Consumption</a
+							>
 						</div>
 					</div>
 					<div class="menu-group sub" data-group="hse-ops">
@@ -678,7 +765,6 @@
 							<a href="/app/work-permit" class="menu-item">Work Permit</a>
 							<a href="/app/ppe-master-list" class="menu-item">PPE Master List</a>
 							<a href="/app/ppe-inspection" class="menu-item">PPE Inspection</a>
-							<!-- <a href="/app/ppe-process" class="menu-item">PPE Process</a> -->
 							<a href="/app/accident-incident" class="menu-item"
 								>Accident Incident</a
 							>
@@ -692,16 +778,18 @@
 							<span>HSE Documents</span><i class="chevron">▸</i>
 						</div>
 						<div class="group-items">
-							<a href="/app/hse-checklist-master" class="menu-item">HSE CheckList Master</a>
+							<a href="/app/hse-checklist-master" class="menu-item"
+								>HSE CheckList Master</a
+							>
 						</div>
-							<div class="group-items">
-					<a href="/app/hse-checklist-inspection" class="menu-item">HSE Inspection</a>
-				</div>
+						<div class="group-items">
+							<a href="/app/hse-checklist-inspection" class="menu-item"
+								>HSE Inspection</a
+							>
+						</div>
 					</div>
 				</div>
 			</div>
-
-			 
 
 			<div class="menu-group" data-group="task">
 				<div class="group-header">
@@ -967,9 +1055,8 @@
 					</div>
 
 					<!-- ---- IMS Quality Objectives (Supplier | Training side-by-side) ---- -->
-					<div class="insight-card full qo-card">
+					<div class="insight-card qo-card">
 						<div class="insight-title">IMS Quality Objectives</div>
-
 						<div class="qo-grid">
 							<div class="qo-col">
 								<div class="qo-section-title">Supplier Compliance Stats</div>
@@ -978,7 +1065,6 @@
 									<canvas id="chartSupplierCompliance" height="200"></canvas>
 								</div>
 							</div>
-
 							<div class="qo-col">
 								<div class="qo-section-title">Training Objectives Stats</div>
 								<div id="tblTrainingStats" class="stats-table-wrap"></div>
@@ -987,6 +1073,48 @@
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ---------- INSIGHTS: ESTIMATION ---------- -->
+			<div class="insights-section">
+				<h3>Insights — Estimation</h3>
+				<div class="insights-grid">
+					<div class="insight-card est-card">
+						<div class="insight-title">Estimation Turnaround — On Time vs Delayed</div>
+
+						<div class="est-top">
+							<div class="est-stat est-green">
+								<div class="es-lbl">On Time</div>
+								<div class="es-val" id="estOnTime">—</div>
+							</div>
+							<div class="est-stat est-red">
+								<div class="es-lbl">Delayed</div>
+								<div class="es-val" id="estDelayed">—</div>
+							</div>
+							<div class="est-stat est-blue">
+								<div class="es-lbl">On-Time Rate</div>
+								<div class="es-val" id="estOnTimePct">—</div>
+							</div>
+							<div class="est-stat est-slate">
+								<div class="es-lbl">Avg Delay (days)</div>
+								<div class="es-val" id="estAvgDelay">—</div>
+							</div>
+						</div>
+
+						<div class="est-bar-wrap" id="estBar"></div>
+						<div class="est-legend">
+							<span class="lg-ontime">On Time</span>
+							<span class="lg-delayed">Delayed</span>
+						</div>
+						<div id="estSummaryLine" style="font-size: 11.5px; color: #6c7680"></div>
+
+						<canvas
+							id="chartEstimation"
+							height="140"
+							style="margin-top: 14px"
+						></canvas>
 					</div>
 				</div>
 			</div>
@@ -1019,10 +1147,6 @@
 						<div class="insight-title">Quotations — by Status</div>
 						<canvas id="chartQuoteStatus" height="200"></canvas>
 					</div>
-					<!-- <div class="insight-card wide">
-						<div class="insight-title">Quotation Value Trend</div>
-						<canvas id="chartQuoteTrend" height="180"></canvas>
-					</div> -->
 				</div>
 			</div>
 
@@ -1137,7 +1261,7 @@
 </div>
 
 <!-- =========================================================================
-     SCRIPT 1 of 3 — sidebar + all dashboard data  (ONLY ONE COPY)
+     SCRIPT 1 of 3 — sidebar + all dashboard data (ONLY ONE COPY)
 ========================================================================== -->
 <script>
 	(function () {
@@ -1619,12 +1743,92 @@
 			simpleChart("chartOppStatus", d.opportunity_by_status, "doughnut");
 			simpleChart("chartOppType", d.opportunity_by_type, "bar", "#00897b", true);
 			simpleChart("chartQuoteStatus", d.quotation_by_status, "doughnut");
-			valueTrendChart(
-				"chartQuoteTrend",
-				d.quotation_value_trend,
-				"#1565c0",
-				"No. of Quotations",
-			);
+
+			/* -------- ESTIMATION TURNAROUND (fixed: uses "d" from this scope) -------- */
+			(function () {
+				var es = d.estimation_summary || {};
+				var onTime = es.on_time || 0;
+				var delayed = es.delayed || 0;
+				var total = onTime + delayed;
+
+				setText("estOnTime", onTime);
+				setText("estDelayed", delayed);
+				var pctEl = document.getElementById("estOnTimePct");
+				if (pctEl) pctEl.textContent = (es.on_time_pct || 0) + "%";
+				var delayEl = document.getElementById("estAvgDelay");
+				if (delayEl) delayEl.textContent = es.avg_delay_days || 0;
+
+				var line = document.getElementById("estSummaryLine");
+				if (line) {
+					line.textContent = total
+						? total +
+							" quotation(s) linked to opportunities in this period" +
+							(es.no_reference
+								? " · " +
+									es.no_reference +
+									" quotation(s) without a linked opportunity"
+								: "")
+						: "No quotations linked to opportunities in this period.";
+				}
+
+				var barWrap = document.getElementById("estBar");
+				if (barWrap) {
+					barWrap.innerHTML = "";
+					if (total > 0) {
+						var onPct = (onTime / total) * 100;
+						var delPct = 100 - onPct;
+						var s1 = document.createElement("div");
+						s1.className = "seg-ontime";
+						s1.style.width = onPct + "%";
+						var s2 = document.createElement("div");
+						s2.className = "seg-delayed";
+						s2.style.width = delPct + "%";
+						barWrap.appendChild(s1);
+						barWrap.appendChild(s2);
+					}
+				}
+
+				destroyChart("chartEstimation");
+				var ctx = getCanvas("chartEstimation");
+				if (ctx) {
+					if (!total) {
+						noData("chartEstimation");
+					} else {
+						charts["chartEstimation"] = new Chart(ctx, {
+							type: "bar",
+							data: {
+								labels: ["Quotations"],
+								datasets: [
+									{
+										label: "On Time",
+										data: [onTime],
+										backgroundColor: "#2e9e5b",
+										borderRadius: 4,
+									},
+									{
+										label: "Delayed",
+										data: [delayed],
+										backgroundColor: "#d0433f",
+										borderRadius: 4,
+									},
+								],
+							},
+							options: {
+								indexAxis: "y",
+								plugins: { legend: { display: false } },
+								scales: {
+									x: {
+										stacked: true,
+										beginAtZero: true,
+										ticks: { precision: 0 },
+									},
+									y: { stacked: true },
+								},
+							},
+						});
+					}
+				}
+			})();
 
 			/* -------- PROCUREMENT -------- */
 			funnelChart("chartPrcFunnel", d.procurement_funnel, [

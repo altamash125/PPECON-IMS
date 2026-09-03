@@ -1,7 +1,7 @@
 # =========================================================================
 #  ppecon_ims/www/ims/index.py
-#  IMS portal dashboard backend  (v3.1 — fixed)
-#  Sections: IMS/ISO · Sales & Marketing (CRM) · Procurement
+#  IMS portal dashboard backend  (v3.3 — Estimation Turnaround fixed & wired)
+#  Sections: IMS/ISO · Sales & Marketing (CRM) · Estimation · Procurement
 # =========================================================================
 import frappe
 from frappe.utils import add_months, add_days, getdate, today, flt
@@ -21,12 +21,10 @@ def get_context(context):
 #  PERIOD HELPERS
 # =========================================================================
 def _resolve_period(period=None, from_date=None, to_date=None):
-    """Return (from_date, to_date) for a named period or a custom range."""
     t = getdate(today())
 
     if from_date and to_date:
         f, e = getdate(from_date), getdate(to_date)
-        # FIX: swap if the user picks them the wrong way round
         return (e, f) if f > e else (f, e)
 
     period = (period or "this_year").lower()
@@ -51,23 +49,18 @@ def _resolve_period(period=None, from_date=None, to_date=None):
         end = t.replace(year=t.year - 1, month=12, day=31)
     elif period == "all_time":
         start, end = getdate("2000-01-01"), t
-    else:  # this_year
+    else:
         start, end = t.replace(month=1, day=1), t
 
     return start, end
 
 
 def _month_buckets(start, end, max_points=12):
-    """
-    Month buckets between start and end.
-    FIX: when the range is longer than max_points, keep the MOST RECENT
-    months (the old version kept the oldest, so 'All Time' showed year 2000).
-    """
     out = []
     cur = getdate(start).replace(day=1)
     last = getdate(end).replace(day=1)
     guard = 0
-    while cur <= last and guard < 600:          # guard against runaway loops
+    while cur <= last and guard < 600:
         nxt = getdate(add_months(cur, 1))
         out.append((cur.strftime("%b %Y"), cur, nxt))
         cur = nxt
@@ -102,7 +95,6 @@ def _safe_count(doctype, filters=None):
 
 
 def _date_field(doctype):
-    """Best date field for period filtering."""
     for f in ("transaction_date", "posting_date", "schedule_date", "date"):
         if _has_field(doctype, f):
             return f
@@ -110,7 +102,6 @@ def _date_field(doctype):
 
 
 def _group_by(doctype, field, start=None, end=None, limit=15, extra=""):
-    """GROUP BY count with optional period filter. Returns [] on any failure."""
     if not _has_field(doctype, field):
         return []
     try:
@@ -118,7 +109,6 @@ def _group_by(doctype, field, start=None, end=None, limit=15, extra=""):
         where = "docstatus < 2"
         if start and end:
             df = _date_field(doctype)
-            # FIX: creation is a datetime — add a day so the end date is inclusive
             if df == "creation":
                 where += " AND `creation` >= %(start)s AND `creation` < %(end_x)s"
                 params = {"start": start, "end_x": add_days(getdate(end), 1)}
@@ -199,7 +189,6 @@ def get_dashboard_counts():
 def get_dashboard_charts(period=None, from_date=None, to_date=None):
     start, end = _resolve_period(period, from_date, to_date)
 
-    # FIX: cache per period for 5 minutes — 'All Time' on a big DB was slow
     cache_key = "ims_dash:%s:%s" % (start, end)
     try:
         cached = frappe.cache().get_value(cache_key)
@@ -225,6 +214,9 @@ def get_dashboard_charts(period=None, from_date=None, to_date=None):
         "quotation_by_status": _group_by("Quotation", "status", start, end),
         "quotation_value_trend": _value_trend("Quotation", "base_grand_total", start, end),
         "sales_funnel": _sales_funnel(start, end),
+
+        # ---- ESTIMATION ----
+        "estimation_summary": _estimation_summary(start, end),
 
         # ---- PROCUREMENT ----
         "mr_by_status": _group_by("Material Request", "status", start, end),
@@ -252,7 +244,6 @@ def get_dashboard_charts(period=None, from_date=None, to_date=None):
 
 @frappe.whitelist()
 def clear_dashboard_cache():
-    """Call this if you want fresh numbers immediately."""
     try:
         frappe.cache().delete_keys("ims_dash:")
         return {"ok": True}
@@ -281,7 +272,6 @@ def _trend_count(doctype, start, end):
 
 
 def _value_trend(doctype, amount_field, start, end):
-    """FIX: one grouped query instead of 12 separate ones — much faster."""
     out = []
     if not _has_field(doctype, amount_field):
         return out
@@ -393,6 +383,64 @@ def _crm_summary(start, end):
         return {}
 
 
+# ---------------------- ESTIMATION TURNAROUND ----------------------
+def _quotation_opportunity_field():
+    for f in ("opportunity", "against_opportunity", "custom_opportunity"):
+        if _has_field("Quotation", f):
+            return f
+    return None
+
+
+def _estimation_summary(start, end):
+    """
+    On-time vs Delayed quotation submission:
+    on-time  = Quotation.transaction_date <= Opportunity.expected_closing
+    delayed  = Quotation.transaction_date >  Opportunity.expected_closing
+    """
+    field = _quotation_opportunity_field()
+    if not field or not _has_field("Opportunity", "expected_closing"):
+        return {"on_time": 0, "delayed": 0, "no_reference": 0,
+                "avg_delay_days": 0, "on_time_pct": 0, "total": 0}
+
+    try:
+        rows = frappe.db.sql(
+            """
+            SELECT q.name, q.transaction_date, o.expected_closing
+            FROM `tabQuotation` q
+            INNER JOIN `tabOpportunity` o ON o.name = q.`{field}`
+            WHERE q.docstatus < 2
+              AND q.transaction_date BETWEEN %s AND %s
+              AND o.expected_closing IS NOT NULL
+            """.format(field=field),
+            (start, end), as_dict=True,
+        )
+    except Exception:
+        frappe.log_error(frappe.get_traceback(), "IMS estimation_summary")
+        rows = []
+
+    on_time, delayed, delay_days = 0, 0, []
+    for r in rows:
+        td, ecd = getdate(r.transaction_date), getdate(r.expected_closing)
+        if td <= ecd:
+            on_time += 1
+        else:
+            delayed += 1
+            delay_days.append((td - ecd).days)
+
+    total_quotations = _count_in_period("Quotation", start, end, " AND docstatus < 2")
+    no_reference = max(total_quotations - len(rows), 0)
+    total = on_time + delayed
+
+    return {
+        "on_time": on_time,
+        "delayed": delayed,
+        "no_reference": no_reference,
+        "total": total,
+        "avg_delay_days": round(sum(delay_days) / len(delay_days), 1) if delay_days else 0,
+        "on_time_pct": round(on_time / total * 100, 1) if total else 0,
+    }
+
+
 # ---------------------- PROCUREMENT ----------------------
 def _sq_by_supplier(start, end):
     if not _has_field("Supplier Quotation", "supplier"):
@@ -477,7 +525,6 @@ def _procurement_summary(start, end):
                    WHERE docstatus = 1 AND outstanding_amount > 0"""
             )[0][0])
 
-        # FIX: Supplier.disabled may not exist on older versions
         suppliers = _safe_count("Supplier", {"disabled": 0}) if _has_field("Supplier", "disabled") \
             else _safe_count("Supplier")
 
@@ -509,7 +556,6 @@ def _summary_tiles():
     }
 
 
-
 # =========================================================================
 #  SUPPLIER COMPLIANCE & TRAINING OBJECTIVES STATS
 # =========================================================================
@@ -522,7 +568,6 @@ QUARTERS = [
 
 
 def _se_date_field():
-    """Supplier Evaluation ka date field auto-detect karo."""
     for f in ("evaluation_date", "date_of_evaluation", "date"):
         if _has_field("Supplier Evaluation", f):
             return f
@@ -531,9 +576,6 @@ def _se_date_field():
 
 @frappe.whitelist()
 def get_supplier_compliance_stats(year=None):
-    """Quarterly compliance from Supplier Evaluation.
-    Compliant = percentage >= 90. Target fixed 90%.
-    Objective: non-compliant < 20% of evaluated."""
     year = int(year or getdate(today()).year)
     out = []
 
@@ -566,8 +608,8 @@ def get_supplier_compliance_stats(year=None):
             "quarter": q,
             "evaluated": evaluated,
             "compliant": compliant,
-            "compliance_rate": avg_pct,          # avg of percentage field
-            "target": 90,                         # fixed
+            "compliance_rate": avg_pct,
+            "target": 90,
             "non_compliant_pct": non_compliant_pct,
             "objective_met": (non_compliant_pct < 20) if evaluated else None,
         })
@@ -577,7 +619,6 @@ def get_supplier_compliance_stats(year=None):
 
 @frappe.whitelist()
 def get_training_stats(year=None):
-    """Quarterly training from Training Event. Target = 50% of active employees."""
     year = int(year or getdate(today()).year)
     total_employees = _safe_count("Employee", {"status": "Active"})
     target_count = round(total_employees * 0.5)
@@ -613,3 +654,5 @@ def get_training_stats(year=None):
         })
 
     return {"year": year, "quarters": out}
+
+

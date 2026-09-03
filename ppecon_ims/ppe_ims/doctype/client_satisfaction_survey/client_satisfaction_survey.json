@@ -1,31 +1,40 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "hash",
+ "autoname": "CSF-.YYYY.-.#####",
  "creation": "2026-09-02 10:44:52.453751",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "client_details_section",
   "client_name",
   "project",
   "project_type",
+  "column_break_dubh",
+  "email",
+  "feedback_request_date",
+  "validity_end_date",
+  "section_break_vukg",
   "sb_part1",
   "design_requirements_rating",
   "coordination_design_operation_rating",
   "hse_commitment_rating",
   "project_duration_rating",
   "weekly_reports_rating",
+  "column_break_xqbn",
   "sb_part2",
   "functionality_rating",
   "quality_compliance_rating",
-  "snags_taking_rating",
   "snags_closing_rating",
+  "snags_taking_rating",
+  "section_break",
   "sb_part3",
   "delivery_rating",
   "warranty_aftersales_rating",
   "work_again_rating",
   "recommend_rating",
+  "column_break_rsjs",
   "sb_part4",
   "comm_tender_rating",
   "comm_proposal_rating",
@@ -33,14 +42,22 @@
   "comm_execution_rating",
   "comm_snags_handover_rating",
   "comm_aftersales_rating",
-  "comm_invoicing_rating",
   "material_delivery_rating",
+  "comm_invoicing_rating",
   "sb_part5",
-  "feedback",
   "signature_name",
-  "email",
   "mobile",
-  "survey_date"
+  "questionnaire_title",
+  "feedback_type",
+  "responded_on",
+  "status",
+  "column_break_opuo",
+  "survey_date",
+  "feedback",
+  "description",
+  "response_token",
+  "section_break_jczi",
+  "response_summary_html"
  ],
  "fields": [
   {
@@ -63,7 +80,7 @@
   },
   {
    "fieldname": "sb_part1",
-   "fieldtype": "Section Break",
+   "fieldtype": "Heading",
    "label": "Part 1: Service Quality"
   },
   {
@@ -97,11 +114,6 @@
    "options": "1\n2\n3\n4\n5\nNA"
   },
   {
-   "fieldname": "sb_part2",
-   "fieldtype": "Section Break",
-   "label": "Part 2: Project Outcome and Satisfaction"
-  },
-  {
    "fieldname": "functionality_rating",
    "fieldtype": "Select",
    "label": "Functionality of the completed design",
@@ -127,7 +139,7 @@
   },
   {
    "fieldname": "sb_part3",
-   "fieldtype": "Section Break",
+   "fieldtype": "Heading",
    "label": "Part 3: Overall Experience"
   },
   {
@@ -156,7 +168,7 @@
   },
   {
    "fieldname": "sb_part4",
-   "fieldtype": "Section Break",
+   "fieldtype": "Heading",
    "label": "Part 4: Communication"
   },
   {
@@ -210,42 +222,149 @@
   {
    "fieldname": "sb_part5",
    "fieldtype": "Section Break",
-   "label": "Part 5: Overall Feedback"
+   "label": "Feedback Response"
   },
   {
    "fieldname": "feedback",
    "fieldtype": "Small Text",
-   "label": "Feedback"
+   "label": "Feedback",
+   "read_only": 1
   },
   {
    "fieldname": "signature_name",
    "fieldtype": "Data",
-   "label": "Name"
+   "label": "Name",
+   "read_only": 1
   },
   {
    "fieldname": "email",
    "fieldtype": "Data",
-   "label": "Email"
+   "label": "Client Email",
+   "reqd": 1
   },
   {
    "fieldname": "mobile",
    "fieldtype": "Data",
-   "label": "Mobile"
+   "label": "Mobile",
+   "read_only": 1
   },
   {
    "default": "Today",
    "fieldname": "survey_date",
    "fieldtype": "Date",
-   "label": "Date"
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "default": "Pioneer Projects Executer Customer Feedback",
+   "fieldname": "questionnaire_title",
+   "fieldtype": "Data",
+   "label": "Questionnaire Title",
+   "read_only": 1
+  },
+  {
+   "default": "Customer Satisfaction Survey",
+   "fieldname": "feedback_type",
+   "fieldtype": "Select",
+   "label": "Feedback Type",
+   "options": "Customer Satisfaction Survey"
+  },
+  {
+   "default": "Thank you for choosing PPECON for your interior design / execution of interior design needs. Your feedback is invaluable in helping us improve and ensuring we continue to provide top-quality service. Please take a few minutes to complete this survey based on your recent experience with us.",
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "default": "Today",
+   "fieldname": "feedback_request_date",
+   "fieldtype": "Date",
+   "label": "Feedback Request Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "validity_end_date",
+   "fieldtype": "Date",
+   "label": "Validity End Date",
+   "reqd": 1
+  },
+  {
+   "default": "Pending",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Pending\nIn Progress\nCompleted"
+  },
+  {
+   "fieldname": "response_token",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Response Token",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "responded_on",
+   "fieldtype": "Datetime",
+   "label": "Responded On",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.status=='Completed'",
+   "fieldname": "response_summary_html",
+   "fieldtype": "HTML",
+   "label": "Response Summary"
+  },
+  {
+   "fieldname": "column_break_xqbn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_opuo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_jczi",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_vukg",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "sb_part2",
+   "fieldtype": "Heading",
+   "label": "Part 2: Project Outcome and Satisfaction"
+  },
+  {
+   "fieldname": "section_break",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "column_break_rsjs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_dubh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client_details_section",
+   "fieldtype": "Section Break",
+   "label": "Client Details"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-02 12:22:09.774738",
+ "modified": "2026-09-03 09:55:41.778496",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Client Satisfaction Survey",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

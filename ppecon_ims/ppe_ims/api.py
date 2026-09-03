@@ -1,5 +1,5 @@
 import frappe
-
+import secrets
 @frappe.whitelist(allow_guest=True)
 def submit_client_satisfaction(**kwargs):
     allowed_fields = [
@@ -336,6 +336,146 @@ def send_employee_survey_email(doc):
     frappe.sendmail(
         recipients=recipients,
         subject=f"New Employee Satisfaction Survey Submitted ({doc.name})",
+        message=message,
+        now=True,
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@frappe.whitelist()
+def send_feedback_request(docname):
+    doc = frappe.get_doc("Client Satisfaction Survey", docname)
+
+    if not doc.response_token:
+        doc.response_token = secrets.token_urlsafe(24)
+    doc.status = "In Progress"
+    doc.save(ignore_permissions=True)
+    frappe.db.commit()
+
+    link = f"{frappe.utils.get_url()}/client_satisfaction?token={doc.response_token}"
+
+    sender_user = frappe.get_doc("User", frappe.session.user)
+    sender_name = sender_user.full_name or frappe.session.user
+    sender_email = sender_user.email or frappe.session.user
+
+    message = f"""
+    <div style="font-family:'Segoe UI',Arial,sans-serif;font-size:14px;color:#2d3748;">
+        <p>Hi {doc.client_name},</p>
+        <p>{doc.description or 'Please take a few minutes to give us feedback about our service by filling in this short Customer Feedback Form.'}</p>
+        <p>We are conducting this research in order to measure your level of satisfaction with the quality of our service. We thank you for your participation.</p>
+        <p>Please click here to fill the survey: <a href="{link}" style="color:#2b6cb0;">click here</a></p>
+        <p>Thanks,<br>{sender_name}.<br>On behalf of:<br>{sender_email}</p>
+    </div>
+    """
+
+    frappe.sendmail(
+        recipients=[doc.email],
+        sender=sender_email,
+        subject=f"{doc.questionnaire_title or 'Customer Satisfaction Survey'} - Pioneer Projects Executer Customer Feedback",
+        message=message,
+        now=True,
+    )
+    return {"status": "success"}
+
+
+@frappe.whitelist(allow_guest=True)
+def get_feedback_details(token):
+    doc = frappe.db.get_value(
+        "Client Satisfaction Survey",
+        {"response_token": token},
+        ["name", "client_name", "project", "project_type", "status", "validity_end_date"],
+        as_dict=True
+    )
+    if not doc:
+        frappe.local.response["http_status_code"] = 404
+        return {"status": "error", "message": "Invalid or expired link."}
+
+    if doc.status == "Completed":
+        return {"status": "error", "message": "This feedback has already been submitted. Thank you!"}
+
+    if doc.validity_end_date and frappe.utils.getdate(doc.validity_end_date) < frappe.utils.getdate():
+        return {"status": "error", "message": "This feedback link has expired."}
+
+    return {"status": "success", "data": doc}
+
+
+@frappe.whitelist(allow_guest=True)
+def submit_feedback_response(**kwargs):
+    token = kwargs.get("token")
+    if not token:
+        frappe.local.response["http_status_code"] = 400
+        return {"status": "error", "message": "Missing token."}
+
+    docname = frappe.db.get_value("Client Satisfaction Survey", {"response_token": token}, "name")
+    if not docname:
+        frappe.local.response["http_status_code"] = 404
+        return {"status": "error", "message": "Invalid or expired link."}
+
+    doc = frappe.get_doc("Client Satisfaction Survey", docname)
+    if doc.status == "Completed":
+        return {"status": "error", "message": "This feedback has already been submitted."}
+
+    rating_fields = [
+        "design_requirements_rating", "coordination_design_operation_rating",
+        "hse_commitment_rating", "project_duration_rating", "weekly_reports_rating",
+        "functionality_rating", "quality_compliance_rating", "snags_taking_rating", "snags_closing_rating",
+        "delivery_rating", "warranty_aftersales_rating", "work_again_rating", "recommend_rating",
+        "comm_tender_rating", "comm_proposal_rating", "comm_design_prep_rating", "comm_execution_rating",
+        "comm_snags_handover_rating", "comm_aftersales_rating", "comm_invoicing_rating", "material_delivery_rating",
+        "feedback"
+    ]
+    for f in rating_fields:
+        if f in kwargs:
+            doc.set(f, kwargs.get(f))
+
+    doc.status = "Completed"
+    doc.responded_on = frappe.utils.now()
+    doc.save(ignore_permissions=True)
+    frappe.db.commit()
+
+    try:
+        send_notification_email(doc)
+    except Exception:
+        frappe.log_error(frappe.get_traceback(), "Client Satisfaction Survey Email Failed")
+
+    try:
+        send_thankyou_email(doc)
+    except Exception:
+        frappe.log_error(frappe.get_traceback(), "Client Thank You Email Failed")
+
+    return {"status": "success"}
+
+
+def send_thankyou_email(doc):
+    message = f"""
+    <div style="font-family:'Segoe UI',Arial,sans-serif;font-size:14px;color:#2d3748;">
+        <p>Dear {doc.client_name},</p>
+        <p>Thank you for taking the time to complete our Customer Satisfaction Survey for <strong>{doc.project}</strong>. Your feedback is greatly appreciated and helps us continue to improve our service.</p>
+        <p>Best regards,<br>Pioneer Projects Executer </p>
+    </div>
+    """
+    frappe.sendmail(
+        recipients=[doc.email],
+        subject="Thank You for Your Feedback - Pioneer Projects Executer ",
         message=message,
         now=True,
     )
