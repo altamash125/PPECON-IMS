@@ -5,7 +5,6 @@
 # =========================================================================
 import frappe
 
-
 def _has(doctype, field):
     try:
         return frappe.get_meta(doctype).has_field(field)

@@ -188,16 +188,6 @@ def send_notification_email(doc):
 
 
 
-
-
-
-
-
-
-
-
-
-
 # Employee Survey Submission API
 
 @frappe.whitelist(allow_guest=True)

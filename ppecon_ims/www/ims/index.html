@@ -1,7 +1,7 @@
 <!-- =========================================================================
-  PPECON IMS Portal — index.html  (v3.3 COMPLETE — Estimation fixed)
+  PPECON IMS Portal — index.html  (v4.0)
   Location : ppecon_ims/www/ims/index.html
-  Backend  : ppecon_ims/www/ims/index.py  (v3.3)
+  Backend  : ppecon_ims/www/ims/index.py  (v4.0)
 ========================================================================== -->
 
 <link rel="stylesheet" href="/assets/ppecon_ims/css/ims_portal.css" />
@@ -185,7 +185,7 @@
 		padding: 70px 0;
 	}
 
-	/* ---- Estimation Turnaround card ---- */
+	/* ---- Estimation Turnaround ---- */
 	.est-card {
 		grid-column: 1 / -1;
 	}
@@ -259,7 +259,7 @@
 		color: #d0433f;
 	}
 
-	/* ---- IMS Quality Objectives card ---- */
+	/* ---- IMS Quality Objectives ---- */
 	.qo-card {
 		grid-column: 1 / -1;
 	}
@@ -315,6 +315,28 @@
 		font-size: 11px;
 		color: #566072;
 		max-width: 220px;
+	}
+	table.stats-table tr.total-row td {
+		font-weight: 700;
+		background: #f4f5f6;
+	}
+	.badge-ok {
+		color: #178a5c;
+		font-weight: 700;
+	}
+	.badge-bad {
+		color: #c2402a;
+		font-weight: 700;
+	}
+
+	/* ---- HSE / Electricity ---- */
+	.hse-card {
+		grid-column: 1 / -1;
+	}
+	.elec-note {
+		font-size: 11.5px;
+		color: #6c7680;
+		margin: 8px 0 12px;
 	}
 
 	/* ---- visual settings modal ---- */
@@ -781,8 +803,6 @@
 							<a href="/app/hse-checklist-master" class="menu-item"
 								>HSE CheckList Master</a
 							>
-						</div>
-						<div class="group-items">
 							<a href="/app/hse-checklist-inspection" class="menu-item"
 								>HSE Inspection</a
 							>
@@ -1054,19 +1074,31 @@
 						<canvas id="chartEmpDept" height="200"></canvas>
 					</div>
 
-					<!-- ---- IMS Quality Objectives (Supplier | Training side-by-side) ---- -->
+					<!-- ---- IMS Quality Objectives ---- -->
 					<div class="insight-card qo-card">
 						<div class="insight-title">IMS Quality Objectives</div>
 						<div class="qo-grid">
 							<div class="qo-col">
-								<div class="qo-section-title">Supplier Compliance Stats</div>
+								<div class="qo-section-title">
+									Supplier Compliance Stats
+									<span
+										id="supplierYearLabel"
+										style="font-weight: 400; color: #8d99a6"
+									></span>
+								</div>
 								<div id="tblSupplierCompliance" class="stats-table-wrap"></div>
 								<div class="qo-chart">
 									<canvas id="chartSupplierCompliance" height="200"></canvas>
 								</div>
 							</div>
 							<div class="qo-col">
-								<div class="qo-section-title">Training Objectives Stats</div>
+								<div class="qo-section-title">
+									Training Objectives Stats
+									<span
+										id="trainingYearLabel"
+										style="font-weight: 400; color: #8d99a6"
+									></span>
+								</div>
 								<div id="tblTrainingStats" class="stats-table-wrap"></div>
 								<div class="qo-chart">
 									<canvas id="chartTrainingStats" height="200"></canvas>
@@ -1110,11 +1142,62 @@
 						</div>
 						<div id="estSummaryLine" style="font-size: 11.5px; color: #6c7680"></div>
 
-						<canvas
-							id="chartEstimation"
-							height="140"
+						<div style="font-size: 11.5px; color: #8d99a6; margin: 14px 0 6px">
+							Year-wise breakdown (all data, independent of the period filter)
+						</div>
+						<canvas id="chartEstimation" height="180"></canvas>
+					</div>
+				</div>
+			</div>
+
+			<!-- ---------- INSIGHTS: HSE DASHBOARD ---------- -->
+			<div class="insights-section">
+				<h3>Insights — HSE Dashboard</h3>
+
+				<div class="summary-grid" style="margin-bottom: 16px">
+					<div class="summary-tile st-red">
+						<div class="st-label">Hazard &amp; Risk Assessments</div>
+						<div class="st-value" id="hseHazardCount">—</div>
+					</div>
+					<div class="summary-tile st-amber">
+						<div class="st-label">Aspect Impact Assessments</div>
+						<div class="st-value" id="hseAspectCount">—</div>
+					</div>
+					<div class="summary-tile st-blue">
+						<div class="st-label">Material Safety Data Sheets</div>
+						<div class="st-value" id="hseMsdsCount">—</div>
+					</div>
+					<div class="summary-tile st-teal">
+						<div class="st-label">HSE Checklist Masters</div>
+						<div class="st-value" id="hseChecklistMasterCount">—</div>
+					</div>
+					<div class="summary-tile st-purple">
+						<div class="st-label">HSE Checklist Inspections</div>
+						<div class="st-value" id="hseChecklistInspCount">—</div>
+					</div>
+					<div class="summary-tile st-slate">
+						<div class="st-label">Total Monitoring Records</div>
+						<div class="st-value" id="hseMonitoringTotal">—</div>
+					</div>
+				</div>
+
+				<div class="insights-grid">
+					<div class="insight-card">
+						<div class="insight-title">Monitoring — by Type</div>
+						<canvas id="chartMonitoringType" height="200"></canvas>
+					</div>
+
+					<div class="insight-card hse-card">
+						<div class="insight-title" id="elecTitle">
+							Electricity Consumption — Actual vs Target
+						</div>
+						<div class="elec-note" id="elecNote"></div>
+						<canvas id="chartElectricity" height="150"></canvas>
+						<div
+							id="tblElectricity"
+							class="stats-table-wrap"
 							style="margin-top: 14px"
-						></canvas>
+						></div>
 					</div>
 				</div>
 			</div>
@@ -1261,7 +1344,7 @@
 </div>
 
 <!-- =========================================================================
-     SCRIPT 1 of 3 — sidebar + all dashboard data (ONLY ONE COPY)
+     SCRIPT 1 of 3 — sidebar + period-filtered dashboard data
 ========================================================================== -->
 <script>
 	(function () {
@@ -1744,7 +1827,7 @@
 			simpleChart("chartOppType", d.opportunity_by_type, "bar", "#00897b", true);
 			simpleChart("chartQuoteStatus", d.quotation_by_status, "doughnut");
 
-			/* -------- ESTIMATION TURNAROUND (fixed: uses "d" from this scope) -------- */
+			/* -------- ESTIMATION TURNAROUND -------- */
 			(function () {
 				var es = d.estimation_summary || {};
 				var onTime = es.on_time || 0;
@@ -1776,53 +1859,84 @@
 					barWrap.innerHTML = "";
 					if (total > 0) {
 						var onPct = (onTime / total) * 100;
-						var delPct = 100 - onPct;
 						var s1 = document.createElement("div");
 						s1.className = "seg-ontime";
 						s1.style.width = onPct + "%";
 						var s2 = document.createElement("div");
 						s2.className = "seg-delayed";
-						s2.style.width = delPct + "%";
+						s2.style.width = 100 - onPct + "%";
 						barWrap.appendChild(s1);
 						barWrap.appendChild(s2);
 					}
 				}
 
+				/* year-wise stacked columns (all data, ignores period filter) */
 				destroyChart("chartEstimation");
 				var ctx = getCanvas("chartEstimation");
 				if (ctx) {
-					if (!total) {
+					var yearly = es.yearly || [];
+					var hasData = yearly.some(function (y) {
+						return y.on_time || y.delayed;
+					});
+					if (!hasData) {
 						noData("chartEstimation");
 					} else {
 						charts["chartEstimation"] = new Chart(ctx, {
 							type: "bar",
 							data: {
-								labels: ["Quotations"],
+								labels: yearly.map(function (y) {
+									return String(y.year);
+								}),
 								datasets: [
 									{
 										label: "On Time",
-										data: [onTime],
+										data: yearly.map(function (y) {
+											return y.on_time;
+										}),
 										backgroundColor: "#2e9e5b",
 										borderRadius: 4,
+										maxBarThickness: 70,
 									},
 									{
 										label: "Delayed",
-										data: [delayed],
+										data: yearly.map(function (y) {
+											return y.delayed;
+										}),
 										backgroundColor: "#d0433f",
 										borderRadius: 4,
+										maxBarThickness: 70,
 									},
 								],
 							},
 							options: {
-								indexAxis: "y",
-								plugins: { legend: { display: false } },
+								plugins: {
+									legend: { position: "bottom", labels: { boxWidth: 10 } },
+									tooltip: {
+										callbacks: {
+											afterBody: function (items) {
+												var i = items[0].dataIndex;
+												var ot = yearly[i].on_time,
+													dl = yearly[i].delayed;
+												var tot = ot + dl;
+												if (!tot) return "";
+												return (
+													"Total: " +
+													tot +
+													"  ·  On-time rate: " +
+													Math.round((ot / tot) * 100) +
+													"%"
+												);
+											},
+										},
+									},
+								},
 								scales: {
-									x: {
+									x: { stacked: true },
+									y: {
 										stacked: true,
 										beginAtZero: true,
 										ticks: { precision: 0 },
 									},
-									y: { stacked: true },
 								},
 							},
 						});
@@ -2057,7 +2171,8 @@
 </script>
 
 <!-- =========================================================================
-     SCRIPT 3 of 3 — IMS Quality Objectives (Supplier | Training, table + chart)
+     SCRIPT 3 of 3 — Quality Objectives + HSE Dashboard + Electricity
+     (these are NOT period-filtered; they load once on page load)
 ========================================================================== -->
 <script>
 	(function () {
@@ -2085,20 +2200,38 @@
 			}
 		}
 
-		/* ================= SUPPLIER ================= */
+		function setTxt(id, v) {
+			var e = document.getElementById(id);
+			if (e) e.textContent = v === undefined || v === null ? "0" : v;
+		}
+
+		function emptyChart(canvasId, title) {
+			var el = document.getElementById(canvasId);
+			if (!el) return;
+			el.parentElement.innerHTML =
+				'<div class="insight-title">' +
+				title +
+				"</div>" +
+				'<div class="chart-loading">No data to display</div>';
+		}
+
+		/* ================= SUPPLIER COMPLIANCE ================= */
 		function renderSupplierTable(d) {
 			var el = document.getElementById("tblSupplierCompliance");
 			if (!el || !d) return;
+			var yl = document.getElementById("supplierYearLabel");
+			if (yl && d.year) yl.textContent = "(" + d.year + ")";
+
 			var rows = d.quarters
 				.map(function (q) {
 					var has = q.evaluated > 0;
 					var comment = "";
 					if (has) {
 						comment = q.objective_met
-							? "Objective met. Non-compliant suppliers " +
+							? '<span class="badge-ok">Objective met.</span> Non-compliant suppliers ' +
 								q.non_compliant_pct +
 								"% (limit 20%)."
-							: "Objective not met. Non-compliant suppliers " +
+							: '<span class="badge-bad">Objective not met.</span> Non-compliant suppliers ' +
 								q.non_compliant_pct +
 								"% (limit 20%). Improvement actions required.";
 					}
@@ -2126,6 +2259,7 @@
 					);
 				})
 				.join("");
+
 			el.innerHTML =
 				'<table class="stats-table"><thead><tr>' +
 				"<th>Quarter</th><th>Suppliers<br>Evaluated</th>" +
@@ -2146,15 +2280,18 @@
 			var qs = d.quarters.filter(function (x) {
 				return x.evaluated > 0;
 			});
-			if (!qs.length) qs = d.quarters;
+			if (!qs.length) {
+				emptyChart("chartSupplierCompliance", "");
+				return;
+			}
 
 			var vals = [];
 			qs.forEach(function (x) {
-				if (x.evaluated > 0) vals.push(x.compliance_rate);
+				vals.push(x.compliance_rate);
 				vals.push(x.target);
 			});
-			var yMin = Math.max(0, Math.min.apply(null, vals) - 2);
-			var yMax = Math.min(100, Math.max.apply(null, vals) + 1);
+			var yMin = Math.max(0, Math.min.apply(null, vals) - 5);
+			var yMax = Math.min(100, Math.max.apply(null, vals) + 5);
 
 			charts3["sc"] = new Chart(el, {
 				type: "bar",
@@ -2210,7 +2347,6 @@
 							min: yMin,
 							max: yMax,
 							ticks: {
-								stepSize: 1,
 								callback: function (v) {
 									return v + "%";
 								},
@@ -2225,6 +2361,9 @@
 		function renderTrainingTable(d) {
 			var el = document.getElementById("tblTrainingStats");
 			if (!el || !d) return;
+			var yl = document.getElementById("trainingYearLabel");
+			if (yl && d.year) yl.textContent = "(" + d.year + ")";
+
 			var rows = d.quarters
 				.map(function (q) {
 					var met = q.target > 0 && q.trained >= q.target;
@@ -2232,8 +2371,8 @@
 						q.trained === 0
 							? "No training conducted this quarter."
 							: met
-								? "Target achieved; 50% employees completed training."
-								: "Below target. " +
+								? '<span class="badge-ok">Target achieved.</span> 50% of employees completed training.'
+								: '<span class="badge-bad">Below target.</span> ' +
 									q.pct_trained +
 									"% trained, additional sessions required.";
 					return (
@@ -2260,6 +2399,36 @@
 					);
 				})
 				.join("");
+
+			var totalTrained = d.quarters.reduce(function (a, q) {
+				return a + q.trained;
+			}, 0);
+			var avgPct = d.quarters.length
+				? Math.round(
+						(d.quarters.reduce(function (a, q) {
+							return a + q.pct_trained;
+						}, 0) /
+							d.quarters.length) *
+							10,
+					) / 10
+				: 0;
+
+			rows +=
+				'<tr class="total-row">' +
+				"<td>Total</td>" +
+				"<td>" +
+				(d.total_employees || 0) +
+				"</td>" +
+				"<td>-</td>" +
+				"<td>" +
+				totalTrained +
+				"</td>" +
+				"<td>" +
+				avgPct +
+				"%</td>" +
+				'<td class="comments">Average quarterly training coverage</td>' +
+				"</tr>";
+
 			el.innerHTML =
 				'<table class="stats-table"><thead><tr>' +
 				"<th>Quarter</th><th>Total<br>Employees</th>" +
@@ -2311,7 +2480,7 @@
 							data: qs.map(function (x) {
 								return x.trained;
 							}),
-							backgroundColor: "#c69a83",
+							backgroundColor: "#2e9e5b",
 							borderRadius: 2,
 							maxBarThickness: 35,
 							yAxisID: "y",
@@ -2322,7 +2491,7 @@
 							data: qs.map(function (x) {
 								return x.pct_trained;
 							}),
-							borderColor: "#3d5a45",
+							borderColor: "#1f6fd0",
 							borderWidth: 2,
 							pointRadius: 3,
 							tension: 0.3,
@@ -2350,21 +2519,284 @@
 			});
 		}
 
+		/* ================= HSE DASHBOARD ================= */
+		function drawHse(d) {
+			if (!d) return;
+
+			setTxt("hseHazardCount", d.hazard_risk_assessment);
+			setTxt("hseAspectCount", d.aspect_impact_assessment);
+			setTxt("hseMsdsCount", d.msds);
+			setTxt("hseChecklistMasterCount", d.hse_checklist_master);
+			setTxt("hseChecklistInspCount", d.hse_checklist_inspection);
+			setTxt("hseMonitoringTotal", d.monitoring_total);
+
+			var m = d.monitoring_by_type || {};
+			var el = document.getElementById("chartMonitoringType");
+			if (!el) return;
+			destroy("mt");
+
+			var labels = Object.keys(m);
+			var vals = labels.map(function (k) {
+				return m[k];
+			});
+			if (
+				!vals.some(function (v) {
+					return v > 0;
+				})
+			) {
+				emptyChart("chartMonitoringType", "Monitoring — by Type");
+				return;
+			}
+
+			charts3["mt"] = new Chart(el, {
+				type: "doughnut",
+				data: {
+					labels: labels,
+					datasets: [
+						{
+							data: vals,
+							backgroundColor: [
+								"#1f6fd0",
+								"#00897b",
+								"#e0a020",
+								"#8e44ad",
+								"#607d8b",
+							],
+							borderWidth: 2,
+							borderColor: "#fff",
+						},
+					],
+				},
+				options: { plugins: { legend: { position: "bottom", labels: { boxWidth: 10 } } } },
+			});
+		}
+
+		/* ================= ELECTRICITY ================= */
+		function renderElectricityTable(d) {
+			var el = document.getElementById("tblElectricity");
+			if (!el || !d.months) return;
+
+			var fmt = function (v) {
+				if (v === null || v === undefined) return "-";
+				return Number(v).toLocaleString(undefined, {
+					minimumFractionDigits: 2,
+					maximumFractionDigits: 2,
+				});
+			};
+
+			var rows = d.months
+				.map(function (m, i) {
+					var statusCell =
+						m.status === "Achieved"
+							? '<span class="badge-ok">Achieved</span>'
+							: m.status === "Not Achieved"
+								? '<span class="badge-bad">Not Achieved</span>'
+								: "-";
+					return (
+						"<tr>" +
+						"<td>" +
+						(i + 1) +
+						"</td>" +
+						"<td><b>" +
+						m.month +
+						"</b></td>" +
+						"<td>" +
+						fmt(m.prior_actual) +
+						"</td>" +
+						"<td>" +
+						fmt(m.target) +
+						"</td>" +
+						"<td>" +
+						fmt(m.current_actual) +
+						"</td>" +
+						"<td>" +
+						fmt(m.difference) +
+						"</td>" +
+						"<td>" +
+						(m.pct_change === null || m.pct_change === undefined
+							? "-"
+							: m.pct_change + "%") +
+						"</td>" +
+						"<td>" +
+						statusCell +
+						"</td>" +
+						"</tr>"
+					);
+				})
+				.join("");
+
+			rows +=
+				'<tr class="total-row">' +
+				"<td></td><td>Total</td>" +
+				"<td>" +
+				fmt(d.total_prior) +
+				"</td>" +
+				"<td>" +
+				fmt(d.total_target) +
+				"</td>" +
+				"<td>" +
+				fmt(d.total_current) +
+				"</td>" +
+				"<td>" +
+				fmt(d.total_current - d.total_target) +
+				"</td>" +
+				"<td>" +
+				(d.overall_pct_change || 0) +
+				"%</td>" +
+				"<td>" +
+				(d.overall_status === "Achieved"
+					? '<span class="badge-ok">Achieved</span>'
+					: '<span class="badge-bad">Not Achieved</span>') +
+				"</td>" +
+				"</tr>";
+
+			el.innerHTML =
+				'<table class="stats-table"><thead><tr>' +
+				"<th>SN.</th><th>Month</th>" +
+				"<th>" +
+				d.prior_year +
+				" Actual<br>(kWh)</th>" +
+				"<th>" +
+				d.current_year +
+				" Target<br>(95%)</th>" +
+				"<th>" +
+				d.current_year +
+				" Actual<br>(kWh)</th>" +
+				"<th>Difference<br>(kWh)</th><th>% Change</th><th>Status</th>" +
+				"</tr></thead><tbody>" +
+				rows +
+				"</tbody></table>";
+		}
+
+		function drawElectricity(d) {
+			if (!d || !d.months || !d.months.length) {
+				emptyChart("chartElectricity", "Electricity Consumption");
+				return;
+			}
+
+			var title = document.getElementById("elecTitle");
+			if (title) {
+				title.textContent =
+					"Electricity Consumption — " +
+					d.current_year +
+					" Actual vs Target (95% of " +
+					d.prior_year +
+					")";
+			}
+			var note = document.getElementById("elecNote");
+			if (note) {
+				note.textContent =
+					"Objective: reduce consumption by 5% versus " +
+					d.prior_year +
+					". Green bars = target achieved, red = exceeded target.";
+			}
+
+			renderElectricityTable(d);
+
+			var el = document.getElementById("chartElectricity");
+			if (!el) return;
+			destroy("elec");
+
+			charts3["elec"] = new Chart(el, {
+				data: {
+					labels: d.months.map(function (m) {
+						return m.month;
+					}),
+					datasets: [
+						{
+							type: "bar",
+							label: d.prior_year + " Actual (kWh)",
+							data: d.months.map(function (m) {
+								return m.prior_actual;
+							}),
+							backgroundColor: "#c6ccd3",
+							borderRadius: 3,
+							maxBarThickness: 26,
+						},
+						{
+							type: "bar",
+							label: d.current_year + " Target (95%)",
+							data: d.months.map(function (m) {
+								return m.target;
+							}),
+							backgroundColor: "#5f7470",
+							borderRadius: 3,
+							maxBarThickness: 26,
+						},
+						{
+							type: "bar",
+							label: d.current_year + " Actual (kWh)",
+							data: d.months.map(function (m) {
+								return m.current_actual;
+							}),
+							backgroundColor: d.months.map(function (m) {
+								if (m.current_actual === null || m.current_actual === undefined)
+									return "#e0e4e8";
+								return m.status === "Achieved" ? "#2e9e5b" : "#d0433f";
+							}),
+							borderRadius: 3,
+							maxBarThickness: 26,
+						},
+					],
+				},
+				options: {
+					plugins: {
+						legend: { position: "bottom", labels: { boxWidth: 10 } },
+						tooltip: {
+							callbacks: {
+								afterBody: function (items) {
+									var i = items[0].dataIndex;
+									var mo = d.months[i];
+									if (
+										mo.current_actual === null ||
+										mo.current_actual === undefined
+									)
+										return "";
+									return (
+										"Status: " +
+										mo.status +
+										(mo.pct_change !== null && mo.pct_change !== undefined
+											? "  (" + mo.pct_change + "%)"
+											: "")
+									);
+								},
+							},
+						},
+					},
+					scales: { y: { beginAtZero: true, title: { display: true, text: "kWh" } } },
+				},
+			});
+		}
+
 		/* ================= START ================= */
 		function start3() {
 			if (typeof Chart === "undefined") {
 				setTimeout(start3, 200);
 				return;
 			}
+
 			call("ppecon_ims.www.ims.index.get_supplier_compliance_stats")
 				.then(drawSupplierCompliance)
 				.catch(function (e) {
 					console.error("Supplier compliance failed:", e);
 				});
+
 			call("ppecon_ims.www.ims.index.get_training_stats")
 				.then(drawTrainingStats)
 				.catch(function (e) {
 					console.error("Training stats failed:", e);
+				});
+
+			call("ppecon_ims.www.ims.index.get_hse_summary")
+				.then(drawHse)
+				.catch(function (e) {
+					console.error("HSE summary failed:", e);
+				});
+
+			call("ppecon_ims.www.ims.index.get_electricity_summary")
+				.then(drawElectricity)
+				.catch(function (e) {
+					console.error("Electricity summary failed:", e);
 				});
 		}
 
