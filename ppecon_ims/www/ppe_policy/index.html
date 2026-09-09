@@ -1,0 +1,477 @@
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link
+	href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+	rel="stylesheet"
+/>
+
+<style>
+	* {
+		box-sizing: border-box;
+	}
+	.pp-root {
+		font-family: "Inter", "Segoe UI", Arial, sans-serif;
+		color: #1f272e;
+	}
+
+	/* ---- HERO ---- */
+	.pp-hero {
+		background: radial-gradient(circle at 50% 0%, #16324f 0%, #0a1a2e 60%, #081522 100%);
+		padding: 46px 24px 40px;
+		text-align: center;
+		position: relative;
+		overflow: hidden;
+	}
+	.pp-hero::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		opacity: 0.04;
+		background-image: repeating-linear-gradient(
+			45deg,
+			#fff 0,
+			#fff 1px,
+			transparent 1px,
+			transparent 18px
+		);
+	}
+	.pp-badge {
+		display: inline-block;
+		border: 1px solid rgba(212, 175, 55, 0.5);
+		color: #d4af37;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 2.5px;
+		text-transform: uppercase;
+		padding: 7px 20px;
+		border-radius: 20px;
+		margin-bottom: 22px;
+		position: relative;
+		z-index: 1;
+	}
+	.pp-title {
+		font-family: "Playfair Display", Georgia, serif;
+		font-size: 44px;
+		font-weight: 700;
+		color: #fff;
+		margin: 0;
+		position: relative;
+		z-index: 1;
+	}
+	.pp-title .accent {
+		color: #d4af37;
+	}
+	.pp-subtitle {
+		color: #93a4bd;
+		font-size: 14.5px;
+		margin: 12px 0 0;
+		position: relative;
+		z-index: 1;
+	}
+	.pp-rule {
+		width: 70px;
+		height: 2px;
+		background: linear-gradient(90deg, transparent, #d4af37, transparent);
+		margin: 20px auto 0;
+		position: relative;
+		z-index: 1;
+	}
+
+	.pp-compliance {
+		background: #0f2437;
+		padding: 13px 20px;
+		text-align: center;
+		font-size: 12.5px;
+		color: #93a4bd;
+		border-top: 1px solid rgba(255, 255, 255, 0.06);
+	}
+	.pp-compliance b {
+		color: #d4af37;
+		font-weight: 700;
+	}
+
+	/* ---- BODY ---- */
+	.pp-body {
+		background: #f7f4ec;
+		padding: 36px 24px 60px;
+	}
+	.pp-inner {
+		max-width: 1520px;
+		margin: 0 auto;
+	}
+
+	.pp-summary {
+		text-align: center;
+		font-size: 12px;
+		color: #8d99a6;
+		margin-bottom: 28px;
+	}
+
+	/* ---- GRID: 5 columns on wide screens, responsive down to 1 ---- */
+	.pp-grid {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: 16px;
+	}
+	@media (max-width: 1400px) {
+		.pp-grid {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+	@media (max-width: 1100px) {
+		.pp-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+	@media (max-width: 780px) {
+		.pp-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (max-width: 480px) {
+		.pp-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.pp-card {
+		background: #fff;
+		border-radius: 12px;
+		overflow: hidden;
+		position: relative;
+		box-shadow: 0 2px 10px rgba(16, 42, 77, 0.06);
+		border: 1px solid #eceee9;
+		display: flex;
+		flex-direction: column;
+		transition:
+			transform 0.15s ease,
+			box-shadow 0.15s ease;
+	}
+	.pp-card:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 10px 24px rgba(16, 42, 77, 0.12);
+	}
+	.pp-card-bar {
+		height: 5px;
+	}
+	.pp-card-body {
+		padding: 20px 20px 18px;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+	.pp-card-top {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		margin-bottom: 14px;
+	}
+	.pp-card-icon {
+		width: 42px;
+		height: 42px;
+		border-radius: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 19px;
+	}
+	.pp-card-badge {
+		font-size: 9.5px;
+		font-weight: 700;
+		letter-spacing: 0.6px;
+		text-transform: uppercase;
+		padding: 4px 9px;
+		border-radius: 10px;
+		color: #fff;
+		white-space: nowrap;
+	}
+	.pp-card-title {
+		font-family: "Playfair Display", Georgia, serif;
+		font-size: 17.5px;
+		font-weight: 700;
+		color: #16324f;
+		margin: 0 0 8px;
+		line-height: 1.25;
+	}
+	.pp-card-desc {
+		font-size: 12.5px;
+		color: #6c7680;
+		line-height: 1.55;
+		margin-bottom: 14px;
+	}
+
+	.pp-doc-list {
+		margin-top: auto;
+		border-top: 1px solid #f0f2ee;
+		padding-top: 12px;
+	}
+	.pp-doc-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		padding: 6px 0;
+		font-size: 12px;
+	}
+	.pp-doc-info {
+		min-width: 0;
+	}
+	.pp-doc-title {
+		font-weight: 600;
+		color: #1f272e;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.pp-doc-meta {
+		font-size: 10.5px;
+		color: #a4afba;
+	}
+	.pp-doc-empty {
+		font-size: 11.5px;
+		color: #b0bac4;
+		font-style: italic;
+	}
+
+	/* ---- View button: pill with eye icon, fills with color on hover ---- */
+	.pp-doc-view {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		font-size: 11px;
+		font-weight: 700;
+		text-decoration: none;
+		white-space: nowrap;
+		flex-shrink: 0;
+		padding: 5px 12px;
+		border-radius: 20px;
+		border: 1.5px solid currentColor;
+		transition: all 0.15s ease;
+		background: transparent;
+	}
+	.pp-doc-view:hover {
+		color: #fff !important;
+	}
+	.pp-doc-view svg {
+		width: 13px;
+		height: 13px;
+		flex-shrink: 0;
+	}
+
+	.pp-loading,
+	.pp-error {
+		text-align: center;
+		padding: 60px 20px;
+		color: #8d99a6;
+		font-size: 13px;
+		grid-column: 1 / -1;
+	}
+	.pp-error {
+		color: #c2402a;
+	}
+</style>
+
+<div class="pp-root">
+	<div class="pp-hero">
+		<span class="pp-badge">● Official Document Portal ●</span>
+		<h1 class="pp-title">Company <span class="accent">Policy</span> Center</h1>
+		<p class="pp-subtitle">Select any policy to view the official document</p>
+		<div class="pp-rule"></div>
+	</div>
+
+	<div class="pp-compliance">
+		All policies comply with <b>Saudi Labor Law</b> · <b>PDPL</b> · <b>Vision 2030</b>. Click
+		<b>View</b> to open the document in a new tab.
+	</div>
+
+	<div class="pp-body">
+		<div class="pp-inner">
+			<div class="pp-summary" id="ppSummary"></div>
+			<div id="ppSections">
+				<div class="pp-loading">Loading policies...</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	(function () {
+		function esc(v) {
+			if (!v) return "";
+			var div = document.createElement("div");
+			div.textContent = String(v);
+			return div.innerHTML;
+		}
+
+		function tint(hex, alpha) {
+			try {
+				var n = parseInt(hex.replace("#", ""), 16);
+				var r = (n >> 16) & 255,
+					g = (n >> 8) & 255,
+					b = n & 255;
+				return "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
+			} catch (e) {
+				return hex;
+			}
+		}
+
+		function callMethod(method) {
+			return new Promise(function (resolve, reject) {
+				function doFetch() {
+					fetch("/api/method/" + method, {
+						headers: { Accept: "application/json" },
+						credentials: "same-origin",
+					})
+						.then(function (r) {
+							return r.json();
+						})
+						.then(function (j) {
+							resolve(j.message);
+						})
+						.catch(reject);
+				}
+				if (window.frappe && frappe.call) {
+					frappe.call({
+						method: method,
+						callback: function (r) {
+							resolve(r.message);
+						},
+						error: function () {
+							doFetch();
+						},
+					});
+				} else {
+					doFetch();
+				}
+			});
+		}
+
+		function eyeIcon() {
+			return (
+				'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+				'stroke-linecap="round" stroke-linejoin="round">' +
+				'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>' +
+				'<circle cx="12" cy="12" r="3"></circle>' +
+				"</svg>"
+			);
+		}
+
+		function renderCard(cat) {
+			var color = cat.color || "#1f6fd0";
+			var docs = cat.documents || [];
+
+			var docsHtml = docs.length
+				? docs
+						.map(function (d) {
+							return (
+								'<div class="pp-doc-row">' +
+								'<div class="pp-doc-info">' +
+								'<div class="pp-doc-title">' +
+								esc(d.title) +
+								"</div>" +
+								(d.effective_date
+									? '<div class="pp-doc-meta">Effective ' +
+										esc(d.effective_date) +
+										(d.version ? " · v" + esc(d.version) : "") +
+										"</div>"
+									: "") +
+								"</div>" +
+								'<a class="pp-doc-view" style="color:' +
+								color +
+								'" ' +
+								"onmouseover=\"this.style.background='" +
+								color +
+								"'\" " +
+								"onmouseout=\"this.style.background='transparent'\" " +
+								'href="' +
+								esc(d.file_url) +
+								'" target="_blank" rel="noopener">' +
+								eyeIcon() +
+								"View" +
+								"</a>" +
+								"</div>"
+							);
+						})
+						.join("")
+				: '<div class="pp-doc-empty">No document uploaded yet.</div>';
+
+			return (
+				'<div class="pp-card">' +
+				'<div class="pp-card-bar" style="background:' +
+				color +
+				'"></div>' +
+				'<div class="pp-card-body">' +
+				'<div class="pp-card-top">' +
+				'<div class="pp-card-icon" style="background:' +
+				tint(color, 0.12) +
+				'">' +
+				esc(cat.icon || "📄") +
+				"</div>" +
+				(cat.badge_label
+					? '<span class="pp-card-badge" style="background:' +
+						color +
+						'">' +
+						esc(cat.badge_label) +
+						"</span>"
+					: "") +
+				"</div>" +
+				'<h3 class="pp-card-title">' +
+				esc(cat.category_name) +
+				"</h3>" +
+				(cat.description
+					? '<div class="pp-card-desc">' + esc(cat.description) + "</div>"
+					: "") +
+				'<div class="pp-doc-list">' +
+				docsHtml +
+				"</div>" +
+				"</div>" +
+				"</div>"
+			);
+		}
+
+		function renderGrid(data) {
+			var wrap = document.getElementById("ppSections");
+			if (!data || !data.categories || !data.categories.length) {
+				wrap.innerHTML =
+					'<div class="pp-loading">No policy categories have been set up yet.</div>';
+				return;
+			}
+
+			var summary = document.getElementById("ppSummary");
+			if (summary) {
+				summary.textContent =
+					data.total_documents +
+					" document(s) across " +
+					data.total_categories +
+					" categories";
+			}
+
+			wrap.innerHTML =
+				'<div class="pp-grid">' + data.categories.map(renderCard).join("") + "</div>";
+		}
+
+		function start() {
+			callMethod("ppecon_ims.www.ppe_policy.index.get_page_data")
+				.then(renderGrid)
+				.catch(function (e) {
+					console.error("Policy portal load failed:", e);
+					document.getElementById("ppSections").innerHTML =
+						'<div class="pp-error">Failed to load policies. Please refresh the page.</div>';
+				});
+		}
+
+		if (window.frappe && frappe.ready) frappe.ready(start);
+		else {
+			var tries = 0;
+			var timer = setInterval(function () {
+				tries++;
+				if (window.frappe && frappe.ready) {
+					clearInterval(timer);
+					frappe.ready(start);
+				} else if (tries > 20) {
+					clearInterval(timer);
+					start();
+				}
+			}, 150);
+		}
+	})();
+</script>
