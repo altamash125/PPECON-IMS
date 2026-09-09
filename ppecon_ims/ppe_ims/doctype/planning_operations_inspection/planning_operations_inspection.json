@@ -1,0 +1,126 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-09-08 10:23:45.545339",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_fdzm",
+  "amended_from",
+  "naming_series",
+  "planning_operations_template",
+  "project_name",
+  "project_manager",
+  "column_break_xcvp",
+  "location",
+  "date",
+  "name1",
+  "section_break_slku",
+  "planning_operations_table"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_fdzm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Planning Operations Inspection",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "project_name",
+   "fieldtype": "Link",
+   "label": "Project Name",
+   "options": "Project"
+  },
+  {
+   "fieldname": "project_manager",
+   "fieldtype": "Link",
+   "label": "Project Manager",
+   "options": "User"
+  },
+  {
+   "fieldname": "column_break_xcvp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "section_break_slku",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "planning_operations_table",
+   "fieldtype": "Table",
+   "label": "Planning Operations Table",
+   "options": "Planning Operation Checklist  Item"
+  },
+  {
+   "fetch_from": "project_manager.full_name",
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "label": "Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location"
+  },
+  {
+   "fieldname": "planning_operations_template",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Planning Operations Template",
+   "options": "Planning Operation Checklist",
+   "reqd": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "S No",
+   "options": "POI - .YYYY.-.###"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-09-08 13:50:35.545782",
+ "modified_by": "Administrator",
+ "module": "PPE IMS",
+ "name": "Planning Operations Inspection",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

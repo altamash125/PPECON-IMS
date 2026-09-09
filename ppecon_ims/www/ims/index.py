@@ -855,9 +855,9 @@ def get_hse_summary():
     aspect_dt = _first_existing_doctype(
         ["Aspect - Impact Assessment", "Aspect Impact Assessment", "Aspect - Impact Assesment"])
     checklist_master_dt = _first_existing_doctype(
-        ["HSE CheckList Master", "HSE Checklist Master"])
+        ["HSE Checklist Master", "HSE Checklist Master"])
     checklist_insp_dt = _first_existing_doctype(
-        ["HSE CheckList Inspection", "HSE Checklist Inspection"])
+        ["HSE Checklist Inspection", "HSE Checklist Inspection"])
 
     return {
         "monitoring_by_type": monitoring_counts,
