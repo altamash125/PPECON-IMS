@@ -38,7 +38,7 @@ def send_risk_opportunity_mail(doc, recipients):
         ("Risk Impact", doc.risk_impact),
         ("Risk Probability", doc.risk_probability),
         ("Management System Type", doc.management_system_type),
-        ("Department", doc.deaprtment),
+        ("Department", doc.department),
         ("Treatment Type", doc.treatement_type),
         ("Source / Activity", doc.riskopportunity_source_or_activity),
         ("Submitted By", created_by),
