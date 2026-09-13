@@ -1,7 +1,7 @@
 <!-- =========================================================================
-  PPECON IMS Portal — index.html  (v4.0)
+  PPECON IMS Portal — index.html  (v4.1)
   Location : ppecon_ims/www/ims/index.html
-  Backend  : ppecon_ims/www/ims/index.py  (v4.0)
+  Backend  : ppecon_ims/www/ims/index.py  (v4.1)
 ========================================================================== -->
 
 <link rel="stylesheet" href="/assets/ppecon_ims/css/ims_portal.css" />
@@ -185,35 +185,33 @@
 		padding: 70px 0;
 	}
 
-	/* ---- Estimation Turnaround ---- */
+	/* ---- Estimation Turnaround (COMPACT) ---- */
 	.est-card {
 		grid-column: 1 / -1;
 	}
-	.est-top {
-		display: flex;
-		gap: 14px;
-		flex-wrap: wrap;
-		align-items: stretch;
-		margin-bottom: 14px;
+	.est-top,
+	.est-compact {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 10px;
+		margin-bottom: 10px;
 	}
 	.est-stat {
-		flex: 1;
-		min-width: 140px;
 		border-radius: 8px;
-		padding: 12px 14px;
+		padding: 10px 12px;
 		color: #fff;
 	}
 	.est-stat .es-lbl {
-		font-size: 10.5px;
+		font-size: 10px;
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.4px;
 		opacity: 0.9;
 	}
 	.est-stat .es-val {
-		font-size: 24px;
+		font-size: 20px;
 		font-weight: 800;
-		margin-top: 3px;
+		margin-top: 2px;
 	}
 	.est-green {
 		background: linear-gradient(135deg, #2e9e5b, #1d6b3c);
@@ -228,7 +226,7 @@
 		background: linear-gradient(135deg, #546e7a, #37474f);
 	}
 	.est-bar-wrap {
-		height: 14px;
+		height: 12px;
 		border-radius: 8px;
 		overflow: hidden;
 		display: flex;
@@ -246,7 +244,7 @@
 		gap: 16px;
 		font-size: 11.5px;
 		color: #6c7680;
-		margin-bottom: 14px;
+		margin-bottom: 10px;
 	}
 	.est-legend span::before {
 		content: "●";
@@ -257,6 +255,11 @@
 	}
 	.est-legend .lg-delayed::before {
 		color: #d0433f;
+	}
+	@media (max-width: 700px) {
+		.est-compact {
+			grid-template-columns: repeat(2, 1fr);
+		}
 	}
 
 	/* ---- IMS Quality Objectives ---- */
@@ -288,6 +291,11 @@
 	}
 	.qo-chart {
 		margin-top: 12px;
+	}
+	/* FIX: give fixed height to canvas inside qo-chart so Chart.js fills it */
+	.qo-chart canvas {
+		height: 260px !important;
+		width: 100% !important;
 	}
 	.stats-table-wrap {
 		overflow-x: auto;
@@ -337,6 +345,10 @@
 		font-size: 11.5px;
 		color: #6c7680;
 		margin: 8px 0 12px;
+	}
+	#chartElectricity {
+		height: 220px !important;
+		width: 100% !important;
 	}
 
 	/* ---- visual settings modal ---- */
@@ -1105,20 +1117,16 @@
 								</div>
 								<div id="tblSupplierCompliance" class="stats-table-wrap"></div>
 								<div class="qo-chart">
-									<canvas id="chartSupplierCompliance" height="200"></canvas>
+									<canvas id="chartSupplierCompliance"></canvas>
 								</div>
 							</div>
 							<div class="qo-col">
 								<div class="qo-section-title">
-									Training Objectives Stats
-									<span
-										id="trainingYearLabel"
-										style="font-weight: 400; color: #8d99a6"
-									></span>
+									Training Objectives Stats — Last 4 Quarters
 								</div>
 								<div id="tblTrainingStats" class="stats-table-wrap"></div>
 								<div class="qo-chart">
-									<canvas id="chartTrainingStats" height="200"></canvas>
+									<canvas id="chartTrainingStats"></canvas>
 								</div>
 							</div>
 						</div>
@@ -1126,14 +1134,14 @@
 				</div>
 			</div>
 
-			<!-- ---------- INSIGHTS: ESTIMATION ---------- -->
+			<!-- ---------- INSIGHTS: ESTIMATION (COMPACT) ---------- -->
 			<div class="insights-section">
 				<h3>Insights — Estimation</h3>
 				<div class="insights-grid">
 					<div class="insight-card est-card">
-						<div class="insight-title">Estimation Turnaround — On Time vs Delayed</div>
+						<div class="insight-title">Estimation Turnaround</div>
 
-						<div class="est-top">
+						<div class="est-compact">
 							<div class="est-stat est-green">
 								<div class="es-lbl">On Time</div>
 								<div class="es-val" id="estOnTime">—</div>
@@ -1152,17 +1160,17 @@
 							</div>
 						</div>
 
-						<div class="est-bar-wrap" id="estBar"></div>
+						<div class="est-bar-wrap" id="estBar" style="margin-top: 10px"></div>
 						<div class="est-legend">
 							<span class="lg-ontime">On Time</span>
 							<span class="lg-delayed">Delayed</span>
 						</div>
-						<div id="estSummaryLine" style="font-size: 11.5px; color: #6c7680"></div>
+						<div
+							id="estSummaryLine"
+							style="font-size: 11.5px; color: #6c7680; margin-bottom: 10px"
+						></div>
 
-						<div style="font-size: 11.5px; color: #8d99a6; margin: 14px 0 6px">
-							Year-wise breakdown (all data, independent of the period filter)
-						</div>
-						<canvas id="chartEstimation" height="180"></canvas>
+						<canvas id="chartEstimation" height="140"></canvas>
 					</div>
 				</div>
 			</div>
@@ -1188,10 +1196,6 @@
 						<div class="st-label">HSE Checklist Masters</div>
 						<div class="st-value" id="hseChecklistMasterCount">—</div>
 					</div>
-					<!-- <div class="summary-tile st-purple">
-						<div class="st-label">HSE Checklist Inspections</div>
-						<div class="st-value" id="hseChecklistInspCount">—</div>
-					</div> -->
 					<div class="summary-tile st-slate">
 						<div class="st-label">Total Monitoring Records</div>
 						<div class="st-value" id="hseMonitoringTotal">—</div>
@@ -1199,17 +1203,12 @@
 				</div>
 
 				<div class="insights-grid">
-					<!-- <div class="insight-card">
-						<div class="insight-title">Monitoring — by Type</div>
-						<canvas id="chartMonitoringType" height="200"></canvas>
-					</div> -->
-
 					<div class="insight-card hse-card">
 						<div class="insight-title" id="elecTitle">
 							Electricity Consumption — Actual vs Target
 						</div>
 						<div class="elec-note" id="elecNote"></div>
-						<canvas id="chartElectricity" height="150"></canvas>
+						<canvas id="chartElectricity"></canvas>
 						<div
 							id="tblElectricity"
 							class="stats-table-wrap"
@@ -1887,7 +1886,6 @@
 					}
 				}
 
-				/* year-wise stacked columns (all data, ignores period filter) */
 				destroyChart("chartEstimation");
 				var ctx = getCanvas("chartEstimation");
 				if (ctx) {
@@ -2225,10 +2223,9 @@
 		function emptyChart(canvasId, title) {
 			var el = document.getElementById(canvasId);
 			if (!el) return;
-			el.parentElement.innerHTML =
-				'<div class="insight-title">' +
-				title +
-				"</div>" +
+			var wrap = el.parentElement;
+			wrap.innerHTML =
+				(title ? '<div class="insight-title">' + title + "</div>" : "") +
 				'<div class="chart-loading">No data to display</div>';
 		}
 
@@ -2338,6 +2335,8 @@
 					],
 				},
 				options: {
+					responsive: true,
+					maintainAspectRatio: false,
 					plugins: {
 						legend: { position: "bottom", labels: { boxWidth: 10 } },
 						tooltip: {
@@ -2379,24 +2378,38 @@
 			var el = document.getElementById("tblTrainingStats");
 			if (!el || !d) return;
 			var yl = document.getElementById("trainingYearLabel");
-			if (yl && d.year) yl.textContent = "(" + d.year + ")";
+			if (yl) yl.textContent = "";
 
 			var rows = d.quarters
 				.map(function (q) {
-					var met = q.target > 0 && q.trained >= q.target;
-					var comment =
-						q.trained === 0
-							? "No training conducted this quarter."
-							: met
-								? '<span class="badge-ok">Target achieved.</span> 50% of employees completed training.'
-								: '<span class="badge-bad">Below target.</span> ' +
-									q.pct_trained +
-									"% trained, additional sessions required.";
+					var met = q.objective_met === true;
+					var comment;
+					if (q.trained === 0) {
+						comment = "No training conducted in this quarter.";
+					} else if (met) {
+						comment =
+							'<span class="badge-ok">Target achieved.</span> ' +
+							q.trained +
+							" of " +
+							q.total_employees +
+							" employees trained.";
+					} else {
+						comment =
+							'<span class="badge-bad">Below target.</span> ' +
+							q.pct_trained +
+							"% trained (need " +
+							q.target +
+							").";
+					}
 					return (
 						"<tr>" +
 						"<td><b>" +
 						q.quarter +
-						"</b></td>" +
+						"</b><div style='font-size:10px;color:#8d99a6'>" +
+						q.period_from +
+						" → " +
+						q.period_to +
+						"</div></td>" +
 						"<td>" +
 						q.total_employees +
 						"</td>" +
@@ -2448,10 +2461,8 @@
 
 			el.innerHTML =
 				'<table class="stats-table"><thead><tr>' +
-				"<th>Quarter</th><th>Total<br>Employees</th>" +
-				"<th>Target: 50%<br>to Train</th>" +
-				"<th>Employees<br>Trained</th><th>%<br>Trained</th>" +
-				"<th>Comments/Actions Taken</th>" +
+				"<th>Quarter</th><th>Employees</th><th>Target</th>" +
+				"<th>Trained</th><th>%</th><th>Comments</th>" +
 				"</tr></thead><tbody>" +
 				rows +
 				"</tbody></table>";
@@ -2460,9 +2471,21 @@
 		function drawTrainingStats(d) {
 			renderTrainingTable(d);
 			var el = document.getElementById("chartTrainingStats");
-			if (!el || !d) return;
+			if (!el || !d || !d.quarters || !d.quarters.length) {
+				emptyChart("chartTrainingStats", "");
+				return;
+			}
 			destroy("tr");
+
 			var qs = d.quarters;
+			var hasAny = qs.some(function (x) {
+				return x.trained > 0 || x.events > 0;
+			});
+			if (!hasAny) {
+				emptyChart("chartTrainingStats", "");
+				return;
+			}
+
 			charts3["tr"] = new Chart(el, {
 				data: {
 					labels: qs.map(function (x) {
@@ -2476,8 +2499,8 @@
 								return x.total_employees;
 							}),
 							backgroundColor: "#8d4a3c",
-							borderRadius: 2,
-							maxBarThickness: 35,
+							borderRadius: 3,
+							maxBarThickness: 30,
 							yAxisID: "y",
 						},
 						{
@@ -2487,8 +2510,8 @@
 								return x.target;
 							}),
 							backgroundColor: "#5f7470",
-							borderRadius: 2,
-							maxBarThickness: 35,
+							borderRadius: 3,
+							maxBarThickness: 30,
 							yAxisID: "y",
 						},
 						{
@@ -2497,9 +2520,11 @@
 							data: qs.map(function (x) {
 								return x.trained;
 							}),
-							backgroundColor: "#2e9e5b",
-							borderRadius: 2,
-							maxBarThickness: 35,
+							backgroundColor: qs.map(function (x) {
+								return x.objective_met === false ? "#d0433f" : "#2e9e5b";
+							}),
+							borderRadius: 3,
+							maxBarThickness: 30,
 							yAxisID: "y",
 						},
 						{
@@ -2509,17 +2534,47 @@
 								return x.pct_trained;
 							}),
 							borderColor: "#1f6fd0",
+							backgroundColor: "#1f6fd0",
 							borderWidth: 2,
-							pointRadius: 3,
+							pointRadius: 4,
+							pointHoverRadius: 6,
 							tension: 0.3,
 							yAxisID: "y1",
 						},
 					],
 				},
 				options: {
-					plugins: { legend: { position: "bottom", labels: { boxWidth: 10 } } },
+					responsive: true,
+					maintainAspectRatio: false,
+					interaction: { mode: "index", intersect: false },
+					plugins: {
+						legend: {
+							position: "bottom",
+							labels: { boxWidth: 10, font: { size: 10 } },
+						},
+						tooltip: {
+							callbacks: {
+								afterBody: function (items) {
+									var i = items[0].dataIndex;
+									var q = qs[i];
+									return (
+										"Period: " +
+										q.period_from +
+										" → " +
+										q.period_to +
+										"\nEvents: " +
+										(q.events || 0)
+									);
+								},
+							},
+						},
+					},
 					scales: {
-						y: { beginAtZero: true, ticks: { precision: 0 } },
+						y: {
+							beginAtZero: true,
+							ticks: { precision: 0 },
+							title: { display: true, text: "Employees" },
+						},
 						y1: {
 							position: "right",
 							beginAtZero: true,
@@ -2530,6 +2585,7 @@
 									return v + "%";
 								},
 							},
+							title: { display: true, text: "% Trained" },
 						},
 					},
 				},
@@ -2584,7 +2640,9 @@
 						},
 					],
 				},
-				options: { plugins: { legend: { position: "bottom", labels: { boxWidth: 10 } } } },
+				options: {
+					plugins: { legend: { position: "bottom", labels: { boxWidth: 10 } } },
+				},
 			});
 		}
 
@@ -2757,6 +2815,8 @@
 					],
 				},
 				options: {
+					responsive: true,
+					maintainAspectRatio: false,
 					plugins: {
 						legend: { position: "bottom", labels: { boxWidth: 10 } },
 						tooltip: {
@@ -2780,7 +2840,9 @@
 							},
 						},
 					},
-					scales: { y: { beginAtZero: true, title: { display: true, text: "kWh" } } },
+					scales: {
+						y: { beginAtZero: true, title: { display: true, text: "kWh" } },
+					},
 				},
 			});
 		}
