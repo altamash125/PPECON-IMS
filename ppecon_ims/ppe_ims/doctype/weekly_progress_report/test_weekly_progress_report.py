@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestOperationPlanning(FrappeTestCase):
+class TestWeeklyProgressReport(FrappeTestCase):
 	pass
