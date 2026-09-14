@@ -2385,29 +2385,39 @@
 			var rows = d.quarters
 				.map(function (q) {
 					var met = q.objective_met === true;
+					var trained =
+						q.trained_employees !== undefined ? q.trained_employees : q.trained;
+					var completions = q.training_completions || 0;
+
 					var comment;
-					if (q.trained === 0) {
+					if (completions === 0) {
 						comment = "No training conducted in this quarter.";
 					} else if (met) {
 						comment =
 							'<span class="badge-ok">Target achieved.</span> ' +
-							q.trained +
+							trained +
 							" of " +
 							q.total_employees +
-							" employees trained.";
+							" employees trained (" +
+							completions +
+							" completions).";
 					} else {
 						comment =
 							'<span class="badge-bad">Below target.</span> ' +
 							q.pct_trained +
 							"% trained (need " +
 							q.target +
-							").";
+							"). " +
+							completions +
+							" completions recorded.";
 					}
+
 					return (
 						"<tr>" +
 						"<td><b>" +
 						q.quarter +
-						"</b><div style='font-size:10px;color:#8d99a6'>" +
+						"</b>" +
+						"<div style='font-size:10px;color:#8d99a6'>" +
 						q.period_from +
 						" → " +
 						q.period_to +
@@ -2419,7 +2429,10 @@
 						q.target +
 						"</td>" +
 						"<td>" +
-						q.trained +
+						trained +
+						"</td>" +
+						"<td>" +
+						completions +
 						"</td>" +
 						"<td>" +
 						q.pct_trained +
@@ -2433,7 +2446,10 @@
 				.join("");
 
 			var totalTrained = d.quarters.reduce(function (a, q) {
-				return a + q.trained;
+				return a + (q.trained_employees !== undefined ? q.trained_employees : q.trained);
+			}, 0);
+			var totalCompletions = d.quarters.reduce(function (a, q) {
+				return a + (q.training_completions || 0);
 			}, 0);
 			var avgPct = d.quarters.length
 				? Math.round(
@@ -2456,15 +2472,20 @@
 				totalTrained +
 				"</td>" +
 				"<td>" +
+				totalCompletions +
+				"</td>" +
+				"<td>" +
 				avgPct +
 				"%</td>" +
-				'<td class="comments">Average quarterly training coverage</td>' +
+				'<td class="comments">Employees distinct across each quarter, completions summed</td>' +
 				"</tr>";
 
 			el.innerHTML =
 				'<table class="stats-table"><thead><tr>' +
 				"<th>Quarter</th><th>Employees</th><th>Target</th>" +
-				"<th>Trained</th><th>%</th><th>Comments</th>" +
+				"<th>Employees<br>Trained</th>" +
+				"<th>Training<br>Completions</th>" +
+				"<th>%<br>Trained</th><th>Comments</th>" +
 				"</tr></thead><tbody>" +
 				rows +
 				"</tbody></table>";
@@ -2481,7 +2502,7 @@
 
 			var qs = d.quarters;
 			var hasAny = qs.some(function (x) {
-				return x.trained > 0 || x.events > 0;
+				return (x.training_completions || 0) > 0 || (x.events || 0) > 0;
 			});
 			if (!hasAny) {
 				emptyChart("chartTrainingStats", "");
@@ -2496,13 +2517,13 @@
 					datasets: [
 						{
 							type: "bar",
-							label: "Total Employees",
+							label: "Employees (Total)",
 							data: qs.map(function (x) {
 								return x.total_employees;
 							}),
 							backgroundColor: "#8d4a3c",
 							borderRadius: 3,
-							maxBarThickness: 30,
+							maxBarThickness: 26,
 							yAxisID: "y",
 						},
 						{
@@ -2513,20 +2534,33 @@
 							}),
 							backgroundColor: "#5f7470",
 							borderRadius: 3,
-							maxBarThickness: 30,
+							maxBarThickness: 26,
 							yAxisID: "y",
 						},
 						{
 							type: "bar",
-							label: "Trained",
+							label: "Employees Trained (distinct)",
 							data: qs.map(function (x) {
-								return x.trained;
+								return x.trained_employees !== undefined
+									? x.trained_employees
+									: x.trained;
 							}),
 							backgroundColor: qs.map(function (x) {
 								return x.objective_met === false ? "#d0433f" : "#2e9e5b";
 							}),
 							borderRadius: 3,
-							maxBarThickness: 30,
+							maxBarThickness: 26,
+							yAxisID: "y",
+						},
+						{
+							type: "bar",
+							label: "Training Completions",
+							data: qs.map(function (x) {
+								return x.training_completions || 0;
+							}),
+							backgroundColor: "#7e57c2",
+							borderRadius: 3,
+							maxBarThickness: 26,
 							yAxisID: "y",
 						},
 						{
@@ -2564,7 +2598,7 @@
 										q.period_from +
 										" → " +
 										q.period_to +
-										"\nEvents: " +
+										"\nEvents held: " +
 										(q.events || 0)
 									);
 								},
@@ -2575,7 +2609,7 @@
 						y: {
 							beginAtZero: true,
 							ticks: { precision: 0 },
-							title: { display: true, text: "Employees" },
+							title: { display: true, text: "Count" },
 						},
 						y1: {
 							position: "right",

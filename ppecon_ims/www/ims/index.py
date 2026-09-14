@@ -675,15 +675,26 @@ def get_supplier_compliance_stats(year=None):
 def get_training_stats(year=None):
     """
     Quarterly training coverage for the last 4 quarters (including the
-    current one), driven by Training Event.start_time / end_time.
+    current one), driven by Training Event.start_time.
+
+    Per quarter we return TWO counts:
+      - trained_employees   : distinct employees who attended >=1 training
+                              (used for the "50% of employees" objective)
+      - training_completions: total attendance rows (employee x event)
+                              (used for "how many trainings were completed")
+
     A training is attributed to the quarter in which it STARTED.
     """
     total_employees = _safe_count("Employee", {"status": "Active"})
     target_count = round(total_employees * 0.5)
 
     if not _exists("Training Event"):
-        return {"year": None, "quarters": [], "total_employees": total_employees,
-                "target": target_count}
+        return {
+            "year": None,
+            "quarters": [],
+            "total_employees": total_employees,
+            "target": target_count,
+        }
 
     t = getdate(today())
     cur_q_start = t.replace(month=3 * ((t.month - 1) // 3) + 1, day=1)
@@ -696,10 +707,16 @@ def get_training_stats(year=None):
 
     out = []
     for q_start, q_end in periods:
-        trained = 0
+        q_start_dt = q_start
+        q_end_dt = add_days(q_end, 1)   # exclusive upper bound
+
+        trained_employees = 0
+        training_completions = 0
         events = 0
+
+        # ---- distinct employees trained this quarter ----
         try:
-            trained = frappe.db.sql(
+            trained_employees = frappe.db.sql(
                 """
                 SELECT COUNT(DISTINCT tee.employee)
                 FROM `tabTraining Event Employee` tee
@@ -710,23 +727,44 @@ def get_training_stats(year=None):
                   AND tee.employee IS NOT NULL
                   AND tee.employee != ''
                 """,
-                (q_start, add_days(q_end, 1)),
+                (q_start_dt, q_end_dt),
             )[0][0] or 0
         except Exception:
             frappe.log_error(frappe.get_traceback(),
-                             "IMS training_stats trained %s" % q_start)
+                             "IMS training_stats distinct %s" % q_start)
 
+        # ---- total attendance rows (employee x event) ----
+        try:
+            training_completions = frappe.db.sql(
+                """
+                SELECT COUNT(*)
+                FROM `tabTraining Event Employee` tee
+                INNER JOIN `tabTraining Event` te ON te.name = tee.parent
+                WHERE te.docstatus < 2
+                  AND te.start_time >= %s
+                  AND te.start_time <  %s
+                  AND tee.employee IS NOT NULL
+                  AND tee.employee != ''
+                """,
+                (q_start_dt, q_end_dt),
+            )[0][0] or 0
+        except Exception:
+            frappe.log_error(frappe.get_traceback(),
+                             "IMS training_stats completions %s" % q_start)
+
+        # ---- number of training events held ----
         try:
             events = frappe.db.sql(
                 """SELECT COUNT(*) FROM `tabTraining Event`
                    WHERE docstatus < 2
                      AND start_time >= %s AND start_time < %s""",
-                (q_start, add_days(q_end, 1)),
+                (q_start_dt, q_end_dt),
             )[0][0] or 0
         except Exception:
             events = 0
 
-        pct = round(trained / total_employees * 100, 1) if total_employees else 0
+        pct = round(trained_employees / total_employees * 100, 1) \
+              if total_employees else 0
         q_num = (q_start.month - 1) // 3 + 1
         label = "Q%s %s" % (q_num, q_start.year)
 
@@ -736,12 +774,19 @@ def get_training_stats(year=None):
             "year": q_start.year,
             "period_from": str(q_start),
             "period_to": str(q_end),
+
             "total_employees": total_employees,
             "target": target_count,
-            "trained": trained,
+
+            # both metrics
+            "trained": trained_employees,          # keep old key for compatibility
+            "trained_employees": trained_employees,
+            "training_completions": training_completions,
             "events": events,
+
             "pct_trained": pct,
-            "objective_met": (trained >= target_count) if total_employees else None,
+            "objective_met": (trained_employees >= target_count)
+                             if total_employees else None,
         })
 
     return {
@@ -750,7 +795,6 @@ def get_training_stats(year=None):
         "total_employees": total_employees,
         "target": target_count,
     }
-
 
 # =========================================================================
 #  ELECTRICITY CONSUMPTION  (target = prior-year actual x 95%)
@@ -911,8 +955,7 @@ def get_hse_summary():
 
 
 
-
-
+ 
 
 
 
