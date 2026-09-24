@@ -1365,735 +1365,737 @@
      SCRIPT 1 of 3 — sidebar + period-filtered dashboard data
 ========================================================================== -->
 <script>
-	(function () {
-		const app = document.getElementById("imsApp");
-		const menu = document.getElementById("imsMenu");
+		(function () {
+			const app = document.getElementById("imsApp");
+			const menu = document.getElementById("imsMenu");
 
-		/* ==================== SIDEBAR ==================== */
-		menu.querySelectorAll(".group-header").forEach(function (h) {
-			h.addEventListener("click", function (e) {
-				e.stopPropagation();
-				h.parentElement.classList.toggle("open");
-				try {
-					const open = [].slice
-						.call(menu.querySelectorAll(".menu-group.open"))
-						.map(function (x) {
-							return x.dataset.group;
-						});
-					localStorage.setItem("ims_open_groups", JSON.stringify(open));
-				} catch (err) {}
+			/* ==================== SIDEBAR ==================== */
+			menu.querySelectorAll(".group-header").forEach(function (h) {
+				h.addEventListener("click", function (e) {
+					e.stopPropagation();
+					h.parentElement.classList.toggle("open");
+					try {
+						const open = [].slice
+							.call(menu.querySelectorAll(".menu-group.open"))
+							.map(function (x) {
+								return x.dataset.group;
+							});
+						localStorage.setItem("ims_open_groups", JSON.stringify(open));
+					} catch (err) {}
+				});
 			});
-		});
 
-		try {
-			JSON.parse(localStorage.getItem("ims_open_groups") || "[]").forEach(function (name) {
-				const g = menu.querySelector('.menu-group[data-group="' + name + '"]');
-				if (g) g.classList.add("open");
-			});
-		} catch (err) {}
+			try {
+				JSON.parse(localStorage.getItem("ims_open_groups") || "[]").forEach(function (name) {
+					const g = menu.querySelector('.menu-group[data-group="' + name + '"]');
+					if (g) g.classList.add("open");
+				});
+			} catch (err) {}
 
-		const path = window.location.pathname;
-		menu.querySelectorAll("a.menu-item").forEach(function (a) {
-			if (a.getAttribute("href").split("?")[0] === path) {
-				a.classList.add("active");
-				let p = a.closest(".menu-group");
-				while (p) {
-					p.classList.add("open");
-					p = p.parentElement.closest(".menu-group");
-				}
-			}
-		});
-
-		const search = document.getElementById("menuSearch");
-		search.addEventListener("input", function () {
-			const q = this.value.trim().toLowerCase();
+			const path = window.location.pathname;
 			menu.querySelectorAll("a.menu-item").forEach(function (a) {
-				const match = !q || a.textContent.toLowerCase().indexOf(q) !== -1;
-				a.classList.toggle("hidden-by-search", !match);
-			});
-			menu.querySelectorAll(".menu-group").forEach(function (g) {
-				const hasVisible = g.querySelector("a.menu-item:not(.hidden-by-search)");
-				g.classList.toggle("hidden-by-search", !!q && !hasVisible);
-				if (q && hasVisible) g.classList.add("open");
-			});
-			if (!q) {
-				menu.querySelectorAll(".menu-group").forEach(function (g) {
-					g.classList.remove("hidden-by-search");
-				});
-			}
-		});
-
-		const burger = document.getElementById("hamburger");
-		if (burger)
-			burger.addEventListener("click", function () {
-				app.classList.toggle("sidebar-open");
-			});
-
-		menu.querySelectorAll("a.menu-item").forEach(function (a) {
-			const href = a.getAttribute("href") || "";
-			if (href === "/ims") return;
-			a.setAttribute("target", "_blank");
-			a.setAttribute("rel", "noopener");
-		});
-		document.querySelectorAll(".action-grid a.action-btn").forEach(function (a) {
-			a.setAttribute("target", "_blank");
-			a.setAttribute("rel", "noopener");
-		});
-
-		const u = document.getElementById("userName");
-		const w = document.getElementById("welcomeUser");
-		try {
-			const full = decodeURIComponent(
-				(document.cookie.match(/full_name=([^;]+)/) || [])[1] || "",
-			).replace(/\+/g, " ");
-			const name = full || (window.frappe && frappe.session ? frappe.session.user : "");
-			if (u) u.textContent = name;
-			if (w && name) w.textContent = "Welcome, " + name;
-		} catch (err) {}
-
-		/* ==================== HELPERS ==================== */
-		var PALETTE = [
-			"#2196f3",
-			"#2e9e5b",
-			"#f5a623",
-			"#e04f4f",
-			"#8e44ad",
-			"#00897b",
-			"#607d8b",
-			"#c2185b",
-			"#5c6bc0",
-			"#8d6e63",
-		];
-
-		var charts = {};
-		var currentPeriod = "this_year";
-
-		function money(v) {
-			v = v || 0;
-			if (Math.abs(v) >= 1e6) return "SAR " + (v / 1e6).toFixed(1) + "M";
-			if (Math.abs(v) >= 1e3) return "SAR " + (v / 1e3).toFixed(0) + "K";
-			return "SAR " + Math.round(v);
-		}
-
-		function callMethod(method, args) {
-			return new Promise(function (resolve, reject) {
-				if (window.frappe && frappe.call) {
-					frappe.call({
-						method: method,
-						args: args || {},
-						callback: function (r) {
-							resolve(r.message);
-						},
-						error: function (e) {
-							reject(e);
-						},
-					});
-				} else {
-					var qs = new URLSearchParams(args || {}).toString();
-					fetch("/api/method/" + method + (qs ? "?" + qs : ""), {
-						headers: { Accept: "application/json" },
-						credentials: "same-origin",
-					})
-						.then(function (res) {
-							return res.json();
-						})
-						.then(function (json) {
-							resolve(json.message);
-						})
-						.catch(reject);
+				if (a.getAttribute("href").split("?")[0] === path) {
+					a.classList.add("active");
+					let p = a.closest(".menu-group");
+					while (p) {
+						p.classList.add("open");
+						p = p.parentElement.closest(".menu-group");
+					}
 				}
 			});
-		}
 
-		function setText(id, val) {
-			var el = document.getElementById(id);
-			if (el) el.textContent = val === undefined || val === null ? "0" : val;
-		}
-
-		function setBreakdown(id, data) {
-			var el = document.getElementById(id);
-			if (!el || !data) return;
-			el.innerHTML =
-				'<span class="bd-draft">Draft: ' +
-				(data.draft || 0) +
-				"</span>" +
-				'<span class="bd-submit">Submitted: ' +
-				(data.submitted || 0) +
-				"</span>";
-		}
-
-		function getCanvas(id) {
-			var el = document.getElementById(id);
-			if (el && el.tagName === "CANVAS") return el;
-			var ph = document.querySelector('[data-canvas-holder="' + id + '"]');
-			if (!ph) return null;
-			var c = document.createElement("canvas");
-			c.id = id;
-			c.height = ph.getAttribute("data-height") || 200;
-			ph.parentNode.replaceChild(c, ph);
-			return c;
-		}
-
-		function noData(canvasId) {
-			var c = document.getElementById(canvasId);
-			if (!c || c.tagName !== "CANVAS") return;
-			var h = c.getAttribute("height") || 200;
-			var p = document.createElement("div");
-			p.setAttribute("data-canvas-holder", canvasId);
-			p.setAttribute("data-height", h);
-			p.className = "chart-loading";
-			p.textContent = "No data to display";
-			c.parentNode.replaceChild(p, c);
-		}
-
-		function destroyChart(id) {
-			if (charts[id]) {
-				try {
-					charts[id].destroy();
-				} catch (e) {}
-				delete charts[id];
-			}
-		}
-
-		function simpleChart(id, rows, type, color, horizontal, valueKey, isMoney) {
-			destroyChart(id);
-			var el = getCanvas(id);
-			if (!el) return;
-			if (!rows || !rows.length) {
-				noData(id);
-				return;
-			}
-			var isPie = type === "doughnut" || type === "pie";
-			var vk = valueKey || "count";
-			charts[id] = new Chart(el, {
-				type: type,
-				data: {
-					labels: rows.map(function (x) {
-						return x.label || x.stage || "Not Set";
-					}),
-					datasets: [
-						{
-							label: isMoney ? "Value" : "Count",
-							data: rows.map(function (x) {
-								return x[vk];
-							}),
-							backgroundColor: isPie ? PALETTE : color || "#2196f3",
-							borderRadius: isPie ? 0 : 4,
-							borderWidth: isPie ? 2 : 0,
-							borderColor: "#fff",
-						},
-					],
-				},
-				options: {
-					indexAxis: horizontal ? "y" : "x",
-					plugins: {
-						legend: { display: isPie, position: "bottom" },
-						tooltip: {
-							callbacks: {
-								label: function (c) {
-									var v = isPie
-										? c.parsed
-										: horizontal
-											? c.parsed.x
-											: c.parsed.y;
-									return isMoney ? money(v) : v;
-								},
-							},
-						},
-					},
-					scales: isPie
-						? {}
-						: horizontal
-							? {
-									x: {
-										beginAtZero: true,
-										ticks: {
-											callback: function (v) {
-												return isMoney ? money(v) : v;
-											},
-										},
-									},
-								}
-							: {
-									y: {
-										beginAtZero: true,
-										ticks: {
-											callback: function (v) {
-												return isMoney ? money(v) : v;
-											},
-										},
-									},
-								},
-				},
-			});
-		}
-
-		function funnelChart(id, rows, colors) {
-			destroyChart(id);
-			var el = getCanvas(id);
-			if (!el) return;
-			if (!rows || !rows.length) {
-				noData(id);
-				return;
-			}
-			charts[id] = new Chart(el, {
-				type: "bar",
-				data: {
-					labels: rows.map(function (x) {
-						return x.stage;
-					}),
-					datasets: [
-						{
-							label: "Count",
-							data: rows.map(function (x) {
-								return x.count;
-							}),
-							backgroundColor: colors,
-							borderRadius: 4,
-						},
-					],
-				},
-				options: {
-					indexAxis: "y",
-					plugins: {
-						legend: { display: false },
-						tooltip: {
-							callbacks: {
-								afterLabel: function (c) {
-									var first = c.dataset.data[0] || 1;
-									return (
-										"Conversion from stage 1: " +
-										((c.parsed.x / first) * 100).toFixed(1) +
-										"%"
-									);
-								},
-							},
-						},
-					},
-					scales: { x: { beginAtZero: true, ticks: { precision: 0 } } },
-				},
-			});
-		}
-
-		function valueTrendChart(id, rows, barColor, lineLabel) {
-			destroyChart(id);
-			var el = getCanvas(id);
-			if (!el) return;
-			if (!rows || !rows.length) {
-				noData(id);
-				return;
-			}
-			charts[id] = new Chart(el, {
-				data: {
-					labels: rows.map(function (x) {
-						return x.month;
-					}),
-					datasets: [
-						{
-							type: "bar",
-							label: "Value",
-							data: rows.map(function (x) {
-								return x.value;
-							}),
-							backgroundColor: barColor,
-							borderRadius: 4,
-							yAxisID: "y",
-						},
-						{
-							type: "line",
-							label: lineLabel,
-							data: rows.map(function (x) {
-								return x.count;
-							}),
-							borderColor: "#f5a623",
-							borderWidth: 2,
-							pointRadius: 3,
-							tension: 0.3,
-							yAxisID: "y1",
-						},
-					],
-				},
-				options: {
-					plugins: {
-						legend: { position: "top", labels: { boxWidth: 10 } },
-						tooltip: {
-							callbacks: {
-								label: function (c) {
-									return (
-										c.dataset.label +
-										": " +
-										(c.datasetIndex === 0 ? money(c.parsed.y) : c.parsed.y)
-									);
-								},
-							},
-						},
-					},
-					scales: {
-						y: {
-							position: "left",
-							beginAtZero: true,
-							ticks: {
-								callback: function (v) {
-									return money(v);
-								},
-							},
-						},
-						y1: {
-							position: "right",
-							beginAtZero: true,
-							grid: { drawOnChartArea: false },
-							ticks: { precision: 0 },
-						},
-					},
-				},
-			});
-		}
-
-		/* ==================== LOADERS ==================== */
-		function loadCounts() {
-			callMethod("ppecon_ims.www.ims.index.get_dashboard_counts")
-				.then(function (m) {
-					if (!m) return;
-					setText("cnt-risks", m.risks.total);
-					setBreakdown("cnt-risks-breakdown", m.risks);
-					setText("cnt-context", m.contexts.total);
-					setBreakdown("cnt-context-breakdown", m.contexts);
-					setText("cnt-audit", m.audit_findings.total);
-					setBreakdown("cnt-audit-breakdown", m.audit_findings);
-					setText("cnt-nc", m.nc.total);
-					setBreakdown("cnt-nc-breakdown", m.nc);
-				})
-				.catch(function (e) {
-					console.error("IMS counts failed:", e);
+			const search = document.getElementById("menuSearch");
+			search.addEventListener("input", function () {
+				const q = this.value.trim().toLowerCase();
+				menu.querySelectorAll("a.menu-item").forEach(function (a) {
+					const match = !q || a.textContent.toLowerCase().indexOf(q) !== -1;
+					a.classList.toggle("hidden-by-search", !match);
 				});
-		}
-
-		function loadCharts(args) {
-			callMethod(
-				"ppecon_ims.www.ims.index.get_dashboard_charts",
-				args || { period: currentPeriod },
-			)
-				.then(function (d) {
-					if (!d) {
-						console.warn("IMS: no chart data");
-						return;
-					}
-					if (typeof Chart === "undefined") {
-						console.error("IMS: Chart.js not loaded");
-						return;
-					}
-					drawCharts(d);
-				})
-				.catch(function (e) {
-					console.error("IMS charts failed:", e);
+				menu.querySelectorAll(".menu-group").forEach(function (g) {
+					const hasVisible = g.querySelector("a.menu-item:not(.hidden-by-search)");
+					g.classList.toggle("hidden-by-search", !!q && !hasVisible);
+					if (q && hasVisible) g.classList.add("open");
 				});
-		}
+				if (!q) {
+					menu.querySelectorAll(".menu-group").forEach(function (g) {
+						g.classList.remove("hidden-by-search");
+					});
+				}
+			});
 
-		/* ==================== DRAW ==================== */
-		function drawCharts(d) {
-			if (d.period) {
-				var r = document.getElementById("pbRange");
-				if (r) r.textContent = d.period.from + "  →  " + d.period.to;
+			const burger = document.getElementById("hamburger");
+			if (burger)
+				burger.addEventListener("click", function () {
+					app.classList.toggle("sidebar-open");
+				});
+
+			menu.querySelectorAll("a.menu-item").forEach(function (a) {
+				const href = a.getAttribute("href") || "";
+				if (href === "/ims") return;
+				a.setAttribute("target", "_blank");
+				a.setAttribute("rel", "noopener");
+			});
+			document.querySelectorAll(".action-grid a.action-btn").forEach(function (a) {
+				a.setAttribute("target", "_blank");
+				a.setAttribute("rel", "noopener");
+			});
+
+			const u = document.getElementById("userName");
+			const w = document.getElementById("welcomeUser");
+			try {
+				const full = decodeURIComponent(
+					(document.cookie.match(/full_name=([^;]+)/) || [])[1] || "",
+				).replace(/\+/g, " ");
+				const name = full || (window.frappe && frappe.session ? frappe.session.user : "");
+				if (u) u.textContent = name;
+				if (w && name) w.textContent = "Welcome, " + name;
+			} catch (err) {}
+
+			/* ==================== HELPERS ==================== */
+			var PALETTE = [
+				"#2196f3",
+				"#2e9e5b",
+				"#f5a623",
+				"#e04f4f",
+				"#8e44ad",
+				"#00897b",
+				"#607d8b",
+				"#c2185b",
+				"#5c6bc0",
+				"#8d6e63",
+			];
+
+			var charts = {};
+			var currentPeriod = "this_year";
+
+			function money(v) {
+				v = v || 0;
+				if (Math.abs(v) >= 1e6) return "SAR " + (v / 1e6).toFixed(1) + "M";
+				if (Math.abs(v) >= 1e3) return "SAR " + (v / 1e3).toFixed(0) + "K";
+				return "SAR " + Math.round(v);
 			}
 
-			/* -------- IMS -------- */
-			destroyChart("chartNcTrend");
-			var ncEl = getCanvas("chartNcTrend");
-			if (ncEl && d.nc_trend && d.nc_trend.length) {
-				charts["chartNcTrend"] = new Chart(ncEl, {
-					type: "line",
+			function callMethod(method, args) {
+				return new Promise(function (resolve, reject) {
+					if (window.frappe && frappe.call) {
+						frappe.call({
+							method: method,
+							args: args || {},
+							callback: function (r) {
+								resolve(r.message);
+							},
+							error: function (e) {
+								reject(e);
+							},
+						});
+					} else {
+						var qs = new URLSearchParams(args || {}).toString();
+						fetch("/api/method/" + method + (qs ? "?" + qs : ""), {
+							headers: { Accept: "application/json" },
+							credentials: "same-origin",
+						})
+							.then(function (res) {
+								return res.json();
+							})
+							.then(function (json) {
+								resolve(json.message);
+							})
+							.catch(reject);
+					}
+				});
+			}
+
+			function setText(id, val) {
+				var el = document.getElementById(id);
+				if (el) el.textContent = val === undefined || val === null ? "0" : val;
+			}
+
+			function setBreakdown(id, data) {
+				var el = document.getElementById(id);
+				if (!el || !data) return;
+				el.innerHTML =
+					'<span class="bd-draft">Draft: ' +
+					(data.draft || 0) +
+					"</span>" +
+					'<span class="bd-submit">Submitted: ' +
+					(data.submitted || 0) +
+					"</span>";
+			}
+
+			function getCanvas(id) {
+				var el = document.getElementById(id);
+				if (el && el.tagName === "CANVAS") return el;
+				var ph = document.querySelector('[data-canvas-holder="' + id + '"]');
+				if (!ph) return null;
+				var c = document.createElement("canvas");
+				c.id = id;
+				c.height = ph.getAttribute("data-height") || 200;
+				ph.parentNode.replaceChild(c, ph);
+				return c;
+			}
+
+			function noData(canvasId) {
+				var c = document.getElementById(canvasId);
+				if (!c || c.tagName !== "CANVAS") return;
+				var h = c.getAttribute("height") || 200;
+				var p = document.createElement("div");
+				p.setAttribute("data-canvas-holder", canvasId);
+				p.setAttribute("data-height", h);
+				p.className = "chart-loading";
+				p.textContent = "No data to display";
+				c.parentNode.replaceChild(p, c);
+			}
+
+			function destroyChart(id) {
+				if (charts[id]) {
+					try {
+						charts[id].destroy();
+					} catch (e) {}
+					delete charts[id];
+				}
+			}
+
+			function simpleChart(id, rows, type, color, horizontal, valueKey, isMoney) {
+				destroyChart(id);
+				var el = getCanvas(id);
+				if (!el) return;
+				if (!rows || !rows.length) {
+					noData(id);
+					return;
+				}
+				var isPie = type === "doughnut" || type === "pie";
+				var vk = valueKey || "count";
+				charts[id] = new Chart(el, {
+					type: type,
 					data: {
-						labels: d.nc_trend.map(function (x) {
-							return x.month;
+						labels: rows.map(function (x) {
+							return x.label || x.stage || "Not Set";
 						}),
 						datasets: [
 							{
-								label: "Non Conformances",
-								data: d.nc_trend.map(function (x) {
-									return x.count;
+								label: isMoney ? "Value" : "Count",
+								data: rows.map(function (x) {
+									return x[vk];
 								}),
-								borderColor: "#e04f4f",
-								backgroundColor: "rgba(224,79,79,0.12)",
-								tension: 0.3,
-								fill: true,
+								backgroundColor: isPie ? PALETTE : color || "#2196f3",
+								borderRadius: isPie ? 0 : 4,
+								borderWidth: isPie ? 2 : 0,
+								borderColor: "#fff",
 							},
 						],
 					},
 					options: {
-						plugins: { legend: { display: false } },
-						scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
-					},
-				});
-			} else {
-				noData("chartNcTrend");
-			}
-
-			simpleChart("chartRiskStatus", d.risk_by_status, "doughnut");
-			simpleChart("chartDocsCategory", d.docs_by_category, "bar", "#1565c0");
-			simpleChart("chartEmpDept", d.employees_by_department, "bar", "#2e9e5b", true);
-
-			/* -------- CRM -------- */
-			funnelChart("chartFunnel", d.sales_funnel, [
-				"#2196f3",
-				"#5c6bc0",
-				"#f5a623",
-				"#2e9e5b",
-			]);
-			simpleChart("chartLeadStatus", d.lead_by_status, "doughnut");
-			simpleChart("chartLeadSource", d.lead_by_source, "bar", "#8e44ad", true);
-			simpleChart("chartOppStatus", d.opportunity_by_status, "doughnut");
-			simpleChart("chartOppType", d.opportunity_by_type, "bar", "#00897b", true);
-			simpleChart("chartQuoteStatus", d.quotation_by_status, "doughnut");
-
-			/* -------- ESTIMATION TURNAROUND -------- */
-			(function () {
-				var es = d.estimation_summary || {};
-				var onTime = es.on_time || 0;
-				var delayed = es.delayed || 0;
-				var total = onTime + delayed;
-
-				setText("estOnTime", onTime);
-				setText("estDelayed", delayed);
-				var pctEl = document.getElementById("estOnTimePct");
-				if (pctEl) pctEl.textContent = (es.on_time_pct || 0) + "%";
-				var delayEl = document.getElementById("estAvgDelay");
-				if (delayEl) delayEl.textContent = es.avg_delay_days || 0;
-
-				var line = document.getElementById("estSummaryLine");
-				if (line) {
-					line.textContent = total
-						? total +
-							" quotation(s) linked to opportunities in this period" +
-							(es.no_reference
-								? " · " +
-									es.no_reference +
-									" quotation(s) without a linked opportunity"
-								: "")
-						: "No quotations linked to opportunities in this period.";
-				}
-
-				var barWrap = document.getElementById("estBar");
-				if (barWrap) {
-					barWrap.innerHTML = "";
-					if (total > 0) {
-						var onPct = (onTime / total) * 100;
-						var s1 = document.createElement("div");
-						s1.className = "seg-ontime";
-						s1.style.width = onPct + "%";
-						var s2 = document.createElement("div");
-						s2.className = "seg-delayed";
-						s2.style.width = 100 - onPct + "%";
-						barWrap.appendChild(s1);
-						barWrap.appendChild(s2);
-					}
-				}
-
-				destroyChart("chartEstimation");
-				var ctx = getCanvas("chartEstimation");
-				if (ctx) {
-					var yearly = es.yearly || [];
-					var hasData = yearly.some(function (y) {
-						return y.on_time || y.delayed;
-					});
-					if (!hasData) {
-						noData("chartEstimation");
-					} else {
-						charts["chartEstimation"] = new Chart(ctx, {
-							type: "bar",
-							data: {
-								labels: yearly.map(function (y) {
-									return String(y.year);
-								}),
-								datasets: [
-									{
-										label: "On Time",
-										data: yearly.map(function (y) {
-											return y.on_time;
-										}),
-										backgroundColor: "#2e9e5b",
-										borderRadius: 4,
-										maxBarThickness: 70,
+						indexAxis: horizontal ? "y" : "x",
+						plugins: {
+							legend: { display: isPie, position: "bottom" },
+							tooltip: {
+								callbacks: {
+									label: function (c) {
+										var v = isPie
+											? c.parsed
+											: horizontal
+												? c.parsed.x
+												: c.parsed.y;
+										return isMoney ? money(v) : v;
 									},
-									{
-										label: "Delayed",
-										data: yearly.map(function (y) {
-											return y.delayed;
-										}),
-										backgroundColor: "#d0433f",
-										borderRadius: 4,
-										maxBarThickness: 70,
-									},
-								],
+								},
 							},
-							options: {
-								plugins: {
-									legend: { position: "bottom", labels: { boxWidth: 10 } },
-									tooltip: {
-										callbacks: {
-											afterBody: function (items) {
-												var i = items[0].dataIndex;
-												var ot = yearly[i].on_time,
-													dl = yearly[i].delayed;
-												var tot = ot + dl;
-												if (!tot) return "";
-												return (
-													"Total: " +
-													tot +
-													"  ·  On-time rate: " +
-													Math.round((ot / tot) * 100) +
-													"%"
-												);
+						},
+						scales: isPie
+							? {}
+							: horizontal
+								? {
+										x: {
+											beginAtZero: true,
+											ticks: {
+												callback: function (v) {
+													return isMoney ? money(v) : v;
+												},
+											},
+										},
+									}
+								: {
+										y: {
+											beginAtZero: true,
+											ticks: {
+												callback: function (v) {
+													return isMoney ? money(v) : v;
+												},
 											},
 										},
 									},
-								},
-								scales: {
-									x: { stacked: true },
-									y: {
-										stacked: true,
-										beginAtZero: true,
-										ticks: { precision: 0 },
+					},
+				});
+			}
+
+			function funnelChart(id, rows, colors) {
+				destroyChart(id);
+				var el = getCanvas(id);
+				if (!el) return;
+				if (!rows || !rows.length) {
+					noData(id);
+					return;
+				}
+				charts[id] = new Chart(el, {
+					type: "bar",
+					data: {
+						labels: rows.map(function (x) {
+							return x.stage;
+						}),
+						datasets: [
+							{
+								label: "Count",
+								data: rows.map(function (x) {
+									return x.count;
+								}),
+								backgroundColor: colors,
+								borderRadius: 4,
+							},
+						],
+					},
+					options: {
+						indexAxis: "y",
+						plugins: {
+							legend: { display: false },
+							tooltip: {
+								callbacks: {
+									afterLabel: function (c) {
+										var first = c.dataset.data[0] || 1;
+										return (
+											"Conversion from stage 1: " +
+											((c.parsed.x / first) * 100).toFixed(1) +
+											"%"
+										);
 									},
 								},
 							},
+						},
+						scales: { x: { beginAtZero: true, ticks: { precision: 0 } } },
+					},
+				});
+			}
+
+			function valueTrendChart(id, rows, barColor, lineLabel) {
+				destroyChart(id);
+				var el = getCanvas(id);
+				if (!el) return;
+				if (!rows || !rows.length) {
+					noData(id);
+					return;
+				}
+				charts[id] = new Chart(el, {
+					data: {
+						labels: rows.map(function (x) {
+							return x.month;
+						}),
+						datasets: [
+							{
+								type: "bar",
+								label: "Value",
+								data: rows.map(function (x) {
+									return x.value;
+								}),
+								backgroundColor: barColor,
+								borderRadius: 4,
+								yAxisID: "y",
+							},
+							{
+								type: "line",
+								label: lineLabel,
+								data: rows.map(function (x) {
+									return x.count;
+								}),
+								borderColor: "#f5a623",
+								borderWidth: 2,
+								pointRadius: 3,
+								tension: 0.3,
+								yAxisID: "y1",
+							},
+						],
+					},
+					options: {
+						plugins: {
+							legend: { position: "top", labels: { boxWidth: 10 } },
+							tooltip: {
+								callbacks: {
+									label: function (c) {
+										return (
+											c.dataset.label +
+											": " +
+											(c.datasetIndex === 0 ? money(c.parsed.y) : c.parsed.y)
+										);
+									},
+								},
+							},
+						},
+						scales: {
+							y: {
+								position: "left",
+								beginAtZero:bench setup requirements --node
+	bench build
+	bench restart true,
+								ticks: {
+									callback: function (v) {
+										return money(v);
+									},
+								},
+							},
+							y1: {
+								position: "right",
+								beginAtZero: true,
+								grid: { drawOnChartArea: false },
+								ticks: { precision: 0 },
+							},
+						},
+					},
+				});
+			}
+
+			/* ==================== LOADERS ==================== */
+			function loadCounts() {
+				callMethod("ppecon_ims.www.ims.index.get_dashboard_counts")
+					.then(function (m) {
+						if (!m) return;
+						setText("cnt-risks", m.risks.total);
+						setBreakdown("cnt-risks-breakdown", m.risks);
+						setText("cnt-context", m.contexts.total);
+						setBreakdown("cnt-context-breakdown", m.contexts);
+						setText("cnt-audit", m.audit_findings.total);
+						setBreakdown("cnt-audit-breakdown", m.audit_findings);
+						setText("cnt-nc", m.nc.total);
+						setBreakdown("cnt-nc-breakdown", m.nc);
+					})
+					.catch(function (e) {
+						console.error("IMS counts failed:", e);
+					});
+			}
+
+			function loadCharts(args) {
+				callMethod(
+					"ppecon_ims.www.ims.index.get_dashboard_charts",
+					args || { period: currentPeriod },
+				)
+					.then(function (d) {
+						if (!d) {
+							console.warn("IMS: no chart data");
+							return;
+						}
+						if (typeof Chart === "undefined") {
+							console.error("IMS: Chart.js not loaded");
+							return;
+						}
+						drawCharts(d);
+					})
+					.catch(function (e) {
+						console.error("IMS charts failed:", e);
+					});
+			}
+
+			/* ==================== DRAW ==================== */
+			function drawCharts(d) {
+				if (d.period) {
+					var r = document.getElementById("pbRange");
+					if (r) r.textContent = d.period.from + "  →  " + d.period.to;
+				}
+
+				/* -------- IMS -------- */
+				destroyChart("chartNcTrend");
+				var ncEl = getCanvas("chartNcTrend");
+				if (ncEl && d.nc_trend && d.nc_trend.length) {
+					charts["chartNcTrend"] = new Chart(ncEl, {
+						type: "line",
+						data: {
+							labels: d.nc_trend.map(function (x) {
+								return x.month;
+							}),
+							datasets: [
+								{
+									label: "Non Conformances",
+									data: d.nc_trend.map(function (x) {
+										return x.count;
+									}),
+									borderColor: "#e04f4f",
+									backgroundColor: "rgba(224,79,79,0.12)",
+									tension: 0.3,
+									fill: true,
+								},
+							],
+						},
+						options: {
+							plugins: { legend: { display: false } },
+							scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+						},
+					});
+				} else {
+					noData("chartNcTrend");
+				}
+
+				simpleChart("chartRiskStatus", d.risk_by_status, "doughnut");
+				simpleChart("chartDocsCategory", d.docs_by_category, "bar", "#1565c0");
+				simpleChart("chartEmpDept", d.employees_by_department, "bar", "#2e9e5b", true);
+
+				/* -------- CRM -------- */
+				funnelChart("chartFunnel", d.sales_funnel, [
+					"#2196f3",
+					"#5c6bc0",
+					"#f5a623",
+					"#2e9e5b",
+				]);
+				simpleChart("chartLeadStatus", d.lead_by_status, "doughnut");
+				simpleChart("chartLeadSource", d.lead_by_source, "bar", "#8e44ad", true);
+				simpleChart("chartOppStatus", d.opportunity_by_status, "doughnut");
+				simpleChart("chartOppType", d.opportunity_by_type, "bar", "#00897b", true);
+				simpleChart("chartQuoteStatus", d.quotation_by_status, "doughnut");
+
+				/* -------- ESTIMATION TURNAROUND -------- */
+				(function () {
+					var es = d.estimation_summary || {};
+					var onTime = es.on_time || 0;
+					var delayed = es.delayed || 0;
+					var total = onTime + delayed;
+
+					setText("estOnTime", onTime);
+					setText("estDelayed", delayed);
+					var pctEl = document.getElementById("estOnTimePct");
+					if (pctEl) pctEl.textContent = (es.on_time_pct || 0) + "%";
+					var delayEl = document.getElementById("estAvgDelay");
+					if (delayEl) delayEl.textContent = es.avg_delay_days || 0;
+
+					var line = document.getElementById("estSummaryLine");
+					if (line) {
+						line.textContent = total
+							? total +
+								" quotation(s) linked to opportunities in this period" +
+								(es.no_reference
+									? " · " +
+										es.no_reference +
+										" quotation(s) without a linked opportunity"
+									: "")
+							: "No quotations linked to opportunities in this period.";
+					}
+
+					var barWrap = document.getElementById("estBar");
+					if (barWrap) {
+						barWrap.innerHTML = "";
+						if (total > 0) {
+							var onPct = (onTime / total) * 100;
+							var s1 = document.createElement("div");
+							s1.className = "seg-ontime";
+							s1.style.width = onPct + "%";
+							var s2 = document.createElement("div");
+							s2.className = "seg-delayed";
+							s2.style.width = 100 - onPct + "%";
+							barWrap.appendChild(s1);
+							barWrap.appendChild(s2);
+						}
+					}
+
+					destroyChart("chartEstimation");
+					var ctx = getCanvas("chartEstimation");
+					if (ctx) {
+						var yearly = es.yearly || [];
+						var hasData = yearly.some(function (y) {
+							return y.on_time || y.delayed;
 						});
+						if (!hasData) {
+							noData("chartEstimation");
+						} else {
+							charts["chartEstimation"] = new Chart(ctx, {
+								type: "bar",
+								data: {
+									labels: yearly.map(function (y) {
+										return String(y.year);
+									}),
+									datasets: [
+										{
+											label: "On Time",
+											data: yearly.map(function (y) {
+												return y.on_time;
+											}),
+											backgroundColor: "#2e9e5b",
+											borderRadius: 4,
+											maxBarThickness: 70,
+										},
+										{
+											label: "Delayed",
+											data: yearly.map(function (y) {
+												return y.delayed;
+											}),
+											backgroundColor: "#d0433f",
+											borderRadius: 4,
+											maxBarThickness: 70,
+										},
+									],
+								},
+								options: {
+									plugins: {
+										legend: { position: "bottom", labels: { boxWidth: 10 } },
+										tooltip: {
+											callbacks: {
+												afterBody: function (items) {
+													var i = items[0].dataIndex;
+													var ot = yearly[i].on_time,
+														dl = yearly[i].delayed;
+													var tot = ot + dl;
+													if (!tot) return "";
+													return (
+														"Total: " +
+														tot +
+														"  ·  On-time rate: " +
+														Math.round((ot / tot) * 100) +
+														"%"
+													);
+												},
+											},
+										},
+									},
+									scales: {
+										x: { stacked: true },
+										y: {
+											stacked: true,
+											beginAtZero: true,
+											ticks: { precision: 0 },
+										},
+									},
+								},
+							});
+						}
 					}
-				}
-			})();
+				})();
 
-			/* -------- PROCUREMENT -------- */
-			funnelChart("chartPrcFunnel", d.procurement_funnel, [
-				"#2196f3",
-				"#5c6bc0",
-				"#8e44ad",
-				"#f5a623",
-				"#2e9e5b",
-			]);
-			simpleChart("chartMrStatus", d.mr_by_status, "doughnut");
-			simpleChart("chartMrType", d.mr_by_type, "bar", "#5c6bc0");
-			simpleChart("chartPoStatus", d.po_by_status, "doughnut");
-			simpleChart("chartSqSupplier", d.sq_by_supplier, "bar", "#00897b", true);
-			simpleChart(
-				"chartTopSuppliers",
-				d.top_suppliers_by_po,
-				"bar",
-				"#b8860b",
-				true,
-				"value",
-				true,
-			);
-			valueTrendChart("chartPoTrend", d.po_value_trend, "#2e9e5b", "No. of POs");
+				/* -------- PROCUREMENT -------- */
+				funnelChart("chartPrcFunnel", d.procurement_funnel, [
+					"#2196f3",
+					"#5c6bc0",
+					"#8e44ad",
+					"#f5a623",
+					"#2e9e5b",
+				]);
+				simpleChart("chartMrStatus", d.mr_by_status, "doughnut");
+				simpleChart("chartMrType", d.mr_by_type, "bar", "#5c6bc0");
+				simpleChart("chartPoStatus", d.po_by_status, "doughnut");
+				simpleChart("chartSqSupplier", d.sq_by_supplier, "bar", "#00897b", true);
+				simpleChart(
+					"chartTopSuppliers",
+					d.top_suppliers_by_po,
+					"bar",
+					"#b8860b",
+					true,
+					"value",
+					true,
+				);
+				valueTrendChart("chartPoTrend", d.po_value_trend, "#2e9e5b", "No. of POs");
 
-			/* -------- TILES -------- */
-			if (d.summary) {
-				var s = d.summary;
-				[
-					["tileEmployees", s.active_employees],
-					["tileDepartments", s.departments],
-					["tileDocuments", s.documents],
-					["tileRisks", s.risks],
-					["tileNc", s.nc],
-					["tileSuppliers", s.suppliers],
-					["tileTasks", s.open_tasks],
-					["tileProjects", s.projects],
-				].forEach(function (p) {
-					setText(p[0], p[1]);
-				});
-			}
-
-			if (d.crm_summary) {
-				var c = d.crm_summary;
-				[
-					["crmOpenLeads", c.open_leads],
-					["crmOpenOpps", c.open_opportunities],
-					["crmWon", c.won],
-					["crmLost", c.lost],
-				].forEach(function (p) {
-					setText(p[0], p[1]);
-				});
-				var wr = document.getElementById("crmWinRate");
-				if (wr) wr.textContent = (c.win_rate || 0) + "%";
-				var qv = document.getElementById("crmQuoteValue");
-				if (qv) qv.textContent = money(c.open_quote_value);
-			}
-
-			if (d.procurement_summary) {
-				var p = d.procurement_summary;
-				[
-					["prcOpenMR", p.open_mr],
-					["prcPendingPO", p.pending_po],
-					["prcDraftPO", p.draft_po],
-					["prcSuppliers", p.active_suppliers],
-					["prcPOCount", p.po_count],
-				].forEach(function (x) {
-					setText(x[0], x[1]);
-				});
-				var m1 = document.getElementById("prcPOValue");
-				if (m1) m1.textContent = money(p.po_value);
-				var m2 = document.getElementById("prcAvgPO");
-				if (m2) m2.textContent = money(p.avg_po);
-				var m3 = document.getElementById("prcPayable");
-				if (m3) m3.textContent = money(p.outstanding_payable);
-			}
-		}
-
-		/* ==================== PERIOD FILTER ==================== */
-		function setupPeriodFilter() {
-			var bar = document.getElementById("periodBar");
-			if (!bar) return;
-
-			bar.querySelectorAll(".pb-chip").forEach(function (chip) {
-				chip.addEventListener("click", function () {
-					bar.querySelectorAll(".pb-chip").forEach(function (c) {
-						c.classList.remove("active");
+				/* -------- TILES -------- */
+				if (d.summary) {
+					var s = d.summary;
+					[
+						["tileEmployees", s.active_employees],
+						["tileDepartments", s.departments],
+						["tileDocuments", s.documents],
+						["tileRisks", s.risks],
+						["tileNc", s.nc],
+						["tileSuppliers", s.suppliers],
+						["tileTasks", s.open_tasks],
+						["tileProjects", s.projects],
+					].forEach(function (p) {
+						setText(p[0], p[1]);
 					});
-					chip.classList.add("active");
-					currentPeriod = chip.getAttribute("data-period");
-					document.getElementById("pbFrom").value = "";
-					document.getElementById("pbTo").value = "";
-					loadCharts({ period: currentPeriod });
-				});
-			});
+				}
 
-			var applyBtn = document.getElementById("pbApply");
-			if (applyBtn) {
-				applyBtn.addEventListener("click", function () {
-					var f = document.getElementById("pbFrom").value;
-					var t = document.getElementById("pbTo").value;
-					if (!f || !t) {
-						alert("Please pick both From and To dates.");
-						return;
+				if (d.crm_summary) {
+					var c = d.crm_summary;
+					[
+						["crmOpenLeads", c.open_leads],
+						["crmOpenOpps", c.open_opportunities],
+						["crmWon", c.won],
+						["crmLost", c.lost],
+					].forEach(function (p) {
+						setText(p[0], p[1]);
+					});
+					var wr = document.getElementById("crmWinRate");
+					if (wr) wr.textContent = (c.win_rate || 0) + "%";
+					var qv = document.getElementById("crmQuoteValue");
+					if (qv) qv.textContent = money(c.open_quote_value);
+				}
+
+				if (d.procurement_summary) {
+					var p = d.procurement_summary;
+					[
+						["prcOpenMR", p.open_mr],
+						["prcPendingPO", p.pending_po],
+						["prcDraftPO", p.draft_po],
+						["prcSuppliers", p.active_suppliers],
+						["prcPOCount", p.po_count],
+					].forEach(function (x) {
+						setText(x[0], x[1]);
+					});
+					var m1 = document.getElementById("prcPOValue");
+					if (m1) m1.textContent = money(p.po_value);
+					var m2 = document.getElementById("prcAvgPO");
+					if (m2) m2.textContent = money(p.avg_po);
+					var m3 = document.getElementById("prcPayable");
+					if (m3) m3.textContent = money(p.outstanding_payable);
+				}
+			}
+
+			/* ==================== PERIOD FILTER ==================== */
+			function setupPeriodFilter() {
+				var bar = document.getElementById("periodBar");
+				if (!bar) return;
+
+				bar.querySelectorAll(".pb-chip").forEach(function (chip) {
+					chip.addEventListener("click", function () {
+						bar.querySelectorAll(".pb-chip").forEach(function (c) {
+							c.classList.remove("active");
+						});
+						chip.classList.add("active");
+						currentPeriod = chip.getAttribute("data-period");
+						document.getElementById("pbFrom").value = "";
+						document.getElementById("pbTo").value = "";
+						loadCharts({ period: currentPeriod });
+					});
+				});
+
+				var applyBtn = document.getElementById("pbApply");
+				if (applyBtn) {
+					applyBtn.addEventListener("click", function () {
+						var f = document.getElementById("pbFrom").value;
+						var t = document.getElementById("pbTo").value;
+						if (!f || !t) {
+							alert("Please pick both From and To dates.");
+							return;
+						}
+						bar.querySelectorAll(".pb-chip").forEach(function (c) {
+							c.classList.remove("active");
+						});
+						loadCharts({ from_date: f, to_date: t });
+					});
+				}
+			}
+
+			function start() {
+				setupPeriodFilter();
+				loadCounts();
+				loadCharts({ period: currentPeriod });
+			}
+
+			if (window.frappe && frappe.ready) {
+				frappe.ready(start);
+			} else {
+				var tries = 0;
+				var timer = setInterval(function () {
+					tries++;
+					if (window.frappe && frappe.ready) {
+						clearInterval(timer);
+						frappe.ready(start);
+					} else if (tries > 20) {
+						clearInterval(timer);
+						start();
 					}
-					bar.querySelectorAll(".pb-chip").forEach(function (c) {
-						c.classList.remove("active");
-					});
-					loadCharts({ from_date: f, to_date: t });
-				});
+				}, 150);
 			}
-		}
-
-		function start() {
-			setupPeriodFilter();
-			loadCounts();
-			loadCharts({ period: currentPeriod });
-		}
-
-		if (window.frappe && frappe.ready) {
-			frappe.ready(start);
-		} else {
-			var tries = 0;
-			var timer = setInterval(function () {
-				tries++;
-				if (window.frappe && frappe.ready) {
-					clearInterval(timer);
-					frappe.ready(start);
-				} else if (tries > 20) {
-					clearInterval(timer);
-					start();
-				}
-			}, 150);
-		}
-	})();
+		})();
 </script>
 
 <!-- =========================================================================
