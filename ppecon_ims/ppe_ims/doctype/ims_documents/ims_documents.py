@@ -4,20 +4,27 @@
 import frappe
 from frappe.model.document import Document
 
+# Fieldname of the Table MultiSelect on IMS Documents.
+# NOTE: do NOT name it "assigned_to" - Frappe's sidebar "Assigned To" tries to
+# write to a field with that name and fails with "Unknown column 'assigned_to'".
+ASSIGNEES_FIELD = "document_assignees"
+
 
 class IMSDocuments(Document):
     pass
 
 
-def notify_ims_document_assignees(doc, method):
-    if not doc.assigned_to:
-        return
-
+def _get_recipients(doc):
+    """Return list of user ids selected in the assignees table."""
     recipients = []
-    for row in doc.assigned_to:
+    for row in doc.get(ASSIGNEES_FIELD) or []:
         if row.user:
             recipients.append(row.user)
+    return recipients
 
+
+def notify_ims_document_assignees(doc, method):
+    recipients = _get_recipients(doc)
     if not recipients:
         return
 
@@ -25,14 +32,7 @@ def notify_ims_document_assignees(doc, method):
 
 
 def notify_ims_document_assignees_after_submit(doc, method):
-    if not doc.assigned_to:
-        return
-
-    recipients = []
-    for row in doc.assigned_to:
-        if row.user:
-            recipients.append(row.user)
-
+    recipients = _get_recipients(doc)
     if not recipients:
         return
 
@@ -48,7 +48,7 @@ def send_ims_document_mail(doc, recipients):
     current_user = frappe.session.user
     created_by = frappe.db.get_value("User", current_user, "full_name") or current_user
 
-    # Fields to show — sirf tab dikhega jab value ho
+    # Fields to show - sirf tab dikhega jab value ho
     fields_to_show = [
         ("Document Name", doc.document_name),
         ("Document Category", doc.document_category),

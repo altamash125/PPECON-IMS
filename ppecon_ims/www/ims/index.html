@@ -1,7 +1,7 @@
 <!-- =========================================================================
-  PPECON IMS Portal — index.html  (v4.1)
+  PPECON IMS Portal — index.html  (v4.2)
   Location : ppecon_ims/www/ims/index.html
-  Backend  : ppecon_ims/www/ims/index.py  (v4.1)
+  Backend  : ppecon_ims/www/ims/index.py  (v4.2)
 ========================================================================== -->
 
 <link rel="stylesheet" href="/assets/ppecon_ims/css/ims_portal.css" />
@@ -33,7 +33,6 @@
 	})();
 </script>
 
-<!-- ==================== STYLES ==================== -->
 <style>
 	.period-bar {
 		display: flex;
@@ -283,6 +282,9 @@
 		padding: 14px;
 		background: #fbfcfd;
 	}
+	.qo-col.full {
+		grid-column: 1 / -1;
+	}
 	.qo-section-title {
 		font-size: 13px;
 		font-weight: 700;
@@ -292,7 +294,6 @@
 	.qo-chart {
 		margin-top: 12px;
 	}
-	/* FIX: give fixed height to canvas inside qo-chart so Chart.js fills it */
 	.qo-chart canvas {
 		height: 260px !important;
 		width: 100% !important;
@@ -335,6 +336,47 @@
 	.badge-bad {
 		color: #c2402a;
 		font-weight: 700;
+	}
+
+	/* Training YTD banner */
+	.training-ytd-banner {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		padding: 8px 12px;
+		margin-bottom: 10px;
+		border-radius: 6px;
+		background: #f4f8fc;
+		border: 1px solid #e0e6ee;
+		font-size: 12px;
+		color: #44536b;
+		flex-wrap: wrap;
+	}
+	.training-ytd-banner .ytd-num {
+		font-size: 18px;
+		font-weight: 800;
+		color: #1f6fd0;
+	}
+	.training-ytd-banner .ytd-target {
+		font-size: 12px;
+		color: #8d99a6;
+	}
+	.training-ytd-banner .ytd-pill {
+		margin-left: auto;
+		padding: 3px 10px;
+		border-radius: 20px;
+		font-weight: 700;
+		font-size: 11px;
+		color: #fff;
+	}
+	.training-ytd-banner .ytd-pill.ok {
+		background: #2e9e5b;
+	}
+	.training-ytd-banner .ytd-pill.warn {
+		background: #e0a020;
+	}
+	.training-ytd-banner .ytd-pill.bad {
+		background: #d0433f;
 	}
 
 	/* ---- HSE / Electricity ---- */
@@ -499,7 +541,6 @@
 </style>
 
 <div class="ims-app" id="imsApp">
-	<!-- ==================== SIDEBAR ==================== -->
 	<aside class="ims-sidebar">
 		<div class="ims-logo">
 			<div class="logo-wrap">
@@ -887,7 +928,6 @@
 		</div>
 	</aside>
 
-	<!-- ==================== MAIN ==================== -->
 	<main class="ims-main">
 		<header class="ims-topbar">
 			<div class="topbar-left">
@@ -907,7 +947,6 @@
 			<h1>Welcome to PPECON IMS Portal</h1>
 			<p class="subtitle">Integrated Management System — ISO 9001 : 14001 : 45001</p>
 
-			<!-- ---------- PERIOD FILTER ---------- -->
 			<div class="period-bar" id="periodBar">
 				<span class="pb-label">Period</span>
 				<button class="pb-chip" data-period="this_month">This Month</button>
@@ -925,7 +964,6 @@
 				</div>
 			</div>
 
-			<!-- ---------- TOP CARDS ---------- -->
 			<div class="dashboard-cards" id="dashboardCards">
 				<div class="card card-blue">
 					<div class="card-label">Open Risks</div>
@@ -962,7 +1000,6 @@
 				</div>
 			</div>
 
-			<!-- ---------- SUMMARY TILES ---------- -->
 			<div class="summary-section">
 				<h3>Summary</h3>
 				<div class="summary-grid">
@@ -1001,7 +1038,6 @@
 				</div>
 			</div>
 
-			<!-- ---------- CRM TILES ---------- -->
 			<div class="summary-section">
 				<h3>Sales &amp; Marketing</h3>
 				<div class="summary-grid">
@@ -1032,7 +1068,6 @@
 				</div>
 			</div>
 
-			<!-- ---------- PROCUREMENT TILES ---------- -->
 			<div class="summary-section">
 				<h3>Procurement</h3>
 				<div class="summary-grid">
@@ -1071,7 +1106,6 @@
 				</div>
 			</div>
 
-			<!-- ---------- QUICK ACTIONS ---------- -->
 			<div class="quick-actions">
 				<h3>Quick Actions</h3>
 				<div class="action-grid">
@@ -1084,7 +1118,7 @@
 				</div>
 			</div>
 
-			<!-- ---------- INSIGHTS: IMS ---------- -->
+			<!-- ============ IMS OBJECTIVES ============ -->
 			<div class="insights-section">
 				<h3>Insights — IMS</h3>
 				<div class="insights-grid">
@@ -1105,11 +1139,40 @@
 						<canvas id="chartEmpDept" height="200"></canvas>
 					</div>
 
-					<!-- ---- IMS Quality Objectives ---- -->
+					<!-- ---- IMS Quality Objectives (NEW LAYOUT) ---- -->
 					<div class="insight-card qo-card">
 						<div class="insight-title">IMS Quality Objectives</div>
+
+						<!-- ROW 1: Training + Turnover side by side -->
 						<div class="qo-grid">
 							<div class="qo-col">
+								<div class="qo-section-title">
+									Employee Training — Yearly Target (58) vs Quarterly Achieved
+								</div>
+								<div id="trainingYtdBanner" class="training-ytd-banner"></div>
+								<div id="tblTrainingStats" class="stats-table-wrap"></div>
+								<div class="qo-chart">
+									<canvas id="chartTrainingStats"></canvas>
+								</div>
+							</div>
+							<div class="qo-col">
+								<div class="qo-section-title">
+									Employee Turnover — Quarterly Headcount &amp; Rate
+									<span
+										id="turnoverYearLabel"
+										style="font-weight: 400; color: #8d99a6"
+									></span>
+								</div>
+								<div id="tblTurnover" class="stats-table-wrap"></div>
+								<div class="qo-chart">
+									<canvas id="chartTurnover"></canvas>
+								</div>
+							</div>
+						</div>
+
+						<!-- ROW 2: Supplier Compliance under -->
+						<div class="qo-grid" style="grid-template-columns: 1fr">
+							<div class="qo-col full">
 								<div class="qo-section-title">
 									Supplier Compliance Stats
 									<span
@@ -1122,21 +1185,11 @@
 									<canvas id="chartSupplierCompliance"></canvas>
 								</div>
 							</div>
-							<div class="qo-col">
-								<div class="qo-section-title">
-									Training Objectives Stats — Last 4 Quarters
-								</div>
-								<div id="tblTrainingStats" class="stats-table-wrap"></div>
-								<div class="qo-chart">
-									<canvas id="chartTrainingStats"></canvas>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<!-- ---------- INSIGHTS: ESTIMATION (COMPACT) ---------- -->
 			<div class="insights-section">
 				<h3>Insights — Estimation</h3>
 				<div class="insights-grid">
@@ -1177,7 +1230,6 @@
 				</div>
 			</div>
 
-			<!-- ---------- INSIGHTS: HSE DASHBOARD ---------- -->
 			<div class="insights-section">
 				<h3>Insights — HSE Dashboard</h3>
 
@@ -1220,7 +1272,6 @@
 				</div>
 			</div>
 
-			<!-- ---------- INSIGHTS: SALES & MARKETING ---------- -->
 			<div class="insights-section">
 				<h3>Insights — Sales &amp; Marketing</h3>
 				<div class="insights-grid">
@@ -1251,7 +1302,6 @@
 				</div>
 			</div>
 
-			<!-- ---------- INSIGHTS: PROCUREMENT ---------- -->
 			<div class="insights-section">
 				<h3>Insights — Procurement</h3>
 				<div class="insights-grid">
@@ -1369,7 +1419,6 @@
 		const app = document.getElementById("imsApp");
 		const menu = document.getElementById("imsMenu");
 
-		/* ==================== SIDEBAR ==================== */
 		menu.querySelectorAll(".group-header").forEach(function (h) {
 			h.addEventListener("click", function (e) {
 				e.stopPropagation();
@@ -1451,7 +1500,6 @@
 			if (w && name) w.textContent = "Welcome, " + name;
 		} catch (err) {}
 
-		/* ==================== HELPERS ==================== */
 		var PALETTE = [
 			"#2196f3",
 			"#2e9e5b",
@@ -1749,7 +1797,6 @@
 			});
 		}
 
-		/* ==================== LOADERS ==================== */
 		function loadCounts() {
 			callMethod("ppecon_ims.www.ims.index.get_dashboard_counts")
 				.then(function (m) {
@@ -1789,14 +1836,12 @@
 				});
 		}
 
-		/* ==================== DRAW ==================== */
 		function drawCharts(d) {
 			if (d.period) {
 				var r = document.getElementById("pbRange");
 				if (r) r.textContent = d.period.from + "  →  " + d.period.to;
 			}
 
-			/* -------- IMS -------- */
 			destroyChart("chartNcTrend");
 			var ncEl = getCanvas("chartNcTrend");
 			if (ncEl && d.nc_trend && d.nc_trend.length) {
@@ -1832,7 +1877,6 @@
 			simpleChart("chartDocsCategory", d.docs_by_category, "bar", "#1565c0");
 			simpleChart("chartEmpDept", d.employees_by_department, "bar", "#2e9e5b", true);
 
-			/* -------- CRM -------- */
 			funnelChart("chartFunnel", d.sales_funnel, [
 				"#2196f3",
 				"#5c6bc0",
@@ -1845,7 +1889,6 @@
 			simpleChart("chartOppType", d.opportunity_by_type, "bar", "#00897b", true);
 			simpleChart("chartQuoteStatus", d.quotation_by_status, "doughnut");
 
-			/* -------- ESTIMATION TURNAROUND -------- */
 			(function () {
 				var es = d.estimation_summary || {};
 				var onTime = es.on_time || 0;
@@ -1961,7 +2004,6 @@
 				}
 			})();
 
-			/* -------- PROCUREMENT -------- */
 			funnelChart("chartPrcFunnel", d.procurement_funnel, [
 				"#2196f3",
 				"#5c6bc0",
@@ -1984,7 +2026,6 @@
 			);
 			valueTrendChart("chartPoTrend", d.po_value_trend, "#2e9e5b", "No. of POs");
 
-			/* -------- TILES -------- */
 			if (d.summary) {
 				var s = d.summary;
 				[
@@ -2037,7 +2078,6 @@
 			}
 		}
 
-		/* ==================== PERIOD FILTER ==================== */
 		function setupPeriodFilter() {
 			var bar = document.getElementById("periodBar");
 			if (!bar) return;
@@ -2188,8 +2228,7 @@
 </script>
 
 <!-- =========================================================================
-     SCRIPT 3 of 3 — Quality Objectives + HSE Dashboard + Electricity
-     (these are NOT period-filtered; they load once on page load)
+     SCRIPT 3 of 3 — Quality Objectives (Training, Turnover, Supplier) + HSE
 ========================================================================== -->
 <script>
 	(function () {
@@ -2375,70 +2414,59 @@
 			});
 		}
 
-		/* ================= TRAINING ================= */
+		/* ================= TRAINING (yearly target 58) ================= */
 		function renderTrainingTable(d) {
 			var el = document.getElementById("tblTrainingStats");
 			if (!el || !d) return;
-			var yl = document.getElementById("trainingYearLabel");
-			if (yl) yl.textContent = "";
+
+			// YTD banner
+			var banner = document.getElementById("trainingYtdBanner");
+			if (banner) {
+				var ytdPct = d.ytd_pct || 0;
+				var pillClass = d.ytd_objective_met ? "ok" : ytdPct >= 50 ? "warn" : "bad";
+				banner.innerHTML =
+					"<div><span class='ytd-num'>" +
+					(d.ytd_trained || 0) +
+					"</span> <span class='ytd-target'>/ " +
+					(d.target_yearly || 0) +
+					" employees trained this year (" +
+					(d.current_year || "") +
+					")</span></div>" +
+					"<div class='ytd-target'>" +
+					ytdPct +
+					"% of yearly target · " +
+					(d.ytd_remaining || 0) +
+					" remaining</div>" +
+					"<span class='ytd-pill " +
+					pillClass +
+					"'>" +
+					(d.ytd_objective_met
+						? "YEARLY OBJECTIVE MET"
+						: ytdPct >= 50
+							? "ON TRACK"
+							: "BEHIND") +
+					"</span>";
+			}
 
 			var rows = d.quarters
 				.map(function (q) {
-					var met = q.objective_met === true;
-					var trained =
-						q.trained_employees !== undefined ? q.trained_employees : q.trained;
-					var completions = q.training_completions || 0;
-
-					var comment;
-					if (completions === 0) {
-						comment = "No training conducted in this quarter.";
-					} else if (met) {
-						comment =
-							'<span class="badge-ok">Target achieved.</span> ' +
-							trained +
-							" of " +
-							q.total_employees +
-							" employees trained (" +
-							completions +
-							" completions).";
-					} else {
-						comment =
-							'<span class="badge-bad">Below target.</span> ' +
-							q.pct_trained +
-							"% trained (need " +
-							q.target +
-							"). " +
-							completions +
-							" completions recorded.";
-					}
-
 					return (
 						"<tr>" +
 						"<td><b>" +
 						q.quarter +
-						"</b>" +
-						"<div style='font-size:10px;color:#8d99a6'>" +
+						"</b><div style='font-size:10px;color:#8d99a6'>" +
 						q.period_from +
 						" → " +
 						q.period_to +
 						"</div></td>" +
 						"<td>" +
-						q.total_employees +
+						q.trained +
 						"</td>" +
 						"<td>" +
-						q.target +
+						q.completions +
 						"</td>" +
 						"<td>" +
-						trained +
-						"</td>" +
-						"<td>" +
-						completions +
-						"</td>" +
-						"<td>" +
-						q.pct_trained +
-						"%</td>" +
-						'<td class="comments">' +
-						comment +
+						q.events +
 						"</td>" +
 						"</tr>"
 					);
@@ -2446,28 +2474,18 @@
 				.join("");
 
 			var totalTrained = d.quarters.reduce(function (a, q) {
-				return a + (q.trained_employees !== undefined ? q.trained_employees : q.trained);
+				return a + q.trained;
 			}, 0);
 			var totalCompletions = d.quarters.reduce(function (a, q) {
-				return a + (q.training_completions || 0);
+				return a + q.completions;
 			}, 0);
-			var avgPct = d.quarters.length
-				? Math.round(
-						(d.quarters.reduce(function (a, q) {
-							return a + q.pct_trained;
-						}, 0) /
-							d.quarters.length) *
-							10,
-					) / 10
-				: 0;
+			var totalEvents = d.quarters.reduce(function (a, q) {
+				return a + q.events;
+			}, 0);
 
 			rows +=
-				'<tr class="total-row">' +
-				"<td>Total</td>" +
-				"<td>" +
-				(d.total_employees || 0) +
-				"</td>" +
-				"<td>-</td>" +
+				"<tr class='total-row'>" +
+				"<td>Total (last 4 qtrs)</td>" +
 				"<td>" +
 				totalTrained +
 				"</td>" +
@@ -2475,17 +2493,16 @@
 				totalCompletions +
 				"</td>" +
 				"<td>" +
-				avgPct +
-				"%</td>" +
-				'<td class="comments">Employees distinct across each quarter, completions summed</td>' +
+				totalEvents +
+				"</td>" +
 				"</tr>";
 
 			el.innerHTML =
-				'<table class="stats-table"><thead><tr>' +
-				"<th>Quarter</th><th>Employees</th><th>Target</th>" +
+				"<table class='stats-table'><thead><tr>" +
+				"<th>Quarter</th>" +
 				"<th>Employees<br>Trained</th>" +
 				"<th>Training<br>Completions</th>" +
-				"<th>%<br>Trained</th><th>Comments</th>" +
+				"<th>Events<br>Held</th>" +
 				"</tr></thead><tbody>" +
 				rows +
 				"</tbody></table>";
@@ -2501,13 +2518,20 @@
 			destroy("tr");
 
 			var qs = d.quarters;
+			var yearlyTarget = d.target_yearly || 0;
+
 			var hasAny = qs.some(function (x) {
-				return (x.training_completions || 0) > 0 || (x.events || 0) > 0;
+				return x.trained > 0 || x.completions > 0 || x.events > 0;
 			});
 			if (!hasAny) {
 				emptyChart("chartTrainingStats", "");
 				return;
 			}
+
+			// Reference line at the yearly target across the chart
+			var yearlyLine = qs.map(function () {
+				return yearlyTarget;
+			});
 
 			charts3["tr"] = new Chart(el, {
 				data: {
@@ -2517,60 +2541,210 @@
 					datasets: [
 						{
 							type: "bar",
-							label: "Employees (Total)",
-							data: qs.map(function (x) {
-								return x.total_employees;
-							}),
-							backgroundColor: "#8d4a3c",
-							borderRadius: 3,
-							maxBarThickness: 26,
-							yAxisID: "y",
-						},
-						{
-							type: "bar",
-							label: "Target (50%)",
-							data: qs.map(function (x) {
-								return x.target;
-							}),
-							backgroundColor: "#5f7470",
-							borderRadius: 3,
-							maxBarThickness: 26,
-							yAxisID: "y",
-						},
-						{
-							type: "bar",
 							label: "Employees Trained (distinct)",
 							data: qs.map(function (x) {
-								return x.trained_employees !== undefined
-									? x.trained_employees
-									: x.trained;
+								return x.trained;
 							}),
-							backgroundColor: qs.map(function (x) {
-								return x.objective_met === false ? "#d0433f" : "#2e9e5b";
-							}),
+							backgroundColor: "#2e9e5b",
 							borderRadius: 3,
-							maxBarThickness: 26,
+							maxBarThickness: 40,
 							yAxisID: "y",
 						},
 						{
 							type: "bar",
 							label: "Training Completions",
 							data: qs.map(function (x) {
-								return x.training_completions || 0;
+								return x.completions;
 							}),
 							backgroundColor: "#7e57c2",
 							borderRadius: 3,
-							maxBarThickness: 26,
+							maxBarThickness: 40,
 							yAxisID: "y",
 						},
 						{
 							type: "line",
-							label: "% Trained",
+							label: "Yearly Target (" + yearlyTarget + ")",
+							data: yearlyLine,
+							borderColor: "#b23a2f",
+							borderWidth: 2,
+							borderDash: [10, 4],
+							pointRadius: 0,
+							tension: 0,
+							yAxisID: "y",
+						},
+					],
+				},
+				options: {
+					responsive: true,
+					maintainAspectRatio: false,
+					interaction: { mode: "index", intersect: false },
+					plugins: {
+						legend: {
+							position: "bottom",
+							labels: {
+								boxWidth: 10,
+								boxHeight: 10,
+								padding: 8,
+								font: { size: 10 },
+								usePointStyle: true,
+							},
+						},
+						tooltip: {
+							callbacks: {
+								afterBody: function (items) {
+									var i = items[0].dataIndex;
+									var q = qs[i];
+									return (
+										"Period: " +
+										q.period_from +
+										" → " +
+										q.period_to +
+										"\nEvents held: " +
+										q.events
+									);
+								},
+							},
+						},
+					},
+					scales: {
+						y: {
+							beginAtZero: true,
+							ticks: { precision: 0 },
+							title: { display: true, text: "Count" },
+						},
+					},
+				},
+			});
+		}
+
+		/* ================= TURNOVER ================= */
+		function renderTurnoverTable(d) {
+			var el = document.getElementById("tblTurnover");
+			if (!el || !d) return;
+			var yl = document.getElementById("turnoverYearLabel");
+			if (yl && d.year) yl.textContent = "(" + d.year + ")";
+
+			var rows = d.quarters
+				.map(function (q) {
+					return (
+						"<tr>" +
+						"<td><b>" +
+						q.quarter +
+						"</b></td>" +
+						"<td>" +
+						q.starting_headcount +
+						"</td>" +
+						"<td>" +
+						q.joiners +
+						"</td>" +
+						"<td>" +
+						q.leavers +
+						"</td>" +
+						"<td>" +
+						q.ending_headcount +
+						"</td>" +
+						"<td>" +
+						q.turnover_rate +
+						"%</td>" +
+						"</tr>"
+					);
+				})
+				.join("");
+
+			rows +=
+				"<tr class='total-row'>" +
+				"<td>Year " +
+				(d.year || "") +
+				"</td>" +
+				"<td>-</td>" +
+				"<td>-</td>" +
+				"<td>" +
+				(d.total_leavers || 0) +
+				"</td>" +
+				"<td>-</td>" +
+				"<td>" +
+				(d.annual_turnover_rate || 0) +
+				"%</td>" +
+				"</tr>";
+
+			el.innerHTML =
+				"<table class='stats-table'><thead><tr>" +
+				"<th>Quarter</th>" +
+				"<th>Starting<br>Headcount</th>" +
+				"<th>Joiners</th>" +
+				"<th>Employees<br>Left</th>" +
+				"<th>Ending<br>Headcount</th>" +
+				"<th>Turnover<br>Rate (%)</th>" +
+				"</tr></thead><tbody>" +
+				rows +
+				"</tbody></table>";
+		}
+
+		function drawTurnover(d) {
+			renderTurnoverTable(d);
+			var el = document.getElementById("chartTurnover");
+			if (!el || !d || !d.quarters || !d.quarters.length) {
+				emptyChart("chartTurnover", "");
+				return;
+			}
+			destroy("to");
+
+			var qs = d.quarters;
+			var hasAny = qs.some(function (x) {
+				return x.starting_headcount || x.leavers || x.joiners;
+			});
+			if (!hasAny) {
+				emptyChart("chartTurnover", "");
+				return;
+			}
+
+			charts3["to"] = new Chart(el, {
+				data: {
+					labels: qs.map(function (x) {
+						return x.quarter;
+					}),
+					datasets: [
+						{
+							type: "bar",
+							label: "Starting Headcount",
 							data: qs.map(function (x) {
-								return x.pct_trained;
+								return x.starting_headcount;
 							}),
-							borderColor: "#1f6fd0",
 							backgroundColor: "#1f6fd0",
+							borderRadius: 3,
+							maxBarThickness: 32,
+							yAxisID: "y",
+						},
+						{
+							type: "bar",
+							label: "Joiners",
+							data: qs.map(function (x) {
+								return x.joiners;
+							}),
+							backgroundColor: "#2e9e5b",
+							borderRadius: 3,
+							maxBarThickness: 32,
+							yAxisID: "y",
+						},
+						{
+							type: "bar",
+							label: "Employees Left",
+							data: qs.map(function (x) {
+								return x.leavers;
+							}),
+							backgroundColor: "#d0433f",
+							borderRadius: 3,
+							maxBarThickness: 32,
+							yAxisID: "y",
+						},
+						{
+							type: "line",
+							label: "Turnover Rate %",
+							data: qs.map(function (x) {
+								return x.turnover_rate;
+							}),
+							borderColor: "#8e44ad",
+							backgroundColor: "#8e44ad",
 							borderWidth: 2,
 							pointRadius: 4,
 							pointHoverRadius: 6,
@@ -2586,22 +2760,12 @@
 					plugins: {
 						legend: {
 							position: "bottom",
-							labels: { boxWidth: 10, font: { size: 10 } },
-						},
-						tooltip: {
-							callbacks: {
-								afterBody: function (items) {
-									var i = items[0].dataIndex;
-									var q = qs[i];
-									return (
-										"Period: " +
-										q.period_from +
-										" → " +
-										q.period_to +
-										"\nEvents held: " +
-										(q.events || 0)
-									);
-								},
+							labels: {
+								boxWidth: 10,
+								boxHeight: 10,
+								padding: 8,
+								font: { size: 10 },
+								usePointStyle: true,
 							},
 						},
 					},
@@ -2609,19 +2773,18 @@
 						y: {
 							beginAtZero: true,
 							ticks: { precision: 0 },
-							title: { display: true, text: "Count" },
+							title: { display: true, text: "Employees" },
 						},
 						y1: {
 							position: "right",
 							beginAtZero: true,
-							max: 100,
 							grid: { drawOnChartArea: false },
 							ticks: {
 								callback: function (v) {
 									return v + "%";
 								},
 							},
-							title: { display: true, text: "% Trained" },
+							title: { display: true, text: "Turnover %" },
 						},
 					},
 				},
@@ -2638,48 +2801,6 @@
 			setTxt("hseChecklistMasterCount", d.hse_checklist_master);
 			setTxt("hseChecklistInspCount", d.hse_checklist_inspection);
 			setTxt("hseMonitoringTotal", d.monitoring_total);
-
-			var m = d.monitoring_by_type || {};
-			var el = document.getElementById("chartMonitoringType");
-			if (!el) return;
-			destroy("mt");
-
-			var labels = Object.keys(m);
-			var vals = labels.map(function (k) {
-				return m[k];
-			});
-			if (
-				!vals.some(function (v) {
-					return v > 0;
-				})
-			) {
-				emptyChart("chartMonitoringType", "Monitoring — by Type");
-				return;
-			}
-
-			charts3["mt"] = new Chart(el, {
-				type: "doughnut",
-				data: {
-					labels: labels,
-					datasets: [
-						{
-							data: vals,
-							backgroundColor: [
-								"#1f6fd0",
-								"#00897b",
-								"#e0a020",
-								"#8e44ad",
-								"#607d8b",
-							],
-							borderWidth: 2,
-							borderColor: "#fff",
-						},
-					],
-				},
-				options: {
-					plugins: { legend: { position: "bottom", labels: { boxWidth: 10 } } },
-				},
-			});
 		}
 
 		/* ================= ELECTRICITY ================= */
@@ -2900,6 +3021,12 @@
 				.then(drawTrainingStats)
 				.catch(function (e) {
 					console.error("Training stats failed:", e);
+				});
+
+			call("ppecon_ims.www.ims.index.get_turnover_stats")
+				.then(drawTurnover)
+				.catch(function (e) {
+					console.error("Turnover stats failed:", e);
 				});
 
 			call("ppecon_ims.www.ims.index.get_hse_summary")
