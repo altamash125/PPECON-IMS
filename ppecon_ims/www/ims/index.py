@@ -199,7 +199,7 @@ def get_dashboard_counts():
         return {"draft": draft, "submitted": submitted, "total": draft + submitted}
 
     return {
-        "risks": breakdown("Risk And Opportunity"),
+        "risks": breakdown("Risk and Opportunity"),
         "contexts": breakdown("Context Of Organisation"),
         "audit_findings": breakdown("Internal Audit Schedule"),
         "nc": breakdown("Non Conformance"),
@@ -328,8 +328,8 @@ def _value_trend(doctype, amount_field, start, end):
 
 # ---------------------- IMS ----------------------
 def _risk_by_status():
-    return _group_by("Risk And Opportunity", "status") or \
-           _group_by("Risk And Opportunity", "workflow_state")
+    return _group_by("Risk and Opportunity", "status") or \
+           _group_by("Risk and Opportunity", "workflow_state")
 
 
 def _docs_by_category():
@@ -606,7 +606,7 @@ def _summary_tiles():
         "active_employees": _safe_count("Employee", {"status": "Active"}),
         "departments": _safe_count("Department"),
         "documents": _safe_count("IMS Documents"),
-        "risks": _safe_count("Risk And Opportunity"),
+        "risks": _safe_count("Risk and Opportunity"),
         "nc": _safe_count("Non Conformance"),
         "suppliers": _safe_count("Supplier"),
         "open_tasks": _safe_count("Task", {"status": "Open"}),
