@@ -200,7 +200,7 @@ def get_dashboard_counts():
 
     return {
         "risks": breakdown("Risk and Opportunity"),
-        "contexts": breakdown("Context Of Organisation"),
+        "contexts": breakdown("Context of Organisation"),
         "audit_findings": breakdown("Internal Audit Schedule"),
         "nc": breakdown("Non Conformance"),
     }
