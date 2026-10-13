@@ -48,8 +48,38 @@
 				font-size: 13px;
 				opacity: 0.9;
 			}
+
+			/* Progress bar */
+			.progress-wrap {
+				position: sticky;
+				top: 0;
+				z-index: 50;
+				background: #fff;
+				padding: 12px 35px;
+				border-bottom: 1px solid #e2e8f0;
+			}
+			.progress-text {
+				font-size: 12px;
+				color: #718096;
+				margin-bottom: 6px;
+				display: flex;
+				justify-content: space-between;
+			}
+			.progress-track {
+				height: 6px;
+				background: #e2e8f0;
+				border-radius: 3px;
+				overflow: hidden;
+			}
+			.progress-fill {
+				height: 100%;
+				width: 0;
+				background: #38a169;
+				transition: width 0.25s ease;
+			}
+
 			.body-content {
-				padding: 30px 35px 40px;
+				padding: 25px 35px 40px;
 			}
 			.intro {
 				font-size: 14px;
@@ -57,16 +87,22 @@
 				border-left: 4px solid #2b6cb0;
 				padding: 14px 16px;
 				border-radius: 6px;
-				margin-bottom: 25px;
+				margin-bottom: 18px;
 				line-height: 1.6;
 			}
 			.anon-note {
 				font-size: 12px;
 				color: #718096;
-				margin-bottom: 25px;
-				display: flex;
-				align-items: center;
-				gap: 6px;
+				margin-bottom: 14px;
+			}
+			.scale-hint {
+				font-size: 12px;
+				color: #555;
+				background: #f7f9fc;
+				border: 1px solid #e2e8f0;
+				border-radius: 6px;
+				padding: 8px 12px;
+				margin-bottom: 10px;
 			}
 
 			h3.section-title {
@@ -78,7 +114,15 @@
 			}
 
 			.question {
-				margin-bottom: 22px;
+				margin-bottom: 18px;
+				padding: 10px 12px;
+				border-radius: 6px;
+				border-left: 3px solid transparent;
+				transition: background 0.2s;
+			}
+			.question.missing {
+				background: #fff5f5;
+				border-left-color: #e53e3e;
 			}
 			.question label.qlabel {
 				display: block;
@@ -90,7 +134,17 @@
 			.required-mark {
 				color: #e53e3e;
 			}
+			.err-hint {
+				display: none;
+				font-size: 12px;
+				color: #c53030;
+				margin-top: 4px;
+			}
+			.question.missing .err-hint {
+				display: block;
+			}
 
+			/* Stars: inputs visually hidden (NOT display:none), keyboard accessible */
 			.stars {
 				display: flex;
 				flex-direction: row-reverse;
@@ -98,10 +152,15 @@
 				gap: 4px;
 			}
 			.stars input {
-				display: none;
+				position: absolute;
+				opacity: 0;
+				width: 1px;
+				height: 1px;
+				pointer-events: none;
 			}
 			.stars label {
-				font-size: 30px;
+				font-size: 32px;
+				line-height: 1;
 				color: #d5dbe3;
 				cursor: pointer;
 				transition: color 0.15s;
@@ -111,6 +170,10 @@
 			.stars label:hover ~ label {
 				color: #f6ad55;
 			}
+			.stars input:focus-visible + label {
+				outline: 2px solid #2b6cb0;
+				border-radius: 4px;
+			}
 
 			textarea {
 				width: 100%;
@@ -118,6 +181,7 @@
 				border: 1px solid #d5dbe3;
 				border-radius: 6px;
 				font-size: 14px;
+				font-family: inherit;
 				resize: vertical;
 			}
 			textarea:focus {
@@ -152,6 +216,18 @@
 				font-weight: 600;
 				font-size: 13px;
 				text-align: center;
+			}
+
+			.state-screen {
+				text-align: center;
+				padding: 60px 30px;
+			}
+			.state-screen h2 {
+				color: #2d3748;
+			}
+			.state-screen p {
+				color: #718096;
+				font-size: 14px;
 			}
 
 			.modal-overlay {
@@ -216,10 +292,24 @@
 				font-size: 14px;
 				cursor: pointer;
 			}
+
+			@media (max-width: 600px) {
+				.header {
+					flex-direction: column;
+					text-align: center;
+					padding: 22px 18px;
+				}
+				.body-content {
+					padding: 20px 16px 30px;
+				}
+				.progress-wrap {
+					padding: 10px 16px;
+				}
+			}
 		</style>
 	</head>
 	<body>
-		<div class="container">
+		<div class="container" id="mainContainer" style="display: none">
 			<div class="header">
 				<img
 					src="/assets/ppecon_ims/img/PPECON.avif"
@@ -232,17 +322,31 @@
 				</div>
 			</div>
 
+			<div class="progress-wrap">
+				<div class="progress-text">
+					<span id="progressText">0 of 0 answered</span>
+					<span>Anonymous</span>
+				</div>
+				<div class="progress-track">
+					<div class="progress-fill" id="progressFill"></div>
+				</div>
+			</div>
+
 			<div class="body-content">
 				<div class="intro">
 					Your feedback helps us build a better workplace. Please rate each statement
 					honestly and share your thoughts below.
 				</div>
 				<div class="anon-note">
-					🔒 This survey is completely anonymous — no personal or employee information is
-					recorded.
+					🔒 This survey is anonymous. Your personal link works only once and your name
+					or email is never stored with your answers.
+				</div>
+				<div class="scale-hint">
+					★ Rating scale: 1 = Strongly Disagree &nbsp;·&nbsp; 3 = Neutral &nbsp;·&nbsp; 5
+					= Strongly Agree
 				</div>
 
-				<form id="esform">
+				<form id="esform" novalidate>
 					<div id="questionsContainer"></div>
 
 					<h3 class="section-title">Open Feedback</h3>
@@ -290,6 +394,13 @@
 			</div>
 		</div>
 
+		<div class="container" id="stateContainer" style="display: none">
+			<div class="state-screen">
+				<h2 id="stateTitle"></h2>
+				<p id="stateMsg"></p>
+			</div>
+		</div>
+
 		<div class="modal-overlay" id="modalOverlay">
 			<div class="modal-box">
 				<div class="checkmark">&#10003;</div>
@@ -298,15 +409,19 @@
 					Your feedback has been submitted anonymously. We appreciate your honesty and
 					time.
 				</p>
-				<button
-					onclick="document.getElementById('modalOverlay').classList.remove('active')"
-				>
-					Close
-				</button>
+				<button id="modalClose">Close</button>
 			</div>
 		</div>
 
 		<script>
+			const API = "/api/method/ppecon_ims.ppe_ims.api.";
+			const token = new URLSearchParams(window.location.search).get("token");
+
+			const mainContainer = document.getElementById("mainContainer");
+			const form = document.getElementById("esform");
+			const submitBtn = document.getElementById("submitBtn");
+			const msgEl = document.getElementById("msg");
+
 			const sections = {
 				"Work Environment": [
 					["we_comfortable_rating", "I feel comfortable in my work environment"],
@@ -365,71 +480,169 @@
 				],
 			};
 
-			function starInput(fname) {
-				let stars = [5, 4, 3, 2, 1]
-					.map(
-						(n) =>
-							`<input type="radio" id="${fname}_${n}" name="${fname}" value="${n}" required>
-     <label for="${fname}_${n}">★</label>`,
-					)
-					.join("");
-				return `<div class="stars">${stars}</div>`;
+			const ratingFields = Object.values(sections)
+				.flat()
+				.map(([f]) => f);
+
+			/* ---------- helpers ---------- */
+			function showState(title, msg) {
+				mainContainer.style.display = "none";
+				document.getElementById("stateContainer").style.display = "block";
+				document.getElementById("stateTitle").innerText = title;
+				document.getElementById("stateMsg").innerText = msg;
 			}
 
-			let container = document.getElementById("questionsContainer");
-			Object.keys(sections).forEach((title) => {
-				let html = `<h3 class="section-title">${title}</h3>`;
-				sections[title].forEach(([fname, label]) => {
-					html += `<div class="question">
-      <label class="qlabel">${label} <span class="required-mark">*</span></label>
-      ${starInput(fname)}
-    </div>`;
+			// Frappe wraps return values as {message: {...}}; unwrap safely
+			async function callApi(method, payload) {
+				const res = await fetch(API + method, {
+					method: "POST",
+					credentials: "omit",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(payload),
 				});
-				container.innerHTML += html;
+				let body = {};
+				try {
+					body = await res.json();
+				} catch (e) {}
+				const result =
+					body.message && typeof body.message === "object" ? body.message : body;
+				return { ok: res.ok, result };
+			}
+
+			/* ---------- build questions ---------- */
+			function starInput(fname) {
+				return (
+					'<div class="stars" role="radiogroup">' +
+					[5, 4, 3, 2, 1]
+						.map(
+							(n) =>
+								`<input type="radio" id="${fname}_${n}" name="${fname}" value="${n}">` +
+								`<label for="${fname}_${n}" title="${n} / 5" aria-label="${n} out of 5">★</label>`,
+						)
+						.join("") +
+					"</div>"
+				);
+			}
+
+			let html = "";
+			Object.keys(sections).forEach((title) => {
+				html += `<h3 class="section-title">${title}</h3>`;
+				sections[title].forEach(([fname, label]) => {
+					html += `<div class="question" id="q_${fname}">
+						<label class="qlabel">${label} <span class="required-mark">*</span></label>
+						${starInput(fname)}
+						<div class="err-hint">Please select a rating.</div>
+					</div>`;
+				});
 			});
+			document.getElementById("questionsContainer").innerHTML = html;
 
-			const form = document.getElementById("esform");
-			const submitBtn = document.getElementById("submitBtn");
-			const msgEl = document.getElementById("msg");
+			/* ---------- progress ---------- */
+			function updateProgress() {
+				const answered = ratingFields.filter((f) =>
+					form.querySelector(`input[name="${f}"]:checked`),
+				).length;
+				const total = ratingFields.length;
+				document.getElementById("progressText").innerText =
+					`${answered} of ${total} rated`;
+				document.getElementById("progressFill").style.width =
+					(answered / total) * 100 + "%";
+				ratingFields.forEach((f) => {
+					if (form.querySelector(`input[name="${f}"]:checked`)) {
+						document.getElementById("q_" + f).classList.remove("missing");
+					}
+				});
+			}
+			form.addEventListener("change", updateProgress);
+			updateProgress();
 
+			/* ---------- validation ---------- */
+			function validateRatings() {
+				let firstMissing = null;
+				ratingFields.forEach((f) => {
+					const q = document.getElementById("q_" + f);
+					const answered = form.querySelector(`input[name="${f}"]:checked`);
+					q.classList.toggle("missing", !answered);
+					if (!answered && !firstMissing) firstMissing = q;
+				});
+				if (firstMissing) {
+					firstMissing.scrollIntoView({ behavior: "smooth", block: "center" });
+					msgEl.style.color = "red";
+					msgEl.innerText = "Please rate all the statements before submitting.";
+					return false;
+				}
+				return true;
+			}
+
+			/* ---------- submit ---------- */
 			form.addEventListener("submit", async function (e) {
 				e.preventDefault();
-				submitBtn.disabled = true;
-				submitBtn.innerText = "Submitting...";
 				msgEl.innerText = "";
 
-				let formData = new FormData(this);
-				let data = Object.fromEntries(formData.entries());
+				if (!validateRatings()) return;
+				if (!form.reportValidity()) return;
+
+				submitBtn.disabled = true;
+				submitBtn.innerText = "Submitting...";
+
+				const data = Object.fromEntries(new FormData(form).entries());
+				data.token = token;
 
 				try {
-					let res = await fetch(
-						"/api/method/ppecon_ims.ppe_ims.api.submit_employee_satisfaction",
-						{
-							method: "POST",
-							credentials: "omit",
-							headers: { "Content-Type": "application/json" },
-							body: JSON.stringify(data),
-						},
-					);
-					let result = await res.json();
+					const { ok, result } = await callApi("submit_employee_satisfaction", data);
 
-					if (res.ok) {
-						document.getElementById("modalOverlay").classList.add("active");
+					if (ok && result.status === "success") {
 						form.reset();
+						updateProgress();
+						mainContainer.style.display = "none";
+						document.getElementById("modalOverlay").classList.add("active");
 					} else {
 						msgEl.style.color = "red";
-						msgEl.innerText = result.message || "Error submitting. Please try again.";
-						console.error(result);
+						msgEl.innerText =
+							typeof result.message === "string"
+								? result.message
+								: "Error submitting. Please try again.";
+						submitBtn.disabled = false;
+						submitBtn.innerText = "Submit Survey";
 					}
 				} catch (err) {
+					console.error(err);
 					msgEl.style.color = "red";
 					msgEl.innerText = "Network error. Please try again.";
-					console.error(err);
-				} finally {
 					submitBtn.disabled = false;
 					submitBtn.innerText = "Submit Survey";
 				}
 			});
+
+			document.getElementById("modalClose").addEventListener("click", () => {
+				document.getElementById("modalOverlay").classList.remove("active");
+				showState(
+					"Thank you!",
+					"Your response has been recorded. You may now close this page.",
+				);
+			});
+
+			/* ---------- token validation on load (POST, token not in logs) ---------- */
+			if (!token) {
+				showState("Invalid Link", "Please use the personal link sent to your email.");
+			} else {
+				callApi("validate_employee_survey_token", { token })
+					.then(({ result }) => {
+						if (result.status === "success") {
+							mainContainer.style.display = "block";
+						} else {
+							showState(
+								"Unable to open survey",
+								typeof result.message === "string"
+									? result.message
+									: "This link is not valid.",
+							);
+						}
+					})
+					.catch(() =>
+						showState("Error", "Could not load the survey. Please try again later."),
+					);
+			}
 		</script>
 	</body>
 </html>

@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "naming_series:",
- "creation": "2026-07-19 10:59:48.368997",
+ "creation": "2026-10-11 16:53:23.623731",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -44,6 +44,16 @@
    "options": "\nAll Employees\nContractor/ Sub Contractor\nIndividual\nLocal People / Surronding\n\n"
   },
   {
+   "fieldname": "prevention_instructions",
+   "fieldtype": "Small Text",
+   "label": "Prevention Instructions"
+  },
+  {
+   "fieldname": "history_of_past_occurrence",
+   "fieldtype": "Small Text",
+   "label": "History Of Past Occurrence"
+  },
+  {
    "fieldname": "column_break_kqbs",
    "fieldtype": "Column Break"
   },
@@ -54,20 +64,10 @@
    "options": "\nAwareness\nDisplay Of Sign Boards\nTraining"
   },
   {
-   "fieldname": "emergency_instructions",
-   "fieldtype": "Small Text",
-   "label": "Emergency Instructions"
-  },
-  {
    "fieldname": "frequency_of_drill",
    "fieldtype": "Select",
    "label": "Frequency Of Drill",
    "options": "\nHalf -hourly\nHourly\nDaily\nWeekly\nFortnightly\nMonthly\nQuarterly\nHalf-Yearly\nYearly"
-  },
-  {
-   "fieldname": "prevention_instructions",
-   "fieldtype": "Small Text",
-   "label": "Prevention Instructions"
   },
   {
    "fieldname": "expected_participants_for_drill",
@@ -81,15 +81,15 @@
    "label": "Remarks"
   },
   {
-   "fieldname": "history_of_past_occurrence",
+   "fieldname": "emergency_instructions",
    "fieldtype": "Small Text",
-   "label": "History Of Past Occurrence"
+   "label": "Emergency Instructions"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-19 11:13:28.281899",
+ "modified": "2026-10-11 16:53:23.623731",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Planning Emergency",
