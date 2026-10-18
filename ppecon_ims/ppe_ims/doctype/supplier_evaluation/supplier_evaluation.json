@@ -16,9 +16,9 @@
   "supplier_name",
   "project",
   "evaluation_infromation_section",
-  "evaluation_name",
+  "assigned_user",
   "column_break_teua",
-  "position",
+  "name_of_evaluator",
   "performance_evaluation_section",
   "quality_of_product",
   "problem_resolution",
@@ -75,7 +75,8 @@
    "fetch_from": "related_po_no.supplier",
    "fieldname": "supplier_name",
    "fieldtype": "Data",
-   "label": "Supplier Name"
+   "label": "Supplier Name",
+   "read_only": 1
   },
   {
    "default": "Today",
@@ -92,19 +93,6 @@
    "label": "Evaluator Information"
   },
   {
-   "fieldname": "evaluation_name",
-   "fieldtype": "Link",
-   "ignore_user_permissions": 1,
-   "label": "Evaluated By",
-   "options": "Employee"
-  },
-  {
-   "fetch_from": "evaluation_name.designation",
-   "fieldname": "position",
-   "fieldtype": "Data",
-   "label": "Position"
-  },
-  {
    "fieldname": "column_break_teua",
    "fieldtype": "Column Break"
   },
@@ -118,8 +106,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Quality of Products / Service ",
-   "options": "\nExcellent (5pts)\nGood (4pts)\nSatisfactory (3pts)\nNeeds Improvement (2pts)\nUnsatisfactory (1pts)",
-   "reqd": 1
+   "options": "\nExcellent (5pts)\nGood (4pts)\nSatisfactory (3pts)\nNeeds Improvement (2pts)\nUnsatisfactory (1pts)"
   },
   {
    "fieldname": "column_break_eisd",
@@ -129,51 +116,44 @@
    "fieldname": "timelines_of_deliveries",
    "fieldtype": "Select",
    "label": "Timeliness of Deliveries",
-   "options": "\nAlways on Time (5pts)\nMostly on  Time (4pts)\nOccasionally Time (3pts)\nFrequently Late (2pts)\nConsistently Late (1pts)",
-   "reqd": 1
+   "options": "\nAlways on Time (5pts)\nMostly on  Time (4pts)\nOccasionally Time (3pts)\nFrequently Late (2pts)\nConsistently Late (1pts)"
   },
   {
    "fieldname": "problem_resolution",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Problem Resolution",
-   "options": "\nProactive and Timely (5pts)\nAdequate (4pts)\nSlow or Inadequate (3pts)\nFrequent Issues (2pts)\nPersistent Problems (1pts)",
-   "reqd": 1
+   "options": "\nProactive and Timely (5pts)\nAdequate (4pts)\nSlow or Inadequate (3pts)\nFrequent Issues (2pts)\nPersistent Problems (1pts)"
   },
   {
    "fieldname": "adhere_to_contract_terms",
    "fieldtype": "Select",
    "label": "Adhere to Contract Terms",
-   "options": "\nFull Compliance (5pts)\nGenerally Compliant (4pts)\nPartial Compliance (3pts)\nInfrequent Compliance (2pts)\nNon-Compliance (1pts)",
-   "reqd": 1
+   "options": "\nFull Compliance (5pts)\nGenerally Compliant (4pts)\nPartial Compliance (3pts)\nInfrequent Compliance (2pts)\nNon-Compliance (1pts)"
   },
   {
    "fieldname": "overall_satisfaction",
    "fieldtype": "Select",
    "label": "Overall Satisfaction",
-   "options": "\nHighly Satisfied (5pts)\nSatisfied (4pts)\nNeutral (3pts)\nDissatisfied (2pts)\nHighly Dissatisfied (1pts)",
-   "reqd": 1
+   "options": "\nHighly Satisfied (5pts)\nSatisfied (4pts)\nNeutral (3pts)\nDissatisfied (2pts)\nHighly Dissatisfied (1pts)"
   },
   {
    "fieldname": "communication_and_responsiveness",
    "fieldtype": "Select",
    "label": "Communication and Responsiveness",
-   "options": "\nExcellent (5pts)\nGood (4pts)\nSatisfactory (3pts)\nNeeds Improvement (2pts)\nUnsatisfactory (1pts)",
-   "reqd": 1
+   "options": "\nExcellent (5pts)\nGood (4pts)\nSatisfactory (3pts)\nNeeds Improvement (2pts)\nUnsatisfactory (1pts)"
   },
   {
    "fieldname": "consistency_and_reliability",
    "fieldtype": "Select",
    "label": "Consistency and Reliability",
-   "options": "\nConsistently Reliable (5pts)\nGenerally Reliable (4pts)\nOccasionally Unreliable (3pts)\nFrequently Unreliable (2pts)\nHighly Unreliable (1pts)",
-   "reqd": 1
+   "options": "\nConsistently Reliable (5pts)\nGenerally Reliable (4pts)\nOccasionally Unreliable (3pts)\nFrequently Unreliable (2pts)\nHighly Unreliable (1pts)"
   },
   {
    "fieldname": "professionalism",
    "fieldtype": "Select",
    "label": "Professionalism",
-   "options": "\nHighly Professional (5pts)\nProfessional (4pts)\nAdequate (3pts)\nUnprofessional (2pts)\nHighly Unprofessional (1pts)",
-   "reqd": 1
+   "options": "\nHighly Professional (5pts)\nProfessional (4pts)\nAdequate (3pts)\nUnprofessional (2pts)\nHighly Unprofessional (1pts)"
   },
   {
    "fieldname": "recommendations_section",
@@ -242,12 +222,27 @@
    "fetch_from": "related_po_no.project",
    "fieldname": "project",
    "fieldtype": "Data",
-   "label": "Project"
+   "label": "Project",
+   "read_only": 1
   },
   {
    "fieldname": "submission_date",
    "fieldtype": "Date",
    "label": "Submission Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "assigned_user",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Assigned User",
+   "options": "User"
+  },
+  {
+   "fetch_from": "assigned_user.full_name",
+   "fieldname": "name_of_evaluator",
+   "fieldtype": "Data",
+   "label": "Name of Evaluator",
    "read_only": 1
   }
  ],
@@ -255,7 +250,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-18 10:58:17.144356",
+ "modified": "2026-10-18 15:21:14.275092",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Supplier Evaluation",
