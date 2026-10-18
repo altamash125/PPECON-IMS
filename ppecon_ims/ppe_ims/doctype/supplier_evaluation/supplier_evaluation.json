@@ -11,6 +11,7 @@
   "naming_series",
   "related_po_no",
   "date_of_evaluation",
+  "submission_date",
   "column_break_ythl",
   "supplier_name",
   "project",
@@ -77,10 +78,12 @@
    "label": "Supplier Name"
   },
   {
+   "default": "Today",
    "fieldname": "date_of_evaluation",
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Date of Evaluation",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -91,6 +94,7 @@
   {
    "fieldname": "evaluation_name",
    "fieldtype": "Link",
+   "ignore_user_permissions": 1,
    "label": "Evaluated By",
    "options": "Employee"
   },
@@ -239,13 +243,19 @@
    "fieldname": "project",
    "fieldtype": "Data",
    "label": "Project"
+  },
+  {
+   "fieldname": "submission_date",
+   "fieldtype": "Date",
+   "label": "Submission Date",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-08-05 15:23:53.658572",
+ "modified": "2026-10-18 10:58:17.144356",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Supplier Evaluation",

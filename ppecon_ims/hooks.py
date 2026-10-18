@@ -186,7 +186,7 @@ doc_events = {
         },
 
    "Supplier Evaluation": {
-    "on_submit": "ppecon_ims.ppe_ims.doctype.supplier_evaluation.supplier_evaluation.notify_supplier_evaluation_evaluated_by",
+    "on_update": "ppecon_ims.ppe_ims.doctype.supplier_evaluation.supplier_evaluation.notify_supplier_evaluation_evaluated_by",
     "on_update_after_submit": "ppecon_ims.ppe_ims.doctype.supplier_evaluation.supplier_evaluation.notify_supplier_evaluation_evaluated_by_after_submit"
  },
   

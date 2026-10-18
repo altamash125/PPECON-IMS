@@ -52,8 +52,11 @@
    "options": "IT-A-PPE-.####"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "asset_name",
    "fieldtype": "Data",
+   "in_filter": 1,
+   "in_standard_filter": 1,
    "label": "Asset Name"
   },
   {
@@ -64,6 +67,8 @@
   {
    "fieldname": "asset_type",
    "fieldtype": "Select",
+   "in_filter": 1,
+   "in_standard_filter": 1,
    "label": "Asset Type",
    "options": "\nLaptop/Desktop\nMonitor\nRouter\nOthers"
   },
@@ -115,6 +120,7 @@
    "label": "Purchase Date"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "specification",
    "fieldtype": "Small Text",
    "label": "Specification "
@@ -123,7 +129,9 @@
    "allow_on_submit": 1,
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_global_search": 1,
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Status",
    "options": "\nIn Stock\nAssigned\nRepair\nRetired",
    "reqd": 1
@@ -132,10 +140,14 @@
    "allow_on_submit": 1,
    "fieldname": "assigned_to",
    "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Assigned To",
    "options": "Employee"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "assigned_date",
    "fieldtype": "Date",
    "label": "Assigned Date"
@@ -178,7 +190,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-13 09:33:09.708840",
+ "modified": "2026-10-18 09:46:47.743360",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "IT Inventory",
