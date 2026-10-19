@@ -2,7 +2,6 @@
 # For license information, please see license.txt
 
 # apps/ppecon_ims/ppecon_ims/ppecon_ims/doctype/supplier_evaluation/supplier_evaluation.py
-# Server-side calc — score tamper-proof rahega chahe client script bypass ho
 
 import re
 
@@ -26,7 +25,7 @@ MAX_SCORE = len(CRITERIA_FIELDS) * MAX_POINTS_PER_CRITERIA  # 40
 
 
 def get_points(value):
-    """'Good (4 pts)' jaisi value se points nikalta hai."""
+    """'Good (4 pts)' ."""
     if not value:
         return 0
     m = re.search(r"\((\d)\s*pts?\)", value, re.I)
@@ -47,8 +46,6 @@ class SupplierEvaluation(Document):
     def validate(self):
         missing = [f for f in CRITERIA_FIELDS if not self.get(f)]
 
-        # Ratings sirf assigned evaluator ke liye mandatory hain
-        # (jo assign kar raha hai, uske liye nahi) aur final submit pe sabke liye.
         if missing and (self.is_assigned_evaluator() or self.docstatus == 1):
             labels = ", ".join(frappe.bold(self.meta.get_label(f)) for f in missing)
             frappe.throw(
@@ -63,12 +60,10 @@ class SupplierEvaluation(Document):
         self.rating = get_rating(total) if not missing else ""
 
     def before_submit(self):
-        # Final submit pe submission date auto set
         self.submission_date = today()
 
     def is_assigned_evaluator(self):
-        """True jab current user wahi hai jise evaluator assign kiya gaya hai,
-        aur document pehle se save ho chuka hai (naya document nahi)."""
+        """Check if current user is the assigned evaluator for this document."""
         return bool(
             not self.is_new()
             and self.assigned_user
@@ -77,15 +72,14 @@ class SupplierEvaluation(Document):
 
 
 # ---------------------------------------------------------------------------
-# Notifications (hooks.py ke doc_events se call hote hain)
+# Notifications (hooks.py)
 # ---------------------------------------------------------------------------
 
 def notify_supplier_evaluation_evaluated_by(doc, method=None):
-    """Evaluator naya assign ya change hone par hi mail (on_update har save pe chalta hai)."""
+
     if not doc.assigned_user:
         return
 
-    # Naye doc pe has_value_changed True aata hai, isliye creation bhi cover hai
     if not doc.has_value_changed("assigned_user"):
         return
 
@@ -93,11 +87,9 @@ def notify_supplier_evaluation_evaluated_by(doc, method=None):
 
 
 def notify_supplier_evaluation_evaluated_by_after_submit(doc, method=None):
-    # 1. assigned_user naya set/change hua ho to unhe mail
     if doc.assigned_user and doc.has_value_changed("assigned_user"):
         send_supplier_evaluation_mail(doc, [doc.assigned_user], is_update=False)
 
-    # 2. Document update hone par creator (owner) ko notify karo
     notify_document_creator_on_update(doc)
 
 
@@ -105,7 +97,6 @@ def notify_document_creator_on_update(doc):
     if not doc.owner:
         return
 
-    # Khud ke kiye hue update ka mail khud ko bhejne ki zaroorat nahi
     if doc.owner == frappe.session.user:
         return
 
@@ -199,3 +190,5 @@ def send_supplier_evaluation_mail(doc, recipients, is_update=False):
         reference_name=doc.name,
         now=True,
     )
+
+    

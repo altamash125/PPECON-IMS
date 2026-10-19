@@ -1069,3 +1069,125 @@ def get_hse_summary():
         "hse_checklist_master": _safe_count(checklist_master_dt) if checklist_master_dt else 0,
         "hse_checklist_inspection": _safe_count(checklist_insp_dt) if checklist_insp_dt else 0,
     }
+
+
+
+
+
+
+#employee satisfaction survey
+# =========================================================================
+#  EMPLOYEE SATISFACTION  (area-wise + question-wise average score)
+# =========================================================================
+import re
+from frappe.utils import cint
+
+ES_DOCTYPE = "Employee Satisfaction Survey"
+ES_SKIP_FIELDS = {"name", "owner", "creation", "modified", "modified_by",
+                  "docstatus", "idx", "naming_series", "submitted_on"}
+
+
+def _es_num(v):
+    if v is None or v == "":
+        return None
+    if isinstance(v, (int, float)):
+        return flt(v)
+    m = re.search(r"\d+(\.\d+)?", str(v))
+    return flt(m.group()) if m else None
+
+
+def _es_scored_fields(meta):
+    """Return [{fieldname, label, category, max, rating}] for numeric rating-like fields."""
+    out, category = [], "General"
+    for df in meta.fields:
+        if df.fieldtype in ("Section Break", "Column Break", "Tab Break"):
+            if df.label:
+                category = df.label.strip()
+            continue
+        if df.hidden or df.fieldname in ES_SKIP_FIELDS:
+            continue
+
+        mx, is_rating = 5, False
+        if df.fieldtype == "Rating":
+            mx, is_rating = cint(df.options) or 5, True
+        elif df.fieldtype in ("Int", "Float"):
+            mx = 5
+        elif df.fieldtype == "Select":
+            nums = [_es_num(o) for o in (df.options or "").split("\n") if o.strip()]
+            nums = [n for n in nums if n is not None]
+            if not nums or len(nums) != len([o for o in (df.options or "").split("\n") if o.strip()]):
+                continue          # not a numeric select -> text answer, skip
+            mx = max(nums)
+        else:
+            continue
+
+        out.append({"fieldname": df.fieldname, "label": df.label or df.fieldname,
+                    "category": category, "max": mx or 5, "rating": is_rating})
+    return out
+
+
+@frappe.whitelist()
+def get_employee_satisfaction_stats(from_date=None, to_date=None):
+    empty = {"responses": 0, "categories": [], "questions": []}
+    if not _exists(ES_DOCTYPE):
+        return empty
+
+    meta = frappe.get_meta(ES_DOCTYPE)
+    date_f = "submitted_on" if meta.has_field("submitted_on") else "creation"
+    fields = _es_scored_fields(meta)
+    if not fields:
+        return empty
+
+    filters = {"docstatus": ["<", 2]}
+    if from_date and to_date:
+        filters[date_f] = ["between", [from_date, to_date]]
+
+    rows = frappe.get_all(
+        ES_DOCTYPE, filters=filters,
+        fields=["name", date_f] + [f["fieldname"] for f in fields],
+        limit_page_length=0,
+    )
+    if not rows:
+        return empty
+
+    try:
+        major = int(frappe.__version__.split(".")[0])
+    except Exception:
+        major = 15
+
+    questions, cat_acc = [], {}
+    for f in fields:
+        vals = []
+        for r in rows:
+            v = _es_num(r.get(f["fieldname"]))
+            if v is None:
+                continue
+            if f["rating"] and major >= 15:      # v15 stores Rating as 0-1 fraction
+                v = v * f["max"]
+            vals.append(v / f["max"] * 5)        # normalise everything to /5
+        if not vals:
+            continue
+        avg = round(sum(vals) / len(vals), 2)
+        questions.append({"label": f["label"], "category": f["category"],
+                          "avg": avg, "responses": len(vals)})
+        acc = cat_acc.setdefault(f["category"], [0, 0])
+        acc[0] += sum(vals)
+        acc[1] += len(vals)
+
+    categories = sorted(
+        [{"category": c, "avg": round(s / n, 2), "responses": n}
+         for c, (s, n) in cat_acc.items() if n],
+        key=lambda x: x["avg"])
+    questions.sort(key=lambda x: x["avg"])
+
+    dates = [r.get(date_f) for r in rows if r.get(date_f)]
+    all_vals = [q["avg"] for q in questions]
+
+    return {
+        "responses": len(rows),
+        "overall": round(sum(all_vals) / len(all_vals), 2) if all_vals else 0,
+        "last_submitted": str(max(dates))[:16] if dates else None,
+        "first_submitted": str(min(dates))[:16] if dates else None,
+        "categories": categories,
+        "questions": questions,
+    }

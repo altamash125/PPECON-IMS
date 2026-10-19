@@ -538,6 +538,153 @@
 	.vsm-reset:hover {
 		background: #f0f4f8;
 	}
+
+	/* ---- Employee Satisfaction ---- */
+	.es-kpis {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 10px;
+		margin-bottom: 14px;
+	}
+	@media (max-width: 700px) {
+		.es-kpis {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	.es-kpi {
+		border: 1px solid #e0e6ee;
+		border-radius: 8px;
+		padding: 10px 12px;
+		background: #fff;
+	}
+	.es-kpi .k-lbl {
+		font-size: 10px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.4px;
+		color: #8d99a6;
+	}
+	.es-kpi .k-val {
+		font-size: 19px;
+		font-weight: 800;
+		margin-top: 2px;
+		color: #22314a;
+	}
+	.es-kpi .k-sub {
+		font-size: 11px;
+		color: #8d99a6;
+	}
+	.es-two {
+		display: grid;
+		grid-template-columns: 1fr 1.4fr;
+		gap: 20px;
+	}
+	@media (max-width: 900px) {
+		.es-two {
+			grid-template-columns: 1fr;
+		}
+	}
+	.es-sub {
+		font-size: 12px;
+		font-weight: 700;
+		color: #44536b;
+		margin-bottom: 10px;
+	}
+	.es-row {
+		margin-bottom: 12px;
+		opacity: 0;
+		transform: translateX(-14px);
+		transition:
+			opacity 0.5s ease,
+			transform 0.5s ease;
+	}
+	.es-row.in {
+		opacity: 1;
+		transform: none;
+	}
+	.es-row-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 12px;
+		margin-bottom: 4px;
+		gap: 8px;
+	}
+	.es-row-head .nm {
+		font-weight: 600;
+		color: #22314a;
+	}
+	.es-row-head .sc {
+		font-weight: 800;
+	}
+	.es-track {
+		height: 14px;
+		background: #eef0f2;
+		border-radius: 8px;
+		overflow: hidden;
+	}
+	.es-fill {
+		height: 100%;
+		width: 0;
+		border-radius: 8px;
+		transition: width 1.4s cubic-bezier(0.22, 0.9, 0.3, 1);
+	}
+	.es-fill.low {
+		animation: esPulse 1.4s ease-in-out infinite;
+	}
+	@keyframes esPulse {
+		0%,
+		100% {
+			filter: brightness(1);
+			box-shadow: 0 0 0 0 rgba(208, 67, 63, 0.5);
+		}
+		50% {
+			filter: brightness(1.15);
+			box-shadow: 0 0 0 5px rgba(208, 67, 63, 0);
+		}
+	}
+	.es-badge {
+		font-size: 9.5px;
+		font-weight: 700;
+		padding: 2px 8px;
+		border-radius: 10px;
+		color: #fff;
+		white-space: nowrap;
+	}
+	.es-chart-wrap {
+		position: relative;
+		width: 100%;
+	}
+	.es-focus {
+		margin-top: 14px;
+		padding: 10px 14px;
+		border-radius: 8px;
+		background: #fff5f4;
+		border: 1px solid #f3c9c6;
+		font-size: 12px;
+		color: #7a2a26;
+	}
+	.es-focus b {
+		color: #b23a2f;
+	}
+	.es-focus ul {
+		margin: 6px 0 0 18px;
+		padding: 0;
+	}
+	.es-dot {
+		display: inline-block;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: #d0433f;
+		margin-right: 6px;
+		animation: esBlink 1s infinite;
+	}
+	@keyframes esBlink {
+		50% {
+			opacity: 0.25;
+		}
+	}
 </style>
 
 <div class="ims-app" id="imsApp">
@@ -786,6 +933,7 @@
 					<a href="/app/equipment" class="menu-item">Equipment</a>
 					<a href="/app/breakdown-record" class="menu-item">Breakdown Record</a>
 					<a href="/app/external-property" class="menu-item">External Property</a>
+					<a href="/app/lesson-learned-log" class="menu-item">Lesson Learned</a>
 				</div>
 			</div>
 
@@ -1169,6 +1317,21 @@
 								<div id="tblTurnover" class="stats-table-wrap"></div>
 								<div class="qo-chart">
 									<canvas id="chartTurnover"></canvas>
+								</div>
+							</div>
+						</div>
+
+						<!-- ROW 1.5: Employee Satisfaction -->
+						<div class="qo-grid" style="grid-template-columns: 1fr">
+							<div class="qo-col full" id="esCol">
+								<div class="qo-section-title">
+									Employee Satisfaction — Where We Need To Improve
+									<span style="font-weight: 400; color: #8d99a6"
+										>(score out of 5)</span
+									>
+								</div>
+								<div id="esBody">
+									<div class="chart-loading">Loading survey results...</div>
 								</div>
 							</div>
 						</div>
@@ -2794,6 +2957,235 @@
 			});
 		}
 
+		call("ppecon_ims.www.ims.index.get_employee_satisfaction_stats")
+			.then(drawEmpSat)
+			.catch(function (e) {
+				console.error("Employee satisfaction failed:", e);
+				var b = document.getElementById("esBody");
+				if (b)
+					b.innerHTML = '<div class="chart-loading">Could not load survey results</div>';
+			});
+		/* ================= EMPLOYEE SATISFACTION ================= */
+		function esColor(s) {
+			return s < 3 ? "#d0433f" : s < 4 ? "#f5a623" : "#2e9e5b";
+		}
+		function esLabel(s) {
+			return s < 3 ? "Critical" : s < 4 ? "Needs Improvement" : "Good";
+		}
+		function esEsc(t) {
+			return String(t == null ? "" : t).replace(/[&<>"']/g, function (c) {
+				return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+			});
+		}
+
+		function renderEmpSat(d) {
+			var body = document.getElementById("esBody");
+			if (!body) return;
+
+			var weakest = d.categories[0];
+			var lowQs = d.questions
+				.filter(function (q) {
+					return q.avg < 4;
+				})
+				.slice(0, 5);
+
+			var kpis =
+				'<div class="es-kpis">' +
+				'<div class="es-kpi"><div class="k-lbl">Responses</div><div class="k-val">' +
+				d.responses +
+				"</div></div>" +
+				'<div class="es-kpi"><div class="k-lbl">Overall Score</div><div class="k-val" style="color:' +
+				esColor(d.overall) +
+				'">' +
+				d.overall +
+				' <span style="font-size:12px;color:#8d99a6">/ 5</span></div></div>' +
+				'<div class="es-kpi"><div class="k-lbl">Last Submitted</div><div class="k-val" style="font-size:15px">' +
+				esEsc(d.last_submitted || "-") +
+				'</div><div class="k-sub">First: ' +
+				esEsc(d.first_submitted || "-") +
+				"</div></div>" +
+				'<div class="es-kpi"><div class="k-lbl">Weakest Area</div><div class="k-val" style="font-size:14px;color:' +
+				(weakest ? esColor(weakest.avg) : "#22314a") +
+				'">' +
+				esEsc(weakest ? weakest.category : "-") +
+				'</div><div class="k-sub">' +
+				(weakest ? weakest.avg + " / 5" : "") +
+				"</div></div>" +
+				"</div>";
+
+			var bars = d.categories
+				.map(function (c, i) {
+					var col = esColor(c.avg);
+					return (
+						'<div class="es-row" style="transition-delay:' +
+						i * 90 +
+						'ms">' +
+						'<div class="es-row-head"><span class="nm">' +
+						esEsc(c.category) +
+						"</span>" +
+						'<span><span class="sc" style="color:' +
+						col +
+						'">' +
+						c.avg +
+						"</span> " +
+						'<span class="es-badge" style="background:' +
+						col +
+						'">' +
+						esLabel(c.avg) +
+						"</span></span></div>" +
+						'<div class="es-track"><div class="es-fill' +
+						(c.avg < 3 ? " low" : "") +
+						'" data-w="' +
+						(c.avg / 5) * 100 +
+						'" style="background:' +
+						col +
+						'"></div></div></div>'
+					);
+				})
+				.join("");
+
+			var chartH = Math.max(240, d.questions.length * 30);
+
+			var focus = lowQs.length
+				? '<div class="es-focus"><span class="es-dot"></span><b>Focus areas for improvement</b><ul>' +
+					lowQs
+						.map(function (q) {
+							return (
+								"<li>" +
+								esEsc(q.label) +
+								" <i>(" +
+								esEsc(q.category) +
+								")</i> — <b>" +
+								q.avg +
+								" / 5</b></li>"
+							);
+						})
+						.join("") +
+					"</ul></div>"
+				: '<div class="es-focus" style="background:#f0fbf4;border-color:#bfe5cc;color:#1d6b3c"><b>All areas scoring 4 or above. Great work!</b></div>';
+
+			body.innerHTML =
+				kpis +
+				'<div class="es-two">' +
+				'<div><div class="es-sub">Area-wise Score (lowest first)</div>' +
+				bars +
+				"</div>" +
+				'<div><div class="es-sub">Question-wise Score (lowest first)</div>' +
+				'<div class="es-chart-wrap" style="height:' +
+				chartH +
+				'px"><canvas id="chartEmpSat"></canvas></div></div>' +
+				"</div>" +
+				focus;
+
+			// animate area bars
+			setTimeout(function () {
+				body.querySelectorAll(".es-row").forEach(function (r) {
+					r.classList.add("in");
+				});
+				body.querySelectorAll(".es-fill").forEach(function (f) {
+					f.style.width = f.getAttribute("data-w") + "%";
+				});
+			}, 60);
+
+			// animated question chart
+			destroy("es");
+			var el = document.getElementById("chartEmpSat");
+			if (!el) return;
+			charts3["es"] = new Chart(el, {
+				type: "bar",
+				data: {
+					labels: d.questions.map(function (q) {
+						return q.label.length > 55 ? q.label.slice(0, 52) + "..." : q.label;
+					}),
+					datasets: [
+						{
+							label: "Avg Score",
+							data: d.questions.map(function (q) {
+								return q.avg;
+							}),
+							backgroundColor: d.questions.map(function (q) {
+								return esColor(q.avg);
+							}),
+							borderRadius: 4,
+							maxBarThickness: 18,
+						},
+					],
+				},
+				options: {
+					indexAxis: "y",
+					responsive: true,
+					maintainAspectRatio: false,
+					animation: {
+						duration: 1400,
+						easing: "easeOutQuart",
+						delay: function (ctx) {
+							return ctx.type === "data" ? ctx.dataIndex * 70 : 0;
+						},
+					},
+					plugins: {
+						legend: { display: false },
+						tooltip: {
+							callbacks: {
+								title: function (items) {
+									return d.questions[items[0].dataIndex].label;
+								},
+								afterLabel: function (c) {
+									var q = d.questions[c.dataIndex];
+									return (
+										q.category +
+										" · " +
+										esLabel(q.avg) +
+										" · " +
+										q.responses +
+										" response(s)"
+									);
+								},
+							},
+						},
+					},
+					scales: {
+						x: {
+							min: 0,
+							max: 5,
+							ticks: { stepSize: 1 },
+							title: { display: true, text: "Average score (out of 5)" },
+						},
+						y: { ticks: { font: { size: 10 } } },
+					},
+				},
+			});
+		}
+
+		function drawEmpSat(d) {
+			var col = document.getElementById("esCol");
+			var body = document.getElementById("esBody");
+			if (!col || !body) return;
+			if (!d || !d.responses) {
+				body.innerHTML = '<div class="chart-loading">No survey responses yet</div>';
+				return;
+			}
+			var started = false;
+			function go() {
+				if (!started) {
+					started = true;
+					renderEmpSat(d);
+				}
+			}
+			if ("IntersectionObserver" in window) {
+				var io = new IntersectionObserver(
+					function (entries) {
+						if (entries[0].isIntersecting) {
+							go();
+							io.disconnect();
+						}
+					},
+					{ threshold: 0.15 },
+				);
+				io.observe(col);
+			} else {
+				go();
+			}
+		}
 		/* ================= HSE DASHBOARD ================= */
 		function drawHse(d) {
 			if (!d) return;
