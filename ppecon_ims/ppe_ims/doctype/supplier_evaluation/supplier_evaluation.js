@@ -11,7 +11,7 @@ const CRITERIA_FIELDS = [
 	"overall_satisfaction",
 ];
 
-// Ratings sirf assigned evaluator ke liye mandatory (assign karne wale ke liye nahi)
+// Ratings only assigned evaluator
 function toggle_criteria_reqd(frm) {
 	const is_evaluator =
 		!frm.is_new() && !!frm.doc.assigned_user && frappe.session.user === frm.doc.assigned_user;
