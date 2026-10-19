@@ -52,7 +52,7 @@ class SupplierEvaluation(Document):
         if missing and (self.is_assigned_evaluator() or self.docstatus == 1):
             labels = ", ".join(frappe.bold(self.meta.get_label(f)) for f in missing)
             frappe.throw(
-                f"Evaluator ko sabhi {len(CRITERIA_FIELDS)} criteria rate karna zaroori hai. "
+                f"Evaluator Should be All {len(CRITERIA_FIELDS)} criteria fulfilled. "
                 f"Missing: {labels}",
                 title="Ratings Required",
             )
@@ -89,51 +89,7 @@ def notify_supplier_evaluation_evaluated_by(doc, method=None):
     if not doc.has_value_changed("assigned_user"):
         return
 
-    # Khud ko assign kiya ho to khud ko mail ki zaroorat nahi
-    if doc.assigned_user == frappe.session.user:
-        return
-
-    # Assigned user doc khol sake, ratings bhar sake aur submit kar sake
-    share_with_assigned_user(doc)
-
     send_supplier_evaluation_mail(doc, [doc.assigned_user], is_update=False)
-
-
-def share_with_assigned_user(doc):
-    """Assigned user ko read/write/submit access deta hai.
-    Creator ke paas share permission na ho tab bhi chalta hai, aur
-    share fail ho to document save block nahi hota (error log me jata hai)."""
-    try:
-        share_name = frappe.db.get_value(
-            "DocShare",
-            {
-                "user": doc.assigned_user,
-                "share_doctype": doc.doctype,
-                "share_name": doc.name,
-            },
-        )
-        share = (
-            frappe.get_doc("DocShare", share_name)
-            if share_name
-            else frappe.new_doc("DocShare")
-        )
-        share.update(
-            {
-                "user": doc.assigned_user,
-                "share_doctype": doc.doctype,
-                "share_name": doc.name,
-                "read": 1,
-                "write": 1,
-                "submit": 1,
-            }
-        )
-        share.flags.ignore_share_permission = True
-        share.save(ignore_permissions=True)
-    except Exception:
-        frappe.log_error(
-            title="Supplier Evaluation: share with assigned user failed",
-            message=frappe.get_traceback(),
-        )
 
 
 def notify_supplier_evaluation_evaluated_by_after_submit(doc, method=None):
