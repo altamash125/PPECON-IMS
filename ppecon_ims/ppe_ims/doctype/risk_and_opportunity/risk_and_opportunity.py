@@ -10,11 +10,11 @@ class RiskandOpportunity(Document):
 
 
 def notify_risk_opportunity_assignees(doc, method):
-    if not doc.assigned_to:
+    if not doc.allocate_to:
         return
 
     recipients = []
-    for row in doc.assigned_to:
+    for row in doc.allocate_to:
         if row.user:
             recipients.append(row.user)
 

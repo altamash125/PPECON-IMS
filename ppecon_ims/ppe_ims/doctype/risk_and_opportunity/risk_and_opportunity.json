@@ -12,7 +12,7 @@
   "risk_impact",
   "department",
   "treatement_type",
-  "assigned_to",
+  "allocate_to",
   "is_it_an_opportunity",
   "opportunity_details",
   "opportunity_actions_proposed",
@@ -62,12 +62,6 @@
    "options": "\nElimination\nReduction\nTransfer\nRetention"
   },
   {
-   "fieldname": "assigned_to",
-   "fieldtype": "Table MultiSelect",
-   "label": "Assigned To",
-   "options": "Asignee"
-  },
-  {
    "default": "0",
    "fieldname": "is_it_an_opportunity",
    "fieldtype": "Check",
@@ -75,7 +69,7 @@
   },
   {
    "fieldname": "riskopportunity_source_or_activity",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Risk/Opportunity source or activity"
   },
   {
@@ -108,14 +102,14 @@
   {
    "depends_on": "eval:doc.is_it_an_opportunity",
    "fieldname": "opportunity_details",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Opportunity Details",
    "mandatory_depends_on": "eval:doc.is_it_an_opportunity"
   },
   {
    "depends_on": "eval:doc.is_it_an_opportunity",
    "fieldname": "opportunity_actions_proposed",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Opportunity Actions Proposed",
    "mandatory_depends_on": "eval:doc.is_it_an_opportunity"
   },
@@ -135,13 +129,19 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "allocate_to",
+   "fieldtype": "Table MultiSelect",
+   "label": "Assigned To",
+   "options": "Asignee"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-07-15 09:22:13.112089",
+ "modified": "2026-10-25 13:44:08.803230",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Risk and Opportunity",
