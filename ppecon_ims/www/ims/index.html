@@ -3164,6 +3164,7 @@
 		}
 
 		/* ================= CLIENT SATISFACTION ================= */
+		/* ================= CLIENT SATISFACTION ================= */
 		function csPctColor(p) {
 			return p >= 80 ? "#2e9e5b" : p >= 60 ? "#f5a623" : "#d0433f";
 		}
@@ -3261,7 +3262,9 @@
 					csBars(d.by_type, "label", d.parts.length);
 			}
 
-			var chartH = Math.max(240, d.questions.length * 30);
+			// Fixed height for vertical columns
+			var chartH = 320;
+
 			var focus = lowQs.length
 				? '<div class="es-focus"><span class="es-dot"></span><b>Focus areas for improvement</b><ul>' +
 					lowQs
@@ -3346,11 +3349,13 @@
 			destroy("cs");
 			var el = document.getElementById("chartClientSat");
 			if (!el) return;
+
 			charts3["cs"] = new Chart(el, {
-				type: "bar",
+				type: "bar", // Vertical bar (column chart)
 				data: {
 					labels: d.questions.map(function (q) {
-						return q.label.length > 55 ? q.label.slice(0, 52) + "..." : q.label;
+						// Shortened slightly for better vertical display
+						return q.label.length > 45 ? q.label.slice(0, 42) + "..." : q.label;
 					}),
 					datasets: [
 						{
@@ -3362,12 +3367,11 @@
 								return esColor(q.avg);
 							}),
 							borderRadius: 4,
-							maxBarThickness: 18,
+							maxBarThickness: 35, // Thick columns
 						},
 					],
 				},
 				options: {
-					indexAxis: "y",
 					responsive: true,
 					maintainAspectRatio: false,
 					animation: {
@@ -3399,13 +3403,20 @@
 						},
 					},
 					scales: {
-						x: {
+						y: {
 							min: 0,
 							max: 5,
 							ticks: { stepSize: 1 },
 							title: { display: true, text: "Average score (out of 5)" },
 						},
-						y: { ticks: { font: { size: 10 } } },
+						x: {
+							ticks: {
+								maxRotation: 45,
+								minRotation: 45,
+								font: { size: 10 },
+							},
+							grid: { display: false },
+						},
 					},
 				},
 			});
@@ -3447,7 +3458,6 @@
 				go();
 			}
 		}
-
 		/* ================= HSE & ELECTRICITY ================= */
 		function drawHse(d) {
 			if (!d) return;
