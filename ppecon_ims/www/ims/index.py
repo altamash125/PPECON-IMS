@@ -1191,3 +1191,161 @@ def get_employee_satisfaction_stats(from_date=None, to_date=None):
         "categories": categories,
         "questions": questions,
     }
+
+
+
+
+
+
+
+
+# =========================================================================
+#  CLIENT SATISFACTION  (part-wise + question-wise average score)
+# =========================================================================
+CS_DOCTYPE = "Client Satisfaction Survey"
+
+CS_PARTS = [
+    ("Part 1: Service Quality", [
+        "design_requirements_rating", "coordination_design_operation_rating",
+        "hse_commitment_rating", "project_duration_rating", "weekly_reports_rating"]),
+    ("Part 2: Project Outcome and Satisfaction", [
+        "functionality_rating", "quality_compliance_rating",
+        "snags_taking_rating", "snags_closing_rating"]),
+    ("Part 3: Overall Experience", [
+        "delivery_rating", "warranty_aftersales_rating",
+        "work_again_rating", "recommend_rating"]),
+    ("Part 4: Communication", [
+        "comm_tender_rating", "comm_proposal_rating", "comm_design_prep_rating",
+        "comm_execution_rating", "comm_snags_handover_rating", "comm_aftersales_rating",
+        "comm_invoicing_rating", "material_delivery_rating"]),
+]
+
+
+def _cs_num(v):
+    """'1'..'5' -> float.  'NA' / empty -> None (excluded from scores)."""
+    try:
+        n = float(str(v).strip())
+    except (TypeError, ValueError):
+        return None
+    return n if 1 <= n <= 5 else None
+
+
+def _cs_pct_good(vals):
+    return round(len([v for v in vals if v >= 4]) / len(vals) * 100, 1) if vals else 0
+
+
+@frappe.whitelist()
+def get_client_satisfaction_stats(from_date=None, to_date=None):
+    empty = {"responses": 0, "sent": 0, "response_rate": 0, "parts": [],
+             "questions": [], "by_type": [], "recent": []}
+    if not _exists(CS_DOCTYPE):
+        return empty
+    if not frappe.has_permission(CS_DOCTYPE, "read"):
+        empty["no_access"] = 1
+        return empty
+
+    meta = frappe.get_meta(CS_DOCTYPE)
+    fields = [f for _, fl in CS_PARTS for f in fl if meta.has_field(f)]
+    if not fields:
+        return empty
+
+    has_status = meta.has_field("status")
+    sent = 0
+    if has_status:
+        sent = frappe.db.count(CS_DOCTYPE, {"status": ["in", ["In Progress", "Completed"]]})
+
+    date_f = "responded_on" if meta.has_field("responded_on") else "creation"
+    filters = {"docstatus": ["<", 2]}
+    if has_status:
+        filters["status"] = "Completed"
+    if from_date and to_date:
+        filters[date_f] = ["between", [from_date, to_date]]
+
+    rows = frappe.get_all(
+        CS_DOCTYPE, filters=filters,
+        fields=["name", "client_name", "project", "project_type", date_f] + fields,
+        limit_page_length=0,
+    )
+
+    q_vals = {f: [] for f in fields}
+    type_vals, type_count, flat, recent = {}, {}, [], []
+    valid = 0
+
+    for r in rows:
+        mine = []
+        for f in fields:
+            v = _cs_num(r.get(f))
+            if v is not None:
+                q_vals[f].append(v)
+                mine.append(v)
+        if not mine:
+            continue
+        valid += 1
+        flat.extend(mine)
+
+        t = r.get("project_type") or "Not Set"
+        type_vals.setdefault(t, []).extend(mine)
+        type_count[t] = type_count.get(t, 0) + 1
+
+        recent.append({
+            "_d": str(r.get(date_f) or ""),
+            "name": r.get("name"),
+            "client": r.get("client_name"),
+            "project": r.get("project"),
+            "type": t,
+            "score": round(sum(mine) / len(mine), 2),
+            "low": any(v <= 2 for v in mine),
+        })
+
+    if not valid:
+        empty["sent"] = sent
+        return empty
+
+    questions, parts = [], []
+    for title, flist in CS_PARTS:
+        part_vals = []
+        for f in flist:
+            vals = q_vals.get(f)
+            if not vals:
+                continue
+            questions.append({
+                "label": meta.get_field(f).label or f,
+                "category": title,
+                "avg": round(sum(vals) / len(vals), 2),
+                "responses": len(vals),
+            })
+            part_vals.extend(vals)
+        if part_vals:
+            parts.append({"category": title,
+                          "avg": round(sum(part_vals) / len(part_vals), 2),
+                          "responses": len(part_vals)})
+
+    parts.sort(key=lambda x: x["avg"])
+    questions.sort(key=lambda x: x["avg"])
+
+    by_type = sorted(
+        [{"label": t, "avg": round(sum(v) / len(v), 2), "responses": type_count[t]}
+         for t, v in type_vals.items() if v],
+        key=lambda x: x["avg"])
+
+    recent.sort(key=lambda x: x["_d"], reverse=True)
+    recent = recent[:8]
+    for x in recent:
+        x["date"] = x.pop("_d")[:16]
+
+    q_avgs = [q["avg"] for q in questions]
+
+    return {
+        "responses": valid,
+        "sent": sent,
+        "response_rate": round(valid / sent * 100) if sent else 0,
+        "overall": round(sum(q_avgs) / len(q_avgs), 2) if q_avgs else 0,
+        "satisfied_pct": _cs_pct_good(flat),
+        "low_ratings": len([v for v in flat if v <= 2]),
+        "recommend_pct": _cs_pct_good(q_vals.get("recommend_rating", [])),
+        "work_again_pct": _cs_pct_good(q_vals.get("work_again_rating", [])),
+        "parts": parts,
+        "questions": questions,
+        "by_type": by_type,
+        "recent": recent,
+    }

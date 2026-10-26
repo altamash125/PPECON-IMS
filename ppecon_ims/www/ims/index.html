@@ -1,7 +1,5 @@
 <!-- =========================================================================
-  PPECON IMS Portal — index.html  (v4.2)
-  Location : ppecon_ims/www/ims/index.html
-  Backend  : ppecon_ims/www/ims/index.py  (v4.2)
+  PPECON IMS Portal — index.html  (v4.3)
 ========================================================================== -->
 
 <link rel="stylesheet" href="/assets/ppecon_ims/css/ims_portal.css" />
@@ -184,7 +182,6 @@
 		padding: 70px 0;
 	}
 
-	/* ---- Estimation Turnaround (COMPACT) ---- */
 	.est-card {
 		grid-column: 1 / -1;
 	}
@@ -261,7 +258,6 @@
 		}
 	}
 
-	/* ---- IMS Quality Objectives ---- */
 	.qo-card {
 		grid-column: 1 / -1;
 	}
@@ -338,7 +334,6 @@
 		font-weight: 700;
 	}
 
-	/* Training YTD banner */
 	.training-ytd-banner {
 		display: flex;
 		align-items: center;
@@ -379,7 +374,6 @@
 		background: #d0433f;
 	}
 
-	/* ---- HSE / Electricity ---- */
 	.hse-card {
 		grid-column: 1 / -1;
 	}
@@ -393,7 +387,6 @@
 		width: 100% !important;
 	}
 
-	/* ---- visual settings modal ---- */
 	#vsmOverlay {
 		display: none;
 		position: fixed;
@@ -539,7 +532,6 @@
 		background: #f0f4f8;
 	}
 
-	/* ---- Employee Satisfaction ---- */
 	.es-kpis {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
@@ -685,6 +677,30 @@
 			opacity: 0.25;
 		}
 	}
+
+	.cs-pill {
+		display: inline-block;
+		min-width: 34px;
+		text-align: center;
+		padding: 2px 8px;
+		border-radius: 10px;
+		color: #fff;
+		font-weight: 700;
+		font-size: 11px;
+	}
+	.cs-flag {
+		font-size: 10.5px;
+		color: #c2402a;
+		font-weight: 700;
+	}
+	.cs-link {
+		color: var(--accent-dark);
+		text-decoration: none;
+		font-weight: 600;
+	}
+	.cs-link:hover {
+		text-decoration: underline;
+	}
 </style>
 
 <div class="ims-app" id="imsApp">
@@ -698,7 +714,6 @@
 				/>
 			</div>
 		</div>
-
 		<div class="ims-search">
 			<input
 				type="text"
@@ -707,10 +722,8 @@
 				autocomplete="off"
 			/>
 		</div>
-
 		<nav class="ims-menu" id="imsMenu">
 			<a href="/ims" class="menu-item"><i class="menu-icon">⌂</i><span>Dashboard</span></a>
-
 			<div class="menu-group" data-group="admin">
 				<div class="group-header">
 					<i class="menu-icon">⚙</i><span>System Settings</span><i class="chevron">▸</i>
@@ -725,7 +738,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="context">
 				<div class="group-header">
 					<i class="menu-icon">📋</i><span>Context Of Organisation</span
@@ -738,28 +750,21 @@
 					<a href="/app/ims-internal-issue" class="menu-item"
 						>Internal / External Issues</a
 					>
-					<!-- <a href="/app/ims-external--issue" class="menu-item">External Issues</a> -->
 					<a href="/app/interested-party" class="menu-item">Interested Party</a>
 					<a href="/app/scope" class="menu-item">Scope</a>
-					<!-- <a href="/app/life-cycle-management" class="menu-item"
-						>Life Cycle Management</a
-					> -->
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="policy">
 				<div class="group-header">
 					<i class="menu-icon">🏁</i><span>Policy &amp; Objectives</span
 					><i class="chevron">▸</i>
 				</div>
-
 				<div class="group-items">
 					<a href="/ppe_policy" class="menu-item">Company Policy</a>
 					<a href="/app/company-policy" class="menu-item">Policy Centre</a>
 					<a href="/app/objectives" class="menu-item">Objectives</a>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="docs">
 				<div class="group-header">
 					<i class="menu-icon">📄</i><span>Documented Information</span
@@ -775,11 +780,9 @@
 					<a href="/app/minutes-of-meeting" class="menu-item">Minutes of Meeting</a>
 				</div>
 			</div>
-
 			<a href="/app/non-conformance" class="menu-item"
 				><i class="menu-icon">⚠</i><span>Non Conformance</span></a
 			>
-
 			<div class="menu-group" data-group="audit">
 				<div class="group-header">
 					<i class="menu-icon">🔍</i><span>Internal Audit</span><i class="chevron">▸</i>
@@ -799,7 +802,6 @@
 					>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="mrm">
 				<div class="group-header">
 					<i class="menu-icon">⇄</i><span>MRM</span><i class="chevron">▸</i>
@@ -808,7 +810,6 @@
 					<a href="/app/quality-meeting" class="menu-item">MRM Agenda</a>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="compliance">
 				<div class="group-header">
 					<i class="menu-icon">🔧</i><span>Compliance Obligation</span
@@ -820,7 +821,6 @@
 					>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="risk">
 				<div class="group-header">
 					<i class="menu-icon">🛡</i><span>Risk And Opportunity</span
@@ -830,7 +830,6 @@
 					<a href="/app/risk-and-opportunity" class="menu-item">Risk And Opportunity</a>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="hr">
 				<div class="group-header">
 					<i class="menu-icon">👤</i><span>HR &amp; Admin</span><i class="chevron">▸</i>
@@ -847,12 +846,8 @@
 					<a href="/app/employee-satisfaction-survey" class="menu-item"
 						>Employee Satisfaction Respond</a
 					>
-					<!-- <a href="https://ppecon.erpnext.com/employee_satisfaction" class="menu-item"
-						>Employee Satisfaction Survey Form</a
-					> -->
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="sales">
 				<div class="group-header">
 					<i class="menu-icon">💼</i><span>Sales &amp; Marketing</span
@@ -866,7 +861,6 @@
 					>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="estimation">
 				<div class="group-header">
 					<i class="menu-icon">💼</i><span>Estimation</span><i class="chevron">▸</i>
@@ -875,7 +869,6 @@
 					<a href="/app/quotation" class="menu-item">Inquiry Estimation Response</a>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="design">
 				<div class="group-header">
 					<i class="menu-icon">📐</i><span>Design &amp; Development</span
@@ -890,7 +883,6 @@
 					>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="purchase">
 				<div class="group-header">
 					<i class="menu-icon">🛒</i><span>Purchasing</span><i class="chevron">▸</i>
@@ -907,7 +899,6 @@
 					<a href="/app/supplier-evaluation" class="menu-item">Supplier Evaluation</a>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="Planning & Operations">
 				<div class="group-header">
 					<i class="menu-icon">📊</i><span>Planning & Operations</span
@@ -922,7 +913,6 @@
 					>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="ops">
 				<div class="group-header">
 					<i class="menu-icon">🏗</i><span>Operations</span><i class="chevron">▸</i>
@@ -938,7 +928,6 @@
 					<a href="/app/lesson-learned" class="menu-item">Lessons Learned</a>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="maintenance">
 				<div class="group-header">
 					<i class="menu-icon">✓</i><span>Repair &amp; Maintenance</span
@@ -948,7 +937,6 @@
 					<a href="/app/service-request" class="menu-item">Service Request</a>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="quality">
 				<div class="group-header">
 					<i class="menu-icon">✓</i><span>QA/QC</span><i class="chevron">▸</i>
@@ -960,7 +948,6 @@
 					>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="hse">
 				<div class="group-header">
 					<i class="menu-icon">🦺</i><span>HSE</span><i class="chevron">▸</i>
@@ -1035,7 +1022,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="task">
 				<div class="group-header">
 					<i class="menu-icon">📌</i><span>Task</span><i class="chevron">▸</i>
@@ -1048,7 +1034,6 @@
 					<a href="/app/todo" class="menu-item">My ToDo</a>
 				</div>
 			</div>
-
 			<div class="menu-group" data-group="reports">
 				<div class="group-header">
 					<i class="menu-icon">📊</i><span>Reports</span><i class="chevron">▸</i>
@@ -1074,7 +1059,6 @@
 				</div>
 			</div>
 		</nav>
-
 		<div class="ims-footer">
 			<div class="version">PPECON IMS v1.0</div>
 			<div class="user" id="userName"></div>
@@ -1334,6 +1318,21 @@
 								</div>
 								<div id="esBody">
 									<div class="chart-loading">Loading survey results...</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- ROW 1.6: Client Satisfaction -->
+						<div class="qo-grid" style="grid-template-columns: 1fr">
+							<div class="qo-col full" id="csCol">
+								<div class="qo-section-title">
+									Client Satisfaction — Where We Need To Improve
+									<span style="font-weight: 400; color: #8d99a6"
+										>(score out of 5)</span
+									>
+								</div>
+								<div id="csBody">
+									<div class="chart-loading">Loading client feedback...</div>
 								</div>
 							</div>
 						</div>
@@ -1680,7 +1679,6 @@
 			"#5c6bc0",
 			"#8d6e63",
 		];
-
 		var charts = {};
 		var currentPeriod = "this_year";
 
@@ -2438,6 +2436,19 @@
 				'<div class="chart-loading">No data to display</div>';
 		}
 
+		/* ================= UTILS ================= */
+		function esColor(s) {
+			return s < 3 ? "#d0433f" : s < 4 ? "#f5a623" : "#2e9e5b";
+		}
+		function esLabel(s) {
+			return s < 3 ? "Critical" : s < 4 ? "Needs Improvement" : "Good";
+		}
+		function esEsc(t) {
+			return String(t == null ? "" : t).replace(/[&<>"']/g, function (c) {
+				return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+			});
+		}
+
 		/* ================= SUPPLIER COMPLIANCE ================= */
 		function renderSupplierTable(d) {
 			var el = document.getElementById("tblSupplierCompliance");
@@ -2582,12 +2593,11 @@
 			});
 		}
 
-		/* ================= TRAINING (yearly target 58) ================= */
+		/* ================= TRAINING ================= */
 		function renderTrainingTable(d) {
 			var el = document.getElementById("tblTrainingStats");
 			if (!el || !d) return;
 
-			// YTD banner
 			var banner = document.getElementById("trainingYtdBanner");
 			if (banner) {
 				var ytdPct = d.ytd_pct || 0;
@@ -2652,18 +2662,13 @@
 			}, 0);
 
 			rows +=
-				"<tr class='total-row'>" +
-				"<td>Total (last 4 qtrs)</td>" +
-				"<td>" +
+				"<tr class='total-row'><td>Total (last 4 qtrs)</td><td>" +
 				totalTrained +
-				"</td>" +
-				"<td>" +
+				"</td><td>" +
 				totalCompletions +
-				"</td>" +
-				"<td>" +
+				"</td><td>" +
 				totalEvents +
-				"</td>" +
-				"</tr>";
+				"</td></tr>";
 
 			el.innerHTML =
 				"<table class='stats-table'><thead><tr>" +
@@ -2687,7 +2692,6 @@
 
 			var qs = d.quarters;
 			var yearlyTarget = d.target_yearly || 0;
-
 			var hasAny = qs.some(function (x) {
 				return x.trained > 0 || x.completions > 0 || x.events > 0;
 			});
@@ -2696,7 +2700,6 @@
 				return;
 			}
 
-			// Reference line at the yearly target across the chart
 			var yearlyLine = qs.map(function () {
 				return yearlyTarget;
 			});
@@ -2820,20 +2823,13 @@
 				.join("");
 
 			rows +=
-				"<tr class='total-row'>" +
-				"<td>Year " +
+				"<tr class='total-row'><td>Year " +
 				(d.year || "") +
-				"</td>" +
-				"<td>-</td>" +
-				"<td>-</td>" +
-				"<td>" +
+				"</td><td>-</td><td>-</td><td>" +
 				(d.total_leavers || 0) +
-				"</td>" +
-				"<td>-</td>" +
-				"<td>" +
+				"</td><td>-</td><td>" +
 				(d.annual_turnover_rate || 0) +
-				"%</td>" +
-				"</tr>";
+				"%</td></tr>";
 
 			el.innerHTML =
 				"<table class='stats-table'><thead><tr>" +
@@ -2959,27 +2955,7 @@
 			});
 		}
 
-		call("ppecon_ims.www.ims.index.get_employee_satisfaction_stats")
-			.then(drawEmpSat)
-			.catch(function (e) {
-				console.error("Employee satisfaction failed:", e);
-				var b = document.getElementById("esBody");
-				if (b)
-					b.innerHTML = '<div class="chart-loading">Could not load survey results</div>';
-			});
 		/* ================= EMPLOYEE SATISFACTION ================= */
-		function esColor(s) {
-			return s < 3 ? "#d0433f" : s < 4 ? "#f5a623" : "#2e9e5b";
-		}
-		function esLabel(s) {
-			return s < 3 ? "Critical" : s < 4 ? "Needs Improvement" : "Good";
-		}
-		function esEsc(t) {
-			return String(t == null ? "" : t).replace(/[&<>"']/g, function (c) {
-				return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
-			});
-		}
-
 		function renderEmpSat(d) {
 			var body = document.getElementById("esBody");
 			if (!body) return;
@@ -3079,7 +3055,6 @@
 				"</div>" +
 				focus;
 
-			// animate area bars
 			setTimeout(function () {
 				body.querySelectorAll(".es-row").forEach(function (r) {
 					r.classList.add("in");
@@ -3089,7 +3064,6 @@
 				});
 			}, 60);
 
-			// animated question chart
 			destroy("es");
 			var el = document.getElementById("chartEmpSat");
 			if (!el) return;
@@ -3188,10 +3162,295 @@
 				go();
 			}
 		}
-		/* ================= HSE DASHBOARD ================= */
+
+		/* ================= CLIENT SATISFACTION ================= */
+		function csPctColor(p) {
+			return p >= 80 ? "#2e9e5b" : p >= 60 ? "#f5a623" : "#d0433f";
+		}
+		function csKpi(lbl, val, sub, color) {
+			return (
+				'<div class="es-kpi"><div class="k-lbl">' +
+				lbl +
+				'</div><div class="k-val"' +
+				(color ? ' style="color:' + color + '"' : "") +
+				">" +
+				val +
+				'</div><div class="k-sub">' +
+				sub +
+				"</div></div>"
+			);
+		}
+		function csBars(list, nameKey, offset) {
+			return list
+				.map(function (c, i) {
+					var col = esColor(c.avg);
+					return (
+						'<div class="es-row" style="transition-delay:' +
+						(i + (offset || 0)) * 90 +
+						'ms">' +
+						'<div class="es-row-head"><span class="nm">' +
+						esEsc(c[nameKey]) +
+						"</span>" +
+						'<span><span class="sc" style="color:' +
+						col +
+						'">' +
+						c.avg +
+						"</span> " +
+						'<span class="es-badge" style="background:' +
+						col +
+						'">' +
+						esLabel(c.avg) +
+						"</span></span></div>" +
+						'<div class="es-track"><div class="es-fill' +
+						(c.avg < 3 ? " low" : "") +
+						'" data-w="' +
+						(c.avg / 5) * 100 +
+						'" style="background:' +
+						col +
+						'"></div></div></div>'
+					);
+				})
+				.join("");
+		}
+
+		function renderClientSat(d) {
+			var body = document.getElementById("csBody");
+			if (!body) return;
+
+			var weakest = d.parts[0];
+			var lowQs = d.questions
+				.filter(function (q) {
+					return q.avg < 4;
+				})
+				.slice(0, 5);
+
+			var kpis =
+				'<div class="es-kpis">' +
+				csKpi(
+					"Responses",
+					d.responses,
+					"of " + d.sent + " sent · " + d.response_rate + "% replied",
+				) +
+				csKpi(
+					"Overall Score",
+					d.overall + ' <span style="font-size:12px;color:#8d99a6">/ 5</span>',
+					weakest
+						? "Weakest: " + esEsc(weakest.category.replace(/^Part \d+:\s*/, ""))
+						: "",
+					esColor(d.overall),
+				) +
+				csKpi(
+					"Satisfied (4–5)",
+					d.satisfied_pct + "%",
+					d.low_ratings + " low rating(s) (1–2)",
+					csPctColor(d.satisfied_pct),
+				) +
+				csKpi(
+					"Would Recommend",
+					d.recommend_pct + "%",
+					"Work with us again: " + d.work_again_pct + "%",
+					csPctColor(d.recommend_pct),
+				) +
+				"</div>";
+
+			var partBars = csBars(d.parts, "category", 0);
+			var typeBlock = "";
+			if (d.by_type && d.by_type.length) {
+				typeBlock =
+					'<div class="es-sub" style="margin-top:18px">Score by Project Type</div>' +
+					csBars(d.by_type, "label", d.parts.length);
+			}
+
+			var chartH = Math.max(240, d.questions.length * 30);
+			var focus = lowQs.length
+				? '<div class="es-focus"><span class="es-dot"></span><b>Focus areas for improvement</b><ul>' +
+					lowQs
+						.map(function (q) {
+							return (
+								"<li>" +
+								esEsc(q.label) +
+								" <i>(" +
+								esEsc(q.category.replace(/^Part \d+:\s*/, "")) +
+								")</i> — <b>" +
+								q.avg +
+								" / 5</b></li>"
+							);
+						})
+						.join("") +
+					"</ul></div>"
+				: '<div class="es-focus" style="background:#f0fbf4;border-color:#bfe5cc;color:#1d6b3c"><b>All areas scoring 4 or above. Great work!</b></div>';
+
+			var recentRows = (d.recent || [])
+				.map(function (r) {
+					return (
+						"<tr>" +
+						'<td><a class="cs-link" target="_blank" rel="noopener" href="/app/client-satisfaction-survey/' +
+						encodeURIComponent(r.name) +
+						'">' +
+						esEsc(r.client || r.name) +
+						"</a></td>" +
+						"<td>" +
+						esEsc(r.project) +
+						"</td>" +
+						"<td>" +
+						esEsc(r.type) +
+						"</td>" +
+						'<td><span class="cs-pill" style="background:' +
+						esColor(r.score) +
+						'">' +
+						r.score +
+						"</span>" +
+						(r.low ? ' <span class="cs-flag">⚠ low rating</span>' : "") +
+						"</td>" +
+						"<td>" +
+						esEsc(r.date) +
+						"</td>" +
+						"</tr>"
+					);
+				})
+				.join("");
+
+			var recent = recentRows
+				? '<div style="margin-top:18px"><div class="es-sub">Latest Responses</div>' +
+					'<div class="stats-table-wrap"><table class="stats-table"><thead><tr>' +
+					"<th>Client</th><th>Project</th><th>Type</th><th>Avg Score</th><th>Responded</th>" +
+					"</tr></thead><tbody>" +
+					recentRows +
+					"</tbody></table></div></div>"
+				: "";
+
+			body.innerHTML =
+				kpis +
+				'<div class="es-two">' +
+				'<div><div class="es-sub">Part-wise Score (lowest first)</div>' +
+				partBars +
+				typeBlock +
+				"</div>" +
+				'<div><div class="es-sub">Question-wise Score (lowest first)</div>' +
+				'<div class="es-chart-wrap" style="height:' +
+				chartH +
+				'px"><canvas id="chartClientSat"></canvas></div></div>' +
+				"</div>" +
+				focus +
+				recent;
+
+			setTimeout(function () {
+				body.querySelectorAll(".es-row").forEach(function (r) {
+					r.classList.add("in");
+				});
+				body.querySelectorAll(".es-fill").forEach(function (f) {
+					f.style.width = f.getAttribute("data-w") + "%";
+				});
+			}, 60);
+
+			destroy("cs");
+			var el = document.getElementById("chartClientSat");
+			if (!el) return;
+			charts3["cs"] = new Chart(el, {
+				type: "bar",
+				data: {
+					labels: d.questions.map(function (q) {
+						return q.label.length > 55 ? q.label.slice(0, 52) + "..." : q.label;
+					}),
+					datasets: [
+						{
+							label: "Avg Score",
+							data: d.questions.map(function (q) {
+								return q.avg;
+							}),
+							backgroundColor: d.questions.map(function (q) {
+								return esColor(q.avg);
+							}),
+							borderRadius: 4,
+							maxBarThickness: 18,
+						},
+					],
+				},
+				options: {
+					indexAxis: "y",
+					responsive: true,
+					maintainAspectRatio: false,
+					animation: {
+						duration: 1400,
+						easing: "easeOutQuart",
+						delay: function (ctx) {
+							return ctx.type === "data" ? ctx.dataIndex * 70 : 0;
+						},
+					},
+					plugins: {
+						legend: { display: false },
+						tooltip: {
+							callbacks: {
+								title: function (items) {
+									return d.questions[items[0].dataIndex].label;
+								},
+								afterLabel: function (c) {
+									var q = d.questions[c.dataIndex];
+									return (
+										q.category +
+										" · " +
+										esLabel(q.avg) +
+										" · " +
+										q.responses +
+										" response(s)"
+									);
+								},
+							},
+						},
+					},
+					scales: {
+						x: {
+							min: 0,
+							max: 5,
+							ticks: { stepSize: 1 },
+							title: { display: true, text: "Average score (out of 5)" },
+						},
+						y: { ticks: { font: { size: 10 } } },
+					},
+				},
+			});
+		}
+
+		function drawClientSat(d) {
+			var col = document.getElementById("csCol");
+			var body = document.getElementById("csBody");
+			if (!col || !body) return;
+			if (d && d.no_access) {
+				body.innerHTML =
+					'<div class="chart-loading">You do not have access to client feedback results</div>';
+				return;
+			}
+			if (!d || !d.responses) {
+				body.innerHTML =
+					'<div class="chart-loading">No completed client responses yet</div>';
+				return;
+			}
+			var started = false;
+			function go() {
+				if (!started) {
+					started = true;
+					renderClientSat(d);
+				}
+			}
+			if ("IntersectionObserver" in window) {
+				var io = new IntersectionObserver(
+					function (entries) {
+						if (entries[0].isIntersecting) {
+							go();
+							io.disconnect();
+						}
+					},
+					{ threshold: 0.15 },
+				);
+				io.observe(col);
+			} else {
+				go();
+			}
+		}
+
+		/* ================= HSE & ELECTRICITY ================= */
 		function drawHse(d) {
 			if (!d) return;
-
 			setTxt("hseHazardCount", d.hazard_risk_assessment);
 			setTxt("hseAspectCount", d.aspect_impact_assessment);
 			setTxt("hseMsdsCount", d.msds);
@@ -3200,7 +3459,6 @@
 			setTxt("hseMonitoringTotal", d.monitoring_total);
 		}
 
-		/* ================= ELECTRICITY ================= */
 		function renderElectricityTable(d) {
 			var el = document.getElementById("tblElectricity");
 			if (!el || !d.months) return;
@@ -3304,21 +3562,19 @@
 			}
 
 			var title = document.getElementById("elecTitle");
-			if (title) {
+			if (title)
 				title.textContent =
 					"Electricity Consumption — " +
 					d.current_year +
 					" Actual vs Target (95% of " +
 					d.prior_year +
 					")";
-			}
 			var note = document.getElementById("elecNote");
-			if (note) {
+			if (note)
 				note.textContent =
 					"Objective: reduce consumption by 5% versus " +
 					d.prior_year +
 					". Green bars = target achieved, red = exceeded target.";
-			}
 
 			renderElectricityTable(d);
 
@@ -3394,9 +3650,7 @@
 							},
 						},
 					},
-					scales: {
-						y: { beginAtZero: true, title: { display: true, text: "kWh" } },
-					},
+					scales: { y: { beginAtZero: true, title: { display: true, text: "kWh" } } },
 				},
 			});
 		}
@@ -3407,6 +3661,26 @@
 				setTimeout(start3, 200);
 				return;
 			}
+
+			call("ppecon_ims.www.ims.index.get_employee_satisfaction_stats")
+				.then(drawEmpSat)
+				.catch(function (e) {
+					console.error("Employee satisfaction failed:", e);
+					var b = document.getElementById("esBody");
+					if (b)
+						b.innerHTML =
+							'<div class="chart-loading">Could not load survey results</div>';
+				});
+
+			call("ppecon_ims.www.ims.index.get_client_satisfaction_stats")
+				.then(drawClientSat)
+				.catch(function (e) {
+					console.error("Client satisfaction failed:", e);
+					var b = document.getElementById("csBody");
+					if (b)
+						b.innerHTML =
+							'<div class="chart-loading">Could not load client feedback results</div>';
+				});
 
 			call("ppecon_ims.www.ims.index.get_supplier_compliance_stats")
 				.then(drawSupplierCompliance)
