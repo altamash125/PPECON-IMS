@@ -119,7 +119,7 @@ def _first_existing_doctype(candidates):
 
 
 def _date_field(doctype):
-    for f in ("transaction_date", "posting_date", "schedule_date", "date"):
+    for f in ("expected_closing", "posting_date", "schedule_date", "date"):
         if _has_field(doctype, f):
             return f
     return "creation"
@@ -441,7 +441,7 @@ def _estimation_yearly():
     for r in rows:
         td = getdate(r.transaction_date)
         ecd = getdate(r.expected_closing)
-        y = td.year
+        y = ecd.year  # year ab opportunity ki expected_closing se
         if y not in by_year:
             by_year[y] = {"year": y, "on_time": 0, "delayed": 0}
         if td <= ecd:
@@ -466,8 +466,7 @@ def _estimation_summary(start, end):
             FROM `tabQuotation` q
             INNER JOIN `tabOpportunity` o ON o.name = q.`{field}`
             WHERE q.docstatus < 2
-              AND q.transaction_date BETWEEN %s AND %s
-              AND o.`{closing}` IS NOT NULL
+              AND o.`{closing}` BETWEEN %s AND %s
             """.format(field=field, closing=closing),
             (start, end), as_dict=True,
         )
@@ -484,8 +483,24 @@ def _estimation_summary(start, end):
             delayed += 1
             delay_days.append((td - ecd).days)
 
-    total_quotations = _count_in_period("Quotation", start, end, " AND docstatus < 2")
-    no_reference = max(total_quotations - len(rows), 0)
+    # Quotations jinka koi linked opportunity (ya uski expected_closing) nahi hai.
+    # Inki apni koi opportunity date nahi, isliye ye quotation ki date se count hote hain.
+    try:
+        no_reference = frappe.db.sql(
+            """
+            SELECT COUNT(*)
+            FROM `tabQuotation` q
+            LEFT JOIN `tabOpportunity` o ON o.name = q.`{field}`
+            WHERE q.docstatus < 2
+              AND q.transaction_date BETWEEN %s AND %s
+              AND o.`{closing}` IS NULL
+            """.format(field=field, closing=closing),
+            (start, end),
+        )[0][0]
+    except Exception:
+        frappe.log_error(frappe.get_traceback(), "IMS estimation_no_reference")
+        no_reference = 0
+
     total = on_time + delayed
 
     return {
@@ -497,8 +512,6 @@ def _estimation_summary(start, end):
         "on_time_pct": round(on_time / total * 100, 1) if total else 0,
         "yearly": _estimation_yearly(),
     }
-
-
 # ---------------------- PROCUREMENT ----------------------
 def _sq_by_supplier(start, end):
     if not _has_field("Supplier Quotation", "supplier"):

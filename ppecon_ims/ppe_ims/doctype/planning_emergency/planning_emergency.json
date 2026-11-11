@@ -17,7 +17,9 @@
   "frequency_of_drill",
   "expected_participants_for_drill",
   "remarks",
-  "emergency_instructions"
+  "emergency_instructions",
+  "section_break_ooev",
+  "bulk_upload"
  ],
  "fields": [
   {
@@ -84,12 +86,21 @@
    "fieldname": "emergency_instructions",
    "fieldtype": "Small Text",
    "label": "Emergency Instructions"
+  },
+  {
+   "fieldname": "section_break_ooev",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bulk_upload",
+   "fieldtype": "HTML",
+   "label": "Bulk Upload"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-11 16:53:23.623731",
+ "modified": "2026-11-01 14:52:47.768246",
  "modified_by": "Administrator",
  "module": "PPE IMS",
  "name": "Planning Emergency",
