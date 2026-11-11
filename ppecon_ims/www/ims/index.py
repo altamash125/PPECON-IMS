@@ -400,8 +400,11 @@ def _crm_summary(start, end):
         frappe.log_error(frappe.get_traceback(), "IMS crm_summary")
         return {}
 
-
 # ---------------------- ESTIMATION TURNAROUND ----------------------
+# On Time  : Quotation.transaction_date <= Opportunity.expected_closing
+# Delayed  : Quotation.transaction_date >  Opportunity.expected_closing
+# Period   : Opportunity.expected_closing ke hisaab se filter hota hai
+
 def _quotation_opportunity_field():
     for f in ("opportunity", "against_opportunity", "custom_opportunity"):
         if _has_field("Quotation", f):
@@ -409,28 +412,27 @@ def _quotation_opportunity_field():
     return None
 
 
-def _opportunity_closing_field():
-    for f in ("expected_closing", "expected_closing_date"):
-        if _has_field("Opportunity", f):
-            return f
-    return None
+def _estimation_ready():
+    """(quotation->opportunity link field) lautata hai, ya None agar setup adhoora ho."""
+    if not _has_field("Opportunity", "expected_closing"):
+        return None
+    return _quotation_opportunity_field()
 
 
 def _estimation_yearly():
-    field = _quotation_opportunity_field()
-    closing = _opportunity_closing_field()
-    if not field or not closing:
+    field = _estimation_ready()
+    if not field:
         return []
 
     try:
         rows = frappe.db.sql(
             """
-            SELECT q.transaction_date, o.`{closing}` AS expected_closing
+            SELECT q.transaction_date, o.expected_closing
             FROM `tabQuotation` q
             INNER JOIN `tabOpportunity` o ON o.name = q.`{field}`
             WHERE q.docstatus < 2
-              AND o.`{closing}` IS NOT NULL
-            """.format(field=field, closing=closing),
+              AND o.expected_closing IS NOT NULL
+            """.format(field=field),
             as_dict=True,
         )
     except Exception:
@@ -441,7 +443,7 @@ def _estimation_yearly():
     for r in rows:
         td = getdate(r.transaction_date)
         ecd = getdate(r.expected_closing)
-        y = ecd.year  # year ab opportunity ki expected_closing se
+        y = ecd.year
         if y not in by_year:
             by_year[y] = {"year": y, "on_time": 0, "delayed": 0}
         if td <= ecd:
@@ -453,22 +455,23 @@ def _estimation_yearly():
 
 
 def _estimation_summary(start, end):
-    field = _quotation_opportunity_field()
-    closing = _opportunity_closing_field()
-    if not field or not closing:
-        return {"on_time": 0, "delayed": 0, "no_reference": 0,
-                "avg_delay_days": 0, "on_time_pct": 0, "total": 0, "yearly": []}
+    empty = {"on_time": 0, "delayed": 0, "no_reference": 0,
+             "avg_delay_days": 0, "on_time_pct": 0, "total": 0, "yearly": []}
+    field = _estimation_ready()
+    if not field:
+        return empty
 
     try:
         rows = frappe.db.sql(
             """
-            SELECT q.name, q.transaction_date, o.`{closing}` AS expected_closing
+            SELECT q.name, q.transaction_date, o.expected_closing
             FROM `tabQuotation` q
             INNER JOIN `tabOpportunity` o ON o.name = q.`{field}`
             WHERE q.docstatus < 2
-              AND o.`{closing}` BETWEEN %s AND %s
-            """.format(field=field, closing=closing),
-            (start, end), as_dict=True,
+              AND o.expected_closing BETWEEN %s AND %s
+            """.format(field=field),
+            (start, end),
+            as_dict=True,
         )
     except Exception:
         frappe.log_error(frappe.get_traceback(), "IMS estimation_summary")
@@ -483,8 +486,7 @@ def _estimation_summary(start, end):
             delayed += 1
             delay_days.append((td - ecd).days)
 
-    # Quotations jinka koi linked opportunity (ya uski expected_closing) nahi hai.
-    # Inki apni koi opportunity date nahi, isliye ye quotation ki date se count hote hain.
+    # Jin quotations ki opportunity ya expected_closing nahi hai (compare nahi ho sakta)
     try:
         no_reference = frappe.db.sql(
             """
@@ -493,8 +495,8 @@ def _estimation_summary(start, end):
             LEFT JOIN `tabOpportunity` o ON o.name = q.`{field}`
             WHERE q.docstatus < 2
               AND q.transaction_date BETWEEN %s AND %s
-              AND o.`{closing}` IS NULL
-            """.format(field=field, closing=closing),
+              AND o.expected_closing IS NULL
+            """.format(field=field),
             (start, end),
         )[0][0]
     except Exception:
